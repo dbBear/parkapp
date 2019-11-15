@@ -7,8 +7,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryCommand {
+public class OfficialCommand {
   private Long id;
-  private String name;
-  private String description;
+  private String firstName;
+  private String lastName;
+  private String email;
+  private ParkCommand park;
 }
