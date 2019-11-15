@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All Tickets</title>
+</head>
+<body>
+<h1>All Tickets</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Date</th>
+    <th>Description</th>
+    <th>Submitter</th>
+    <th>Park</th>
+  </tr>
+  </thead>
+  <tr th:each="ticket : ${tickets}">
+    <td th:text="${ticket.name}">Name</td>
+    <td th:text="${ticket.category.name}">Category</td>
+    <td th:text="${ticket.date.toLocaleString()}">Date</td>
+    <td th:text="${ticket.description}">Description</td>
+    <td th:text="${ticket.submitter.getFullName()}">Submitter</td>
+    <td th:text="${ticket.park.name}">Park</td>
+  </tr>
+</table>
+
+</body>
+</html>

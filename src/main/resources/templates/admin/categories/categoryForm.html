@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Category Form</title>
+</head>
+<body>
+<h1>Category Form</h1>
+<!--/*@thymesVar id="category" type="com.cs177.parkapp.commands.CategoryCommand"*/-->
+<form
+  th:object="${category}"
+  th:action="@{'/admin/categories'}"
+  method="post"
+>
+  <input type="hidden" th:field="*{id}" />
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" type="text" th:field="*{name}" />
+  </div>
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}"></textarea>
+  </div>
+  <button type="submit">Submit</button>
+
+</form>
+
+</body>
+</html>
