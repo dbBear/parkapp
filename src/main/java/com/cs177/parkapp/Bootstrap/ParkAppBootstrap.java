@@ -54,9 +54,16 @@ public class ParkAppBootstrap implements CommandLineRunner {
 
 
     Park park1 = Park.builder()
-        .name("The First Park in the Repository!!")
+        .name("Park Number 1")
         .build();
     parkRepository.save(park1);
+
+    Park park2 = Park.builder()
+        .name("The Second Park")
+        .build();
+    parkRepository.save(park2);
+
+
 
     Official official1 = generateOfficial("Daniel", "Blum");
     park1.addOfficial(official1);

@@ -10,8 +10,9 @@ import java.util.Set;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true, exclude = "tickets")
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true, exclude = "tickets")
+@ToString(exclude = {"tickets"})
 @Entity
 public class Submitter extends BaseEntity {
 

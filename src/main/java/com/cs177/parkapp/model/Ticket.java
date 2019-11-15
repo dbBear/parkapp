@@ -8,8 +8,8 @@ import java.util.Date;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Entity
 public class Ticket extends BaseEntity{
 

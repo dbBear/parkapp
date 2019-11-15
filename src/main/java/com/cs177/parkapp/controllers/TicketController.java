@@ -5,16 +5,17 @@ import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.SubmitterService;
 import com.cs177.parkapp.services.TicketService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Date;
 
+@Slf4j
 @RequestMapping({"/ticket"})
 @Controller
 public class TicketController {
@@ -59,6 +60,7 @@ public class TicketController {
       Ticket ticket,
       BindingResult result)
   {
+    log.debug(result.toString());
     ticket.setDate(new Date());
     if(ticket.getSubmitter() == null) {
       ticket.setSubmitter(submitterService.findByEmail("Anonymous.Anonymous" +

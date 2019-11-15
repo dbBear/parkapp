@@ -12,7 +12,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, exclude = {"officials", "tickets"})
-//@ToString
 @ToString(exclude = {"officials", "tickets"})
 @Entity
 public class Park extends BaseEntity {

@@ -8,9 +8,7 @@ import javax.persistence.*;
 @Setter()
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-//@AllArgsConstructor
 @Entity
-//@Table(name = "official")
 public class Official extends BaseEntity{
 
   private String firstName;
