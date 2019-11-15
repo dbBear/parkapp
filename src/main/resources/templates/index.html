@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
+<head th:insert="~{fragments/layout/header::header}">
   <meta charset="UTF-8">
   <title>Parks App</title>
 </head>
 <body>
-<h1>Welcome to the Parks App!</h1>
+<div class="jumbotron jumbotron-fluid" id="title">
+  <div class="container-fluid">
+    <h1 class="text-center">Welcome to the Parks App!</h1>
+  </div>
+</div>
 </body>
 </html>

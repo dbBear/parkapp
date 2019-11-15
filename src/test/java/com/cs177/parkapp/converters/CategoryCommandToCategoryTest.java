@@ -19,11 +19,15 @@ class CategoryCommandToCategoryTest {
   @BeforeEach
   void setUp() {
     converter = new CategoryCommandToCategory();
-    categoryCommand = CategoryCommand.builder()
-        .id(ID_1)
-        .name(NAME_1)
-        .description(DESCRIPTION_1)
-        .build();
+//    categoryCommand = CategoryCommand.builder()
+//        .id(ID_1)
+//        .name(NAME_1)
+//        .description(DESCRIPTION_1)
+//        .build();
+    categoryCommand = new CategoryCommand();
+    categoryCommand.setId(ID_1);
+    categoryCommand.setName(NAME_1);
+    categoryCommand.setDescription(DESCRIPTION_1);
   }
 
   @Test

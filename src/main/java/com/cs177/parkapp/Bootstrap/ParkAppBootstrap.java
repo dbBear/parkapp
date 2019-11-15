@@ -77,6 +77,9 @@ public class ParkAppBootstrap implements CommandLineRunner {
     submitter2.addTicket(ticket2);
     park1.addTicket(ticket2);
     ticketRepository.save(ticket2);
+
+    Submitter anonymousSubmitter = generateSubmitter("Anonymous", "Anonymous");
+    submitterRepository.save(anonymousSubmitter);
   }
 
   private Official generateOfficial(String first, String last) {

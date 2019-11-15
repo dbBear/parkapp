@@ -1,6 +1,8 @@
 package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.model.Ticket;
+import com.cs177.parkapp.services.CategoryService;
+import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.TicketService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,10 @@ class TicketControllerTest {
 
   @Mock
   TicketService ticketService;
+  @Mock
+  CategoryService categoryService;
+  @Mock
+  ParkService parkService;
   private MockMvc mockMvc;
 
   @BeforeEach
@@ -26,7 +32,8 @@ class TicketControllerTest {
     MockitoAnnotations.initMocks(this);
     mockMvc =
         MockMvcBuilders
-            .standaloneSetup(new TicketController(ticketService))
+            .standaloneSetup(
+                new TicketController(ticketService, categoryService, parkService))
             .build();
   }
 
@@ -39,6 +46,8 @@ class TicketControllerTest {
     mockMvc.perform(get("/ticket"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("tickets"))
+        .andExpect(model().attributeExists("categories"))
+        .andExpect(model().attributeExists("parks"))
         .andExpect(view().name("tickets/list"));
   }
 }

@@ -15,10 +15,15 @@ public class CategoryCommandToCategory
     if (categoryCommand == null) {
       return null;
     }
-    return Category.builder()
-        .id(categoryCommand.getId())
-        .name(categoryCommand.getName())
-        .description(categoryCommand.getDescription())
-        .build();
+//    return Category.builder()
+//        .id(categoryCommand.getId())
+//        .name(categoryCommand.getName())
+//        .description(categoryCommand.getDescription())
+//        .build();
+    final Category category = new Category();
+    category.setId(categoryCommand.getId());
+    category.setName(categoryCommand.getName());
+    category.setDescription(categoryCommand.getDescription());
+    return category;
   }
 }

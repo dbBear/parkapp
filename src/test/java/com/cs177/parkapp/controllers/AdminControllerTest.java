@@ -64,9 +64,10 @@ class AdminControllerTest {
   @Test
   void saveOrUpdateCategory() throws Exception {
     //given
-    CategoryCommand categoryCommand = CategoryCommand.builder()
-        .id(1L)
-        .build();
+//    CategoryCommand categoryCommand = CategoryCommand.builder()
+//        .id(1L)
+//        .build();
+    CategoryCommand categoryCommand = new CategoryCommand();
     when(categoryService.saveCategoryCommand(any())).thenReturn(categoryCommand);
     //when
     //then

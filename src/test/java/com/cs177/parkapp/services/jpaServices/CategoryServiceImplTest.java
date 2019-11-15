@@ -54,11 +54,16 @@ class CategoryServiceImplTest {
         .description(DESCRIPTION)
         .build();
     categories = new ArrayList<>(Arrays.asList(category1, category2));
-    categoryCommand1 = CategoryCommand.builder()
-        .id(ID_1)
-        .name(NAME_1)
-        .description(DESCRIPTION)
-        .build();
+//    categoryCommand1 = CategoryCommand.builder()
+//        .id(ID_1)
+//        .name(NAME_1)
+//        .description(DESCRIPTION)
+//        .build();
+    categoryCommand1 = new CategoryCommand();
+    categoryCommand1.setId(ID_1);
+    categoryCommand1.setName(NAME_1);
+    categoryCommand1.setDescription(DESCRIPTION);
+
   }
 
   @Test
