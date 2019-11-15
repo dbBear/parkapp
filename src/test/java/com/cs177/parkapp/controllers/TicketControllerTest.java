@@ -3,6 +3,7 @@ package com.cs177.parkapp.controllers;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
+import com.cs177.parkapp.services.SubmitterService;
 import com.cs177.parkapp.services.TicketService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ class TicketControllerTest {
   CategoryService categoryService;
   @Mock
   ParkService parkService;
+  @Mock
+  SubmitterService submitterService;
   private MockMvc mockMvc;
 
   @BeforeEach
@@ -33,7 +36,8 @@ class TicketControllerTest {
     mockMvc =
         MockMvcBuilders
             .standaloneSetup(
-                new TicketController(ticketService, categoryService, parkService))
+                new TicketController(ticketService, categoryService,
+                    parkService, submitterService))
             .build();
   }
 

@@ -1,8 +1,5 @@
 package com.cs177.parkapp.services.jpaServices;
 
-import com.cs177.parkapp.commands.CategoryCommand;
-import com.cs177.parkapp.converters.CategoryCommandToCategory;
-import com.cs177.parkapp.converters.CategoryToCategoryCommand;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.repositories.CategoryRepository;
 import com.cs177.parkapp.services.CategoryService;
@@ -26,22 +23,16 @@ class CategoryServiceImplTest {
 
   @Mock
   CategoryRepository categoryRepository;
-  @Mock
-  CategoryToCategoryCommand categoryToCategoryCommand;
-  @Mock
-  CategoryCommandToCategory categoryCommandToCategory;
   private CategoryService categoryService;
 
   private Category category1;
   private Category category2;
   private List<Category> categories;
-  private CategoryCommand categoryCommand1;
 
   @BeforeEach
   void setUp() {
     MockitoAnnotations.initMocks(this);
-    categoryService = new CategoryServiceImpl(categoryRepository,
-        categoryToCategoryCommand, categoryCommandToCategory);
+    categoryService = new CategoryServiceImpl(categoryRepository);
 
     category1 = Category.builder()
         .id(ID_1)
@@ -58,11 +49,6 @@ class CategoryServiceImplTest {
 //        .id(ID_1)
 //        .name(NAME_1)
 //        .description(DESCRIPTION)
-//        .build();
-    categoryCommand1 = new CategoryCommand();
-    categoryCommand1.setId(ID_1);
-    categoryCommand1.setName(NAME_1);
-    categoryCommand1.setDescription(DESCRIPTION);
 
   }
 
@@ -105,43 +91,5 @@ class CategoryServiceImplTest {
     assertEquals(NAME_1, categoryReturned.getName());
     verify(categoryRepository, times(1)).findByName(anyString());
     verifyNoMoreInteractions(categoryRepository);
-  }
-
-  @Test
-  void findCommandById() {
-    //given
-    when(categoryRepository.findById(anyLong()))
-        .thenReturn(Optional.of(category1));
-    when(categoryToCategoryCommand.convert(any())).thenReturn(categoryCommand1);
-    //when
-    CategoryCommand ccReturned = categoryService.findCommandById(ID_1);
-    //then
-    assertNotNull(ccReturned);
-    assertEquals(categoryCommand1.getId(), ccReturned.getId());
-    verify(categoryRepository, times(1)).findById(anyLong());
-    verify(categoryToCategoryCommand, times(1)).convert(any());
-    verifyNoMoreInteractions(categoryRepository);
-    verifyNoMoreInteractions(categoryToCategoryCommand);
-  }
-
-  @Test
-  void saveCategoryCommand() {
-    //given
-    when(categoryCommandToCategory.convert(any())).thenReturn(category1);
-    when(categoryRepository.save(any())).thenReturn(category1);
-    when(categoryToCategoryCommand.convert(any())).thenReturn(categoryCommand1);
-
-    //when
-    CategoryCommand ccReturned =
-        categoryService.saveCategoryCommand(categoryCommand1);
-
-    //then
-    assertNotNull(ccReturned);
-    assertEquals(categoryCommand1.getId(), ccReturned.getId());
-    verify(categoryRepository, times(1)).save(any());
-    verify(categoryCommandToCategory, times(1)).convert(any());
-    verify(categoryToCategoryCommand, times(1)).convert(any());
-    verifyNoMoreInteractions(categoryRepository);
-    verifyNoMoreInteractions(categoryCommandToCategory);
   }
 }

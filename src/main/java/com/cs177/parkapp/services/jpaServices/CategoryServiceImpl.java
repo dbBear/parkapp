@@ -1,14 +1,10 @@
 package com.cs177.parkapp.services.jpaServices;
 
-import com.cs177.parkapp.commands.CategoryCommand;
-import com.cs177.parkapp.converters.CategoryCommandToCategory;
-import com.cs177.parkapp.converters.CategoryToCategoryCommand;
 import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.repositories.CategoryRepository;
 import com.cs177.parkapp.services.CategoryService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,17 +13,11 @@ import java.util.Set;
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository categoryRepository;
-  private final CategoryToCategoryCommand categoryToCategoryCommand;
-  private final CategoryCommandToCategory categoryCommandToCategory;
 
   public CategoryServiceImpl(
-      CategoryRepository categoryRepository,
-      CategoryToCategoryCommand categoryToCategoryCommand,
-      CategoryCommandToCategory categoryCommandToCategory)
+      CategoryRepository categoryRepository)
   {
     this.categoryRepository = categoryRepository;
-    this.categoryToCategoryCommand = categoryToCategoryCommand;
-    this.categoryCommandToCategory = categoryCommandToCategory;
   }
 
   @Override
@@ -51,17 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
         );
   }
 
-  @Transactional
   @Override
-  public CategoryCommand findCommandById(Long id) {
-    return categoryToCategoryCommand.convert(this.findById(id));
-  }
-
-  @Override
-  public CategoryCommand saveCategoryCommand(CategoryCommand categoryCommand) {
-    Category detachedCategory =
-        categoryCommandToCategory.convert(categoryCommand);
-    Category savedCategory = categoryRepository.save(detachedCategory);
-    return categoryToCategoryCommand.convert(savedCategory);
+  public Category saveCategory(Category category) {
+    return categoryRepository.save(category);
   }
 }

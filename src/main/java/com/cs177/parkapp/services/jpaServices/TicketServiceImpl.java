@@ -1,14 +1,10 @@
 package com.cs177.parkapp.services.jpaServices;
 
-import com.cs177.parkapp.commands.TicketCommand;
-import com.cs177.parkapp.converters.TicketCommandToTicket;
-import com.cs177.parkapp.converters.TicketToTicketCommand;
 import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.repositories.TicketRepository;
 import com.cs177.parkapp.services.TicketService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,17 +13,10 @@ import java.util.Set;
 public class TicketServiceImpl implements TicketService {
 
   private final TicketRepository ticketRepository;
-  private final TicketCommandToTicket ticketCommandToTicket;
-  private final TicketToTicketCommand ticketToTicketCommand;
-
   public TicketServiceImpl(
-      TicketRepository ticketRepository,
-      TicketCommandToTicket ticketCommandToTicket,
-      TicketToTicketCommand ticketToTicketCommand)
+      TicketRepository ticketRepository)
   {
     this.ticketRepository = ticketRepository;
-    this.ticketCommandToTicket = ticketCommandToTicket;
-    this.ticketToTicketCommand = ticketToTicketCommand;
   }
 
   @Override
@@ -44,16 +33,7 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
-  @Transactional
-  public TicketCommand saveTicketCommand(TicketCommand ticketCommand) {
-    Ticket detachedTicket = ticketCommandToTicket.convert(ticketCommand);
-    Ticket savedTicket = ticketRepository.save(detachedTicket);
-    return ticketToTicketCommand.convert(savedTicket);
-  }
-
-  @Override
-  @Transactional
-  public TicketCommand findCommandById(Long id) {
-    return ticketToTicketCommand.convert(this.findBydId(id));
+  public Ticket saveTicket(Ticket ticket) {
+    return ticketRepository.save(ticket);
   }
 }

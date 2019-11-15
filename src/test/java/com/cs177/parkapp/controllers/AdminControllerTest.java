@@ -1,6 +1,5 @@
 package com.cs177.parkapp.controllers;
 
-import com.cs177.parkapp.commands.CategoryCommand;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
@@ -61,22 +60,4 @@ class AdminControllerTest {
         .andExpect(model().attributeExists("category"));
   }
 
-  @Test
-  void saveOrUpdateCategory() throws Exception {
-    //given
-//    CategoryCommand categoryCommand = CategoryCommand.builder()
-//        .id(1L)
-//        .build();
-    CategoryCommand categoryCommand = new CategoryCommand();
-    when(categoryService.saveCategoryCommand(any())).thenReturn(categoryCommand);
-    //when
-    //then
-    mockMvc.perform(post("/admin/categories")
-        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        .param("id","")
-        .param("name", "some name")
-        .param("description", "some description"))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/admin/categories"));
-  }
 }

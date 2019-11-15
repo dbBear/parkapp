@@ -1,6 +1,6 @@
 package com.cs177.parkapp.controllers;
 
-import com.cs177.parkapp.commands.CategoryCommand;
+import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
 import org.springframework.stereotype.Controller;
@@ -27,18 +27,18 @@ public class AdminController {
 
   @GetMapping("/categories/new")
   public String newCategory(Model model) {
-    CategoryCommand cc = new CategoryCommand();
-    model.addAttribute("category", cc);
+    Category c = new Category();
+    model.addAttribute("category", c);
     return "admin/categories/categoryForm";
   }
 
   @PostMapping("/categories")
   public String saveOrUpdateCategory(
-      @ModelAttribute CategoryCommand categoryCommand,
+      @ModelAttribute Category category,
       Model model)
   {
-    CategoryCommand savedCC =
-        categoryService.saveCategoryCommand(categoryCommand);
+    Category savedCategory =
+        categoryService.saveCategory(category);
     return "redirect:/admin/categories";
   }
 }

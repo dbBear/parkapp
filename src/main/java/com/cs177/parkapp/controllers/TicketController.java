@@ -1,10 +1,9 @@
 package com.cs177.parkapp.controllers;
 
-import com.cs177.parkapp.commands.CategoryCommand;
-import com.cs177.parkapp.commands.ParkCommand;
-import com.cs177.parkapp.commands.TicketCommand;
+import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
+import com.cs177.parkapp.services.SubmitterService;
 import com.cs177.parkapp.services.TicketService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,17 +22,20 @@ public class TicketController {
   private final TicketService ticketService;
   private final CategoryService categoryService;
   private final ParkService parkService;
+  private final SubmitterService submitterService;
 
   public TicketController(
       TicketService ticketService,
       CategoryService categoryService,
-      ParkService parkService
-  )
+      ParkService parkService,
+      SubmitterService submitterService)
   {
     this.ticketService = ticketService;
     this.categoryService = categoryService;
     this.parkService = parkService;
+    this.submitterService = submitterService;
   }
+
 
   @GetMapping({"", "/", "/tickets"})
   public String showTickets(Model model) {
@@ -43,11 +45,10 @@ public class TicketController {
 
   @GetMapping({"/new"})
   public String newTicket(Model model) {
-    TicketCommand ticketCommand = TicketCommand.builder()
-        .category(new CategoryCommand())
-        .park(new ParkCommand())
+    Ticket ticket = Ticket.builder()
         .build();
-    model.addAttribute("ticket", new TicketCommand());
+
+    model.addAttribute("ticket", ticket);
     model.addAttribute("categories", categoryService.getCategories());
     model.addAttribute("parks", parkService.getParks());
     return "tickets/ticketForm";
@@ -55,12 +56,15 @@ public class TicketController {
 
   @PostMapping({"/new"})
   public String saveTicket(
-      @ModelAttribute TicketCommand ticketCommand,
+      Ticket ticket,
       BindingResult result)
   {
-    ticketCommand.setDate(new Date());
-    TicketCommand savedTicketCommand =
-        ticketService.saveTicketCommand(ticketCommand);
+    ticket.setDate(new Date());
+    if(ticket.getSubmitter() == null) {
+      ticket.setSubmitter(submitterService.findByEmail("Anonymous.Anonymous" +
+          "@email.com"));
+    }
+    Ticket ticketSaved = ticketService.saveTicket(ticket);
     return "redirect:/ticket";
   }
 }
