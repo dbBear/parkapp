@@ -50,8 +50,6 @@ class TicketControllerTest {
     mockMvc.perform(get("/ticket"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("tickets"))
-        .andExpect(model().attributeExists("categories"))
-        .andExpect(model().attributeExists("parks"))
         .andExpect(view().name("tickets/list"));
   }
 }
