@@ -4,8 +4,8 @@ Welcome to ParkApp. Please find information about how to load and update the pro
 This github project is private so only those with share privileges can see it.
 
 
-## Running Locally
-#### Install
+# Running Locally
+### Install
 If you'd like to run the project locally, you'll need:
 + Java 11
 
@@ -19,7 +19,7 @@ If you'd like to run the project locally, you'll need:
     Alternatively, you don't have to install Maven. Use the Maven Wrapper as detailed in the _'Didn't Install Maven'_
      section under _'Running'_.
     
-#### Running
+### Running
 Once both are installed, bring up a terminal, navigate to the top level directory of ParkApp and run:
 
     `mvn package && java -jar target/parkapp-[version]-jar
@@ -35,15 +35,25 @@ Assuming all the tests are valid and it compiles, you'll be able to access the s
 If you didn't install maven, go into the parent directory and run `./mvnw clean install` to get all the dependencies
 , and run with `./mvnw spring-boot:run`
 
-#### SQL
-Currently, 0.0.1-SNAPSHOT is using an in-memory database. This section will get updated once we link an SQL server.
 
-## Git
-#### Installing
+#### With an IDE
+###### Intellij
+Just go to **File | Open** (either from the open dialogue or the main menu), navigate to the pom.xml file in the project
+, and **Open as Project**
+
+###### Eclipse
+[Here's a stack overflow post with the answer](https://stackoverflow.com/questions/2061094/importing-maven-project-into-eclipse)
+
+
+### SQL
+Currently, `0.0.1-SNAPSHOT` is using an in-memory database. This section will get updated once we link an SQL server.
+
+# Git
+### Installing
 [First, make sure you have git installed locally.](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 After that, make sure you've set up [you're identity.](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup#_your_identity)
 
-#### Workflow
+### Workflow
 We're going to use the 'Centralized Repository' workflow. [Atlassian as a good description of how it works.](https://www.atlassian.com/git/tutorials/comparing-workflows)
 
 We'll keep two working branches, `master` and `production`. **Make sure all work is on the `production` branch!**
@@ -51,14 +61,14 @@ If you've cloned the `master` branch, just run `git checkout -t origin/productio
 
 Please make your commits nice and small. Also, make sure you include a message in your commit!
 
-#### .gitignore
-I've included a .gitignore file in the commit that's pretty extensive. If you need to add more so we're not getting
+>##### .gitignore
+>I've included a .gitignore file in the commit that's pretty extensive. If you need to add more so we're not getting
  you're IDE files, **PLEASE INCLUDE THEM!**
 
 
 
-## Front End Design
-#### Directories
+# Front End Design
+### Directories
 There are two directories currently dealing with front end work
 + `src/main/resources/static` holds all the static stuff (css,js,images, etc)
 + `src/main/resources/templates` holds all your html stuff
@@ -67,16 +77,16 @@ There are two directories in `static` and `templates`, both called `backEndStuff
  sure the backend is displaying properly until we get the proper front end wired in. Please don't make changes to
   these files.
 
-#### Displaying
+### Displaying
 You don't need the server running to work on the design. As long as you make all you links referential, everything
  will be 'A Okay.' Just load up a page from the system directory and you'll be set!
 
 
 
-## Documentation
-+ [This Git Repository](https://github.com/dbBear/parkapp)
+# Documentation
++ [Git Repository](https://github.com/dbBear/parkapp)
 
-#### Contacts
+### Contacts
 + Daniel Blum [drumblum@gmail.com](mailto:drumblum@gmail.com)
 + Kenny Kong [kennyw899@gmail.com](mailto:kennyw899@gmail.com)
 + Jason Rosenberg [comparc@icloud.com](mailto:comparc@icloud.com)
