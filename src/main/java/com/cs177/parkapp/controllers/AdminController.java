@@ -22,14 +22,14 @@ public class AdminController {
   @GetMapping("/categories")
   public String listCategories(Model model) {
     model.addAttribute("categories", categoryService.getCategories());
-    return "admin/categories/list";
+    return "backEndStuff/admin/categories/list";
   }
 
   @GetMapping("/categories/new")
   public String newCategory(Model model) {
     Category c = new Category();
     model.addAttribute("category", c);
-    return "admin/categories/categoryForm";
+    return "backEndStuff/admin/categories/categoryForm";
   }
 
   @PostMapping("/categories")

@@ -41,7 +41,7 @@ public class TicketController {
   @GetMapping({"", "/", "/tickets"})
   public String showTickets(Model model) {
     model.addAttribute("tickets", ticketService.getTickets());
-    return "tickets/list";
+    return "backEndStuff/tickets/list";
   }
 
   @GetMapping({"/new"})
@@ -52,7 +52,7 @@ public class TicketController {
     model.addAttribute("ticket", ticket);
     model.addAttribute("categories", categoryService.getCategories());
     model.addAttribute("parks", parkService.getParks());
-    return "tickets/ticketForm";
+    return "backEndStuff/tickets/ticketForm";
   }
 
   @PostMapping({"/new"})

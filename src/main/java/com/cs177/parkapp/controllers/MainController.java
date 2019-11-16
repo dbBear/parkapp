@@ -11,6 +11,6 @@ public class MainController {
 
   @GetMapping({"", "/"})
   public String getIndex() {
-    return "index";
+    return "backEndStuff/index";
   }
 }

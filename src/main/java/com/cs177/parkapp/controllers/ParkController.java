@@ -21,6 +21,6 @@ public class ParkController {
   @GetMapping({"", "/", "/parks"})
   public String showParks(Model model) {
     model.addAttribute("parks", parkService.getParks());
-    return "parks/list";
+    return "backEndStuff/parks/list";
   }
 }
