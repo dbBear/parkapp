@@ -16,7 +16,6 @@ public class Ticket extends BaseEntity{
   private String name;
   @OneToOne(fetch = FetchType.EAGER)
   private Category category;
-  private Date date;
   @Lob
   private String description;
   @ManyToOne(fetch = FetchType.LAZY)
@@ -39,7 +38,6 @@ public class Ticket extends BaseEntity{
     super(id);
     this.category = category;
     this.name = name;
-    this.date = date;
     this.description = description;
     this.submitter = submitter;
     this.park = park;

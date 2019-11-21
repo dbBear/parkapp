@@ -61,7 +61,6 @@ public class TicketController {
       BindingResult result)
   {
     log.debug(result.toString());
-    ticket.setDate(new Date());
     if(ticket.getSubmitter() == null) {
       ticket.setSubmitter(submitterService.findByEmail("Anonymous.Anonymous" +
           "@email.com"));
