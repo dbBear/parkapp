@@ -85,9 +85,14 @@ You don't need the server running to work on the design. As long as you make all
 
 # Documentation
 + [Git Repository](https://github.com/dbBear/parkapp)
++ [Slack Channel](https://cs177parkapp.slack.com)
++ [Google Drive](https://drive.google.com/drive/folders/1wA6F9TVSKuT24bAsBu-aqEe4TRkmf_Bn?usp=sharing)
+
 
 ### Contacts
 + Daniel Blum [drumblum@gmail.com](mailto:drumblum@gmail.com)
 + Kenny Kong [kennyw899@gmail.com](mailto:kennyw899@gmail.com)
 + Jason Rosenberg [comparc@icloud.com](mailto:comparc@icloud.com)
++ Anastasiia Chalova [achalova@mail.ccsf.edu](mailto:achalova@mail.ccsf.edu)
++ Maryna Ponomarenko [mponoma1@mail.ccsf.edu](mailto:mponoma1@mail.ccsf.edu)
 
