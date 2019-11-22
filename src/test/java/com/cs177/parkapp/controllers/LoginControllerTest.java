@@ -8,6 +8,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -23,7 +24,7 @@ class LoginControllerTest {
 
   @Test
   void getLoginPage() throws Exception {
-    mockMvc.perform(get(LOGIN_DIR))
+    mockMvc.perform(get(LOGIN_DIR)).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + LOGIN_DIR + "/loginForm"));
   }

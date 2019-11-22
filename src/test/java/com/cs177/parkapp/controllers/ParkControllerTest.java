@@ -18,6 +18,7 @@ import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class ParkControllerTest {
@@ -42,7 +43,7 @@ class ParkControllerTest {
     when(parkService.getParks()).thenReturn(new HashSet<>());
     //when
     //then
-    mockMvc.perform(get("/parks"))
+    mockMvc.perform(get("/parks")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + "/parks/parkList"))
         .andExpect(model().attributeExists("parks"));
@@ -55,7 +56,7 @@ class ParkControllerTest {
     //given
     //when
     //then
-    mockMvc.perform(get("/parks/new"))
+    mockMvc.perform(get("/parks/new")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + "/parks/parkForm"))
         .andExpect(model().attributeExists("park"));
@@ -67,7 +68,7 @@ class ParkControllerTest {
     when(parkService.findById(anyLong())).thenReturn(new Park());
     //when
     //then
-    mockMvc.perform(get("/parks/update?id=1"))
+    mockMvc.perform(get("/parks/update?id=1")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + "/parks/parkForm"))
         .andExpect(model().attributeExists("park"));
@@ -89,7 +90,7 @@ class ParkControllerTest {
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("id", park.getId().toString())
         .param("name", park.getName())
-    )
+    ).andDo(print())
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/parks"));
     verify(parkService, times(1)).save(any(Park.class));
@@ -102,7 +103,7 @@ class ParkControllerTest {
     when(parkService.findById(anyLong())).thenReturn(new Park());
     //when
     //then
-    mockMvc.perform(get("/parks/delete?id=1"))
+    mockMvc.perform(get("/parks/delete?id=1")).andDo(print())
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/parks"));
     verify(parkService, times(1)).findById(anyLong());

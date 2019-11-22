@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class CategoryControllerTest {
@@ -43,7 +44,7 @@ class CategoryControllerTest {
     when(categoryService.getCategories()).thenReturn(new HashSet<>());
     //when
     //then
-    mockMvc.perform(get("/categories"))
+    mockMvc.perform(get("/categories")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + "/categories/categoryList"))
         .andExpect(model().attributeExists("categories"));
@@ -54,7 +55,7 @@ class CategoryControllerTest {
     //given
     //when
     //then
-    mockMvc.perform(get("/categories/new"))
+    mockMvc.perform(get("/categories/new")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + "/categories/categoryForm"))
         .andExpect(model().attributeExists("category"));
@@ -66,7 +67,7 @@ class CategoryControllerTest {
     when(categoryService.findById(anyLong())).thenReturn(new Category());
     //when
     //then
-    mockMvc.perform(get("/categories/update?id=1"))
+    mockMvc.perform(get("/categories/update?id=1")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + "/categories/categoryForm"))
         .andExpect(model().attributeExists("category"));
@@ -88,7 +89,7 @@ class CategoryControllerTest {
         .param("id", category.getId().toString())
         .param("name", category.getName())
         .param("description", category.getDescription())
-    )
+    ).andDo(print())
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/categories"));
     verify(categoryService, times(1)).save(any(Category.class));
@@ -101,7 +102,7 @@ class CategoryControllerTest {
     when(categoryService.findById(anyLong())).thenReturn(new Category());
     //when
     //then
-    mockMvc.perform(get("/categories/delete?id=1"))
+    mockMvc.perform(get("/categories/delete?id=1")).andDo(print())
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/categories"));
     verify(categoryService, times(1)).findById(anyLong());

@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.startsWith;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class RangerControllerTest {
@@ -37,7 +38,7 @@ class RangerControllerTest {
     when(rangerService.getRangers()).thenReturn(new HashSet<>());
     //when
     //then
-    mockMvc.perform(get("/rangers"))
+    mockMvc.perform(get("/rangers")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(view().name(DEV_DIR + "/rangers/rangerList"))
         .andExpect(model().attributeExists("rangers"));

@@ -17,6 +17,7 @@ import java.util.HashSet;
 import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class TicketControllerTest {
@@ -52,7 +53,7 @@ class TicketControllerTest {
     when(ticketService.getTickets()).thenReturn(new HashSet<Ticket>());
     //when
     //then
-    mockMvc.perform(get("/tickets"))
+    mockMvc.perform(get("/tickets")).andDo(print())
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("tickets"))
         .andExpect(view().name(DEV_DIR + "/tickets/ticketList"));
