@@ -35,12 +35,12 @@ public class Park extends BaseEntity {
   @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();
 
-  public void addOfficial(Ranger ranger) {
+  public void addRanger(Ranger ranger) {
     ranger.setPark(this);
     rangers.add(ranger);
   }
 
-  public void removeOfficial(Ranger ranger) {
+  public void removeRanger(Ranger ranger) {
     Ranger rangerToRemove = rangers.stream()
         .filter(o -> o.getId().equals(ranger.getId()))
         .findFirst()

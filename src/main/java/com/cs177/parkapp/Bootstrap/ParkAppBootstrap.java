@@ -53,8 +53,8 @@ public class ParkAppBootstrap implements CommandLineRunner {
 
 
 
-    Ranger ranger1 = generateOfficial("Daniel", "Blum");
-    park1.addOfficial(ranger1);
+    Ranger ranger1 = generateRanger("Daniel", "Blum");
+    park1.addRanger(ranger1);
     rangerRepository.save(ranger1);
 
     Submitter submitter1 = generateSubmitter("Travis", "Kinkade");
@@ -77,11 +77,11 @@ public class ParkAppBootstrap implements CommandLineRunner {
     submitterRepository.save(anonymousSubmitter);
   }
 
-  private Ranger generateOfficial(String first, String last) {
+  private Ranger generateRanger(String first, String last) {
     return Ranger.builder()
         .firstName(first)
         .lastName(last)
-        .email(first + "." + last + "@official.com")
+        .email(first + "." + last + "@ranger.com")
         .build();
   }
 
