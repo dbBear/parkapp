@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
-@RequestMapping({"/park"})
+@RequestMapping({"/parks"})
 @Controller
 public class ParkController {
 
@@ -18,9 +18,9 @@ public class ParkController {
     this.parkService = parkService;
   }
 
-  @GetMapping({"", "/", "/parks"})
+  @GetMapping({"", "/" })
   public String showParks(Model model) {
     model.addAttribute("parks", parkService.getParks());
-    return "backEndStuff/parks/list";
+    return "backEndStuff/parks/parkList";
   }
 }

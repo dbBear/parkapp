@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
+<head th:include="~{backEndStuff/fragments/header/header::header}">
   <meta charset="UTF-8">
   <title>Category Form</title>
 </head>
 <body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <h1>Category Form</h1>
 <!--/*@thymesVar id="category" type="com.cs177.parkapp.commands.CategoryCommand"*/-->
 <form

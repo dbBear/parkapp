@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:include="~{backEndStuff/fragments/header/header::header}">
+  <meta charset="UTF-8">
+  <title>Parks</title>
+  <link rel="stylesheet" href="../../../static/backEndStuff/css/backEndMain.css">
+</head>
+<body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<section class="mainSection">
+  <h1>Parks</h1>
+  <a class="btn btn-primary" role="button"
+     href="/categories/categoryForm.html" th:href="@{categories/new}"
+  >Add Category</a>
+  <table class="table">
+    <thead>
+    <tr>
+      <th></th>
+      <th scope="col">Name</th>
+      <th scope="col">Number of Tickets</th>
+      <th scope="col">Number of Officials</th>
+    </tr>
+    </thead>
+    <tr th:each="park : ${parks}">
+      <td>
+        <div class="btn-group" role="group" aria-label="edit/delete">
+          <button type="button" class="btn btn-secondary">edit</button>
+          <button type="button" class="btn btn-secondary">delete</button>
+        </div>
+      </td>
+      <td th:text="${park.name}">Park Name</td>
+      <td th:text="${park.getTickets().size()}">0</td>
+      <td th:text="${park.getRangers().size()}">0</td>
+    </tr>
+  </table>
+</section>
+
+</body>
+</html>

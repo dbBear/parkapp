@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,8 +20,9 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 @MappedSuperclass
-class BaseEntity implements Serializable {
+abstract class BaseEntity implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +34,4 @@ class BaseEntity implements Serializable {
   @UpdateTimestamp
   private Date updateDateTime;
 
-  public BaseEntity(Long id) {
-    this.id = id;
-  }
 }

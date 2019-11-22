@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Date;
 
 @Slf4j
-@RequestMapping({"/ticket"})
+@RequestMapping({"/tickets"})
 @Controller
 public class TicketController {
 
@@ -38,10 +37,10 @@ public class TicketController {
   }
 
 
-  @GetMapping({"", "/", "/tickets"})
+  @GetMapping({"", "/" })
   public String showTickets(Model model) {
     model.addAttribute("tickets", ticketService.getTickets());
-    return "backEndStuff/tickets/list";
+    return "backEndStuff/tickets/ticketList";
   }
 
   @GetMapping({"/new"})
@@ -66,6 +65,6 @@ public class TicketController {
           "@email.com"));
     }
     Ticket ticketSaved = ticketService.saveTicket(ticket);
-    return "redirect:/ticket";
+    return "redirect:/tickets";
   }
 }

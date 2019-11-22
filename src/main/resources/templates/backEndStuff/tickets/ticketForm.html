@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:insert="~{backEndStuff/fragments/layout/header::header}">
+<head th:insert="~{backEndStuff/fragments/header/header::header}">
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
 
 <body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <header class="jumbotron jumbotron-fluid">
   <h1 class="display-2 text-center">New Ticket</h1>
 </header>

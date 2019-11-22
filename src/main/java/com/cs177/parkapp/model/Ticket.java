@@ -1,6 +1,7 @@
 package com.cs177.parkapp.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @Entity
 public class Ticket extends BaseEntity{
@@ -25,21 +28,4 @@ public class Ticket extends BaseEntity{
   @JoinColumn(name = "park_id")
   private Park park;
 
-  @Builder
-  public Ticket(
-      Long id,
-      Category category,
-      String name,
-      Date date,
-      String description,
-      Submitter submitter,
-      Park park
-  ) {
-    super(id);
-    this.category = category;
-    this.name = name;
-    this.description = description;
-    this.submitter = submitter;
-    this.park = park;
-  }
 }

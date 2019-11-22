@@ -1,6 +1,7 @@
 package com.cs177.parkapp.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true, exclude = "tickets")
 @ToString(exclude = {"tickets"})
 @Entity
@@ -24,19 +27,8 @@ public class Submitter extends BaseEntity {
       mappedBy = "submitter",
       cascade = CascadeType.ALL,
       orphanRemoval = true)
+  @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();
-
-  @Builder
-  public Submitter(Long id, String firstName, String lastName,String email,
-                   Set<Ticket> tickets) {
-    super(id);
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    if(this.tickets == null) {
-      this.tickets = tickets;
-    }
-  }
 
   public String getFullName() {
     return firstName + " " + lastName;

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:include="~{backEndStuff/fragments/header/header::header}">
+  <meta charset="UTF-8">
+  <title>Categories</title>
+</head>
+<body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<section class="mainSection">
+  <h1>Categories</h1>
+  <a class="btn btn-primary" role="button"
+     href="/categories/categoryForm.html" th:href="@{categories/new}"
+  >Add Category</a>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+    </tr>
+    </thead>
+    <tr th:each="category : ${categories}">
+      <td>
+        <div class="btn-group" role="group" aria-label="edit/delete">
+          <button type="button" class="btn btn-secondary">edit</button>
+          <button type="button" class="btn btn-secondary">delete</button>
+        </div>
+      </td>
+      <td th:text="${category.name}">Name</td>
+      <td th:text="${category.description}">Description</td>
+    </tr>
+  </table>
+</section>
+</body>
+</html>

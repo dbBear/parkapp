@@ -13,20 +13,20 @@ import java.util.Date;
 @Component
 public class ParkAppBootstrap implements CommandLineRunner {
 
-  private final OfficialRepository officialRepository;
+  private final RangerRepository rangerRepository;
   private final ParkRepository parkRepository;
   private final SubmitterRepository submitterRepository;
   private final TicketRepository ticketRepository;
   private final CategoryRepository categoryRepository;
 
   public ParkAppBootstrap(
-      OfficialRepository officialRepository,
+      RangerRepository rangerRepository,
       ParkRepository parkRepository,
       SubmitterRepository submitterRepository,
       TicketRepository ticketRepository,
       CategoryRepository categoryRepository)
   {
-    this.officialRepository = officialRepository;
+    this.rangerRepository = rangerRepository;
     this.parkRepository = parkRepository;
     this.submitterRepository = submitterRepository;
     this.ticketRepository = ticketRepository;
@@ -65,9 +65,9 @@ public class ParkAppBootstrap implements CommandLineRunner {
 
 
 
-    Official official1 = generateOfficial("Daniel", "Blum");
-    park1.addOfficial(official1);
-    officialRepository.save(official1);
+    Ranger ranger1 = generateOfficial("Daniel", "Blum");
+    park1.addOfficial(ranger1);
+    rangerRepository.save(ranger1);
 
     Submitter submitter1 = generateSubmitter("Travis", "Kinkade");
     submitterRepository.save(submitter1);
@@ -89,8 +89,8 @@ public class ParkAppBootstrap implements CommandLineRunner {
     submitterRepository.save(anonymousSubmitter);
   }
 
-  private Official generateOfficial(String first, String last) {
-    return Official.builder()
+  private Ranger generateOfficial(String first, String last) {
+    return Ranger.builder()
         .firstName(first)
         .lastName(last)
         .email(first + "." + last + "@official.com")
@@ -111,7 +111,6 @@ public class ParkAppBootstrap implements CommandLineRunner {
         .name(name)
         .description(name)
         .category(category)
-        .date(new Date())
         .build();
   }
 }

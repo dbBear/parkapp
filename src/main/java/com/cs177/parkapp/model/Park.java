@@ -1,7 +1,7 @@
 package com.cs177.parkapp.model;
 
 import lombok.*;
-
+import lombok.experimental.SuperBuilder;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -11,8 +11,10 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true, exclude = {"officials", "tickets"})
-@ToString(exclude = {"officials", "tickets"})
+@AllArgsConstructor
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true, exclude = {"rangers", "tickets"})
+@ToString(exclude = {"rangers", "tickets"})
 @Entity
 public class Park extends BaseEntity {
 
@@ -20,46 +22,31 @@ public class Park extends BaseEntity {
   @OneToMany(
       mappedBy = "park",
       cascade = CascadeType.ALL,
-      orphanRemoval = true)
-  private Set<Official> officials = new HashSet<>();
+      orphanRemoval = true
+  )
+  @Builder.Default
+  private Set<Ranger> rangers = new HashSet<>();
 
   @OneToMany(
       mappedBy = "park",
       cascade = CascadeType.ALL,
       orphanRemoval = true
   )
+  @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();
 
-  @Builder
-  public Park(
-      Long id,
-      String name,
-      Set<Official> officials,
-      Set<Ticket> tickets
-  ) {
-    super(id);
-    this.name = name;
-    if (this.officials == null) {
-      this.officials = officials;
-    }
-    if (this.tickets == null) {
-      this.tickets = tickets;
-    }
-
+  public void addOfficial(Ranger ranger) {
+    ranger.setPark(this);
+    rangers.add(ranger);
   }
 
-  public void addOfficial(Official official) {
-    official.setPark(this);
-    officials.add(official);
-  }
-
-  public void removeOfficial(Official official) {
-    Official officialToRemove = officials.stream()
-        .filter(o -> o.getId().equals(official.getId()))
+  public void removeOfficial(Ranger ranger) {
+    Ranger rangerToRemove = rangers.stream()
+        .filter(o -> o.getId().equals(ranger.getId()))
         .findFirst()
         .orElse(null);
-    officials.remove(officialToRemove);
-    officialToRemove.setPark(null);
+    rangers.remove(rangerToRemove);
+    rangerToRemove.setPark(null);
   }
 
   public void addTicket(Ticket ticket) {

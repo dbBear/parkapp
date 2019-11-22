@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:insert="~{backEndStuff/fragments/layout/header::header}">
+<head th:include="~{backEndStuff/fragments/header/header::header}">
   <meta charset="UTF-8">
   <title>Parks App</title>
 </head>
 <body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <div class="jumbotron jumbotron-fluid" id="title">
   <div class="container-fluid">
     <h1 class="text-center">Welcome to the Parks App!</h1>
   </div>
 </div>
+<!--<div class="container">-->
+<!--  <div class="row">-->
+<!--    <div class="col just-content-center">-->
+<!--      <a href="./login/login.html" th:href="@{login}">-->
+<!--        <button type="button" class="btn btn-primary">Login</button>-->
+<!--      </a>-->
+<!--      <a href="./tickets/ticketForm.html" th:href="@{ticket/new}">-->
+<!--        <button type="button" class="btn btn-primary">Submit a Ticket</button>-->
+<!--      </a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
 </body>
 </html>

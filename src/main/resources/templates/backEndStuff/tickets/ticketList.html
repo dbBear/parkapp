@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:include="~{backEndStuff/fragments/header/header::header}">
+  <meta charset="UTF-8">
+  <title>All Tickets</title>
+</head>
+<body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<section class="mainSection">
+  <h1>All Tickets</h1>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Submitter</th>
+      <th>Park</th>
+    </tr>
+    </thead>
+    <tr th:each="ticket : ${tickets}">
+      <td>
+        <div class="btn-group" role="group" aria-label="edit/delete">
+          <button type="button" class="btn btn-secondary">edit</button>
+          <button type="button" class="btn btn-secondary">delete</button>
+        </div>
+      </td>
+      <td th:text="${ticket.name}">Name</td>
+      <td th:text="${ticket.category.name}">Category</td>
+      <td th:text="${ticket.createDateTime.toLocaleString()}">Date</td>
+      <td th:text="${ticket.description}">Description</td>
+      <td th:text="${ticket.submitter.getFullName()}">Submitter</td>
+      <td th:text="${ticket.park.name}">Park</td>
+    </tr>
+  </table>
+</section>
+
+
+</body>
+</html>

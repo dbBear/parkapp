@@ -7,38 +7,39 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping({"/admin"})
+@RequestMapping({"/categories"})
 @Controller
-public class AdminController {
+public class CategoryController {
 
   private final CategoryService categoryService;
   private final ParkService parkService;
 
-  public AdminController(CategoryService categoryService, ParkService parkService) {
+  public CategoryController(CategoryService categoryService, ParkService parkService) {
     this.categoryService = categoryService;
     this.parkService = parkService;
   }
 
-  @GetMapping("/categories")
+  @GetMapping({"","/"})
   public String listCategories(Model model) {
     model.addAttribute("categories", categoryService.getCategories());
-    return "backEndStuff/admin/categories/list";
+    return "backEndStuff/categories/categoryList";
   }
 
-  @GetMapping("/categories/new")
+  @GetMapping("/new")
   public String newCategory(Model model) {
     Category c = new Category();
     model.addAttribute("category", c);
-    return "backEndStuff/admin/categories/categoryForm";
+    return "backEndStuff/categories/categoryForm";
   }
 
-  @PostMapping("/categories")
+  @PostMapping("/categories/new")
   public String saveOrUpdateCategory(
       @ModelAttribute Category category,
       Model model)
   {
     Category savedCategory =
         categoryService.saveCategory(category);
-    return "redirect:/admin/categories";
+    return "redirect:/categories";
   }
 }
+

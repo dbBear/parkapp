@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:include="~{backEndStuff/fragments/header/header::header}">
+  <meta charset="UTF-8">
+  <title>Ranger List</title>
+</head>
+<body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<section class="mainSection">
+  <h1>Rangers</h1>
+  <a class="btn btn-primary" role="button"
+     href="/rangers/rangerForm.html" th:href="@{rangers/new}"
+  >Add Category</a>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+    </tr>
+    </thead>
+    <tr th:each="ranger: ${rangers}">
+      <td>
+        <div class="btn-group" role="group" aria-label="edit/delete">
+          <button type="button" class="btn btn-secondary">edit</button>
+          <button type="button" class="btn btn-secondary">delete</button>
+        </div>
+      </td>
+      <td th:text="${ranger.firstName+ ' ' + ranger.lastName}">Name</td>
+      <td th:text="${ranger.email}">Email</td>
+    </tr>
+  </table>
+</section>
+</body>
+</html>
