@@ -3,7 +3,6 @@ package com.cs177.parkapp.services.jpaServices;
 import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.repositories.ParkRepository;
-import com.cs177.parkapp.services.jpaServices.ParkServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsIterableContaining.hasItem;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -20,7 +21,8 @@ class ParkServiceImplTest {
 
   private static final Long ID_1 = 1L;
   private static final Long ID_2 = 2L;
-  private static final String NAME = "Park Name";
+  private static final String NAME_1 = "Park Name 1";
+  private static final String NAME_2 = "Park Name 2";
 
   @Mock
   ParkRepository parkRepository;
@@ -28,6 +30,7 @@ class ParkServiceImplTest {
 
   private Park park1;
   private Park park2;
+  List<Park> parks;
 
   @BeforeEach
   void setUp() {
@@ -35,26 +38,27 @@ class ParkServiceImplTest {
     parkService = new ParkServiceImpl(parkRepository);
     park1 = Park.builder()
         .id(ID_1)
-        .name(NAME)
+        .name(NAME_1)
         .build();
     park2 = Park.builder()
         .id(ID_2)
-        .name(NAME)
+        .name(NAME_2)
         .build();
+    parks = new ArrayList<>(Arrays.asList(park1, park2));
   }
 
   @Test
   void getParks() {
     //given
-    List<Park> parks = new ArrayList<>(Arrays.asList(park1, park2));
-
-    //when
     when(parkRepository.findAll()).thenReturn(parks);
+    //when
     Set<Park> parksReturned = parkService.getParks();
-
     //then
     assertNotNull(parksReturned);
-    assertEquals(2, parksReturned.size());
+    assertEquals(parks.size(), parksReturned.size());
+    for(Park park: parks) {
+      assertThat(parksReturned, hasItem(park));
+    }
     verify(parkRepository, times(1)).findAll();
     verifyNoMoreInteractions(parkRepository);
   }
@@ -62,12 +66,12 @@ class ParkServiceImplTest {
   @Test
   void findById() {
     //given
-    //when
     when(parkRepository.findById(anyLong())).thenReturn(Optional.of(park1));
-    Park returnPark = parkService.findById(ID_1);
-
+    //when
+    Park parkReturned = parkService.findById(ID_1);
     //then
-    assertNotNull(returnPark);
+    assertNotNull(parkReturned);
+    assertEquals(park1, parkReturned);
     verify(parkRepository,times(1)).findById(anyLong());
     verifyNoMoreInteractions(parkRepository);
   }
@@ -75,8 +79,8 @@ class ParkServiceImplTest {
   @Test
   void findByIdNotFound() {
     //give
-    //when
     when(parkRepository.findById(anyLong())).thenReturn(Optional.empty());
+    //when
     //then
     Assertions.assertThrows(EntityNotFoundException.class, () -> {
       Park returnPark = parkService.findById(ID_1);
@@ -88,11 +92,12 @@ class ParkServiceImplTest {
   @Test
   void findByName() {
     //given
-    //when
     when(parkRepository.findByName(anyString())).thenReturn(Optional.of(park1));
+    //when
     Park parkReturned = parkService.findByName(park1.getName());
     //then
     assertNotNull(parkReturned);
+    assertEquals(park1, parkReturned);
     verify(parkRepository,times(1)).findByName(anyString());
     verifyNoMoreInteractions(parkRepository);
   }
@@ -100,8 +105,8 @@ class ParkServiceImplTest {
   @Test
   void findByNameNotFound() {
     //given
-    //when
     when(parkRepository.findByName(anyString())).thenReturn(Optional.empty());
+    //when
     //then
     Assertions.assertThrows(EntityNotFoundException.class, () -> {
       Park returnPark = parkService.findByName("");
@@ -111,14 +116,39 @@ class ParkServiceImplTest {
   @Test
   void findByNameLike() {
     //give
-    List<Park> parks = new ArrayList<>(Arrays.asList(park1, park2));
-    //when
     when(parkRepository.findAllByNameLike(anyString())).thenReturn(parks);
-    Set<Park> parksReturned = parkService.findByNameLike("");
+    //when
+    Set<Park> parksReturned = parkService.findByNameLike("Park");
     //then
     assertNotNull(parksReturned);
-    assertEquals(parksReturned.size(), 2);
+    assertEquals(parks.size(), parksReturned.size());
+    for(Park park : parks) {
+      assertThat(parksReturned, hasItem(park));
+    }
     verify(parkRepository, times(1)).findAllByNameLike(anyString());
+    verifyNoMoreInteractions(parkRepository);
+  }
+
+  @Test
+  void save() {
+    //given
+    when(parkRepository.save(any(Park.class))).thenReturn(park1);
+    //when
+    Park parkSaved = parkService.save(park1);
+    //then
+    assertNotNull(parkSaved);
+    assertEquals(park1, parkSaved);
+    verify(parkRepository, times(1)).save(any());
+    verifyNoMoreInteractions(parkRepository);
+  }
+
+  @Test
+  void delete() {
+    //given
+    //when
+    parkService.delete(park1);
+    //then
+    verify(parkRepository, times(1)).delete(any());
     verifyNoMoreInteractions(parkRepository);
   }
 }

@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
 
+import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -36,8 +37,12 @@ class TicketControllerTest {
     mockMvc =
         MockMvcBuilders
             .standaloneSetup(
-                new TicketController(ticketService, categoryService,
-                    parkService, submitterService))
+                new TicketController(
+                    ticketService,
+                    categoryService,
+                    parkService,
+                    submitterService
+                ))
             .build();
   }
 
@@ -47,9 +52,15 @@ class TicketControllerTest {
     when(ticketService.getTickets()).thenReturn(new HashSet<Ticket>());
     //when
     //then
-    mockMvc.perform(get("/ticket"))
+    mockMvc.perform(get("/tickets"))
         .andExpect(status().isOk())
         .andExpect(model().attributeExists("tickets"))
-        .andExpect(view().name("tickets/list"));
+        .andExpect(view().name(DEV_DIR + "/tickets/ticketList"));
   }
+
+  @Test
+  void newTicket() {}
+
+  @Test
+  void saveTicket() {}
 }

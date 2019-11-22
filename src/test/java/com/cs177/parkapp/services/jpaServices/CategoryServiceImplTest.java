@@ -10,6 +10,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsIterableContaining.hasItem;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -45,11 +47,6 @@ class CategoryServiceImplTest {
         .description(DESCRIPTION)
         .build();
     categories = new ArrayList<>(Arrays.asList(category1, category2));
-//    categoryCommand1 = CategoryCommand.builder()
-//        .id(ID_1)
-//        .name(NAME_1)
-//        .description(DESCRIPTION)
-
   }
 
   @Test
@@ -61,6 +58,9 @@ class CategoryServiceImplTest {
     //then
     assertNotNull(categoriesReturned);
     assertEquals(2, categoriesReturned.size());
+    for(Category category: categories) {
+      assertThat(categoriesReturned, hasItem(category));
+    }
     verify(categoryRepository, times(1)).findAll();
     verifyNoMoreInteractions(categoryRepository);
   }
@@ -74,7 +74,7 @@ class CategoryServiceImplTest {
     Category categoryReturned = categoryService.findById(ID_1);
     //then
     assertNotNull(categoryReturned);
-    assertEquals(ID_1, categoryReturned.getId());
+    assertEquals(category1, categoryReturned);
     verify(categoryRepository, times(1)).findById(anyLong());
     verifyNoMoreInteractions(categoryRepository);
   }
@@ -88,8 +88,31 @@ class CategoryServiceImplTest {
     Category categoryReturned = categoryService.findByName(NAME_1);
     //then
     assertNotNull(categoryReturned);
-    assertEquals(NAME_1, categoryReturned.getName());
+    assertEquals(category1, categoryReturned);
     verify(categoryRepository, times(1)).findByName(anyString());
+    verifyNoMoreInteractions(categoryRepository);
+  }
+
+  @Test
+  void save() {
+    //given
+    when(categoryRepository.save(any(Category.class))).thenReturn(category1);
+    //when
+    Category categorySaved = categoryService.save(category1);
+    //then
+    assertNotNull(categorySaved);
+    assertEquals(category1, categorySaved);
+    verify(categoryRepository, times(1)).save(any());
+    verifyNoMoreInteractions(categoryRepository);
+  }
+
+  @Test
+  void delete() {
+    //given
+    //when
+    categoryService.delete(category1);
+    //then
+    verify(categoryRepository, times(1)).delete(any());
     verifyNoMoreInteractions(categoryRepository);
   }
 }

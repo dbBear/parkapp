@@ -5,7 +5,6 @@ import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.repositories.TicketRepository;
-import com.cs177.parkapp.services.jpaServices.TicketServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,6 +12,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsIterableContaining.hasItem;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -31,16 +32,14 @@ class TicketServiceImplTest {
   TicketRepository ticketRepository;
   private TicketServiceImpl ticketService;
 
-  Ticket ticket1;
-  Ticket ticket2;
-  List<Ticket> tickets;
+  private Ticket ticket1;
+  private Ticket ticket2;
+  private List<Ticket> tickets;
 
   @BeforeEach
   void setUp() {
     MockitoAnnotations.initMocks(this);
     ticketService = new TicketServiceImpl(ticketRepository);
-
-
     ticket1 = Ticket.builder()
         .id(ID_1)
         .category(category)
@@ -68,7 +67,10 @@ class TicketServiceImplTest {
     Set<Ticket> ticketsReturned = ticketService.getTickets();
     //then
     assertNotNull(ticketsReturned);
-    assertEquals(2, ticketsReturned.size());
+    assertEquals(tickets.size(), ticketsReturned.size());
+    for(Ticket ticket : tickets) {
+      assertThat(ticketsReturned, hasItem(ticket));
+    }
     verify(ticketRepository, times(1)).findAll();
     verifyNoMoreInteractions(ticketRepository);
 
@@ -77,13 +79,36 @@ class TicketServiceImplTest {
   @Test
   void findBydId() {
     //given
-    //when
     when(ticketRepository.findById(anyLong())).thenReturn(Optional.of(ticket1));
+    //when
     Ticket ticketReturned = ticketService.findBydId(ID_1);
     //then
     assertNotNull(ticketReturned);
-    assertEquals(ID_1, ticketReturned.getId());
+    assertEquals(ticket1, ticketReturned);
     verify(ticketRepository, times(1)).findById(anyLong());
+    verifyNoMoreInteractions(ticketRepository);
+  }
+
+  @Test
+  void save() {
+    //given
+    when(ticketRepository.save(any(Ticket.class))).thenReturn(ticket1);
+    //when
+    Ticket ticketSaved = ticketService.save(ticket1);
+    //then
+    assertNotNull(ticketSaved);
+    assertEquals(ticket1, ticketSaved);
+    verify(ticketRepository, times(1)).save(any());
+    verifyNoMoreInteractions(ticketRepository);
+  }
+
+  @Test
+  void delete() {
+    //given
+    //when
+    ticketService.delete(ticket1);
+    //then
+    verify(ticketRepository, times(1)).delete(any(Ticket.class));
     verifyNoMoreInteractions(ticketRepository);
   }
 }

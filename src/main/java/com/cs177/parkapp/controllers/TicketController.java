@@ -5,6 +5,7 @@ import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.SubmitterService;
 import com.cs177.parkapp.services.TicketService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @RequestMapping({"/tickets"})
+@AllArgsConstructor
 @Controller
 public class TicketController {
 
@@ -23,19 +25,6 @@ public class TicketController {
   private final CategoryService categoryService;
   private final ParkService parkService;
   private final SubmitterService submitterService;
-
-  public TicketController(
-      TicketService ticketService,
-      CategoryService categoryService,
-      ParkService parkService,
-      SubmitterService submitterService)
-  {
-    this.ticketService = ticketService;
-    this.categoryService = categoryService;
-    this.parkService = parkService;
-    this.submitterService = submitterService;
-  }
-
 
   @GetMapping({"", "/" })
   public String showTickets(Model model) {

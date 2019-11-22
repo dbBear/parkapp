@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -13,8 +14,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class ParkControllerTest {
@@ -36,25 +39,75 @@ class ParkControllerTest {
   @Test
   void showParks() throws Exception{
     //given
-    Park park1 = Park.builder()
-        .id(2L)
-        .name("park1")
-        .build();
-    Park park2 = Park.builder()
-        .id(2L)
-        .name("park2")
-        .build();
-    Set<Park> parks = new HashSet<>(Arrays.asList(park1, park2));
-
+    when(parkService.getParks()).thenReturn(new HashSet<>());
     //when
-    when(parkService.getParks()).thenReturn(parks);
-
     //then
-    mockMvc.perform(get("/park"))
+    mockMvc.perform(get("/parks"))
         .andExpect(status().isOk())
-        .andExpect(view().name("parks/list"))
+        .andExpect(view().name(DEV_DIR + "/parks/parkList"))
         .andExpect(model().attributeExists("parks"));
 
     verify(parkService, times(1)).getParks();
+  }
+
+  @Test
+  void newPark() throws Exception{
+    //given
+    //when
+    //then
+    mockMvc.perform(get("/parks/new"))
+        .andExpect(status().isOk())
+        .andExpect(view().name(DEV_DIR + "/parks/parkForm"))
+        .andExpect(model().attributeExists("park"));
+  }
+
+  @Test
+  void updatePark() throws Exception{
+    //given
+    when(parkService.findById(anyLong())).thenReturn(new Park());
+    //when
+    //then
+    mockMvc.perform(get("/parks/update?id=1"))
+        .andExpect(status().isOk())
+        .andExpect(view().name(DEV_DIR + "/parks/parkForm"))
+        .andExpect(model().attributeExists("park"));
+    verify(parkService, times(1)).findById(anyLong());
+    verifyNoMoreInteractions(parkService);
+  }
+
+  @Test
+  void saveOrUpdatePark() throws Exception{
+    //given
+    Park park = Park.builder()
+        .id(1L)
+        .name("park")
+        .build();
+    when(parkService.save(any(Park.class))).thenReturn(park);
+    //when
+    //then
+    mockMvc.perform(post("/parks")
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        .param("id", park.getId().toString())
+        .param("name", park.getName())
+    )
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/parks"));
+    verify(parkService, times(1)).save(any(Park.class));
+    verifyNoMoreInteractions(parkService);
+  }
+
+  @Test
+  void deletePark() throws Exception {
+    //given
+    when(parkService.findById(anyLong())).thenReturn(new Park());
+    //when
+    //then
+    mockMvc.perform(get("/parks/delete?id=1"))
+        .andExpect(status().is3xxRedirection())
+        .andExpect(view().name("redirect:/parks"));
+    verify(parkService, times(1)).findById(anyLong());
+    verify(parkService, times(1)).delete(any(Park.class));
+    verifyNoMoreInteractions(parkService);
+
   }
 }

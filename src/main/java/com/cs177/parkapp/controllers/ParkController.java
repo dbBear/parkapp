@@ -2,44 +2,49 @@ package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.services.ParkService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+
 @Slf4j
 @RequestMapping({"/parks"})
+@AllArgsConstructor
 @Controller
 public class ParkController {
 
   private final ParkService parkService;
 
-  public ParkController(ParkService parkService) {
-    this.parkService = parkService;
-  }
-
   @GetMapping({"", "/" })
   public String showParks(Model model) {
     model.addAttribute("parks", parkService.getParks());
-    return "backEndStuff/parks/parkList";
+    return DEV_DIR + "/parks/parkList";
   }
 
   @GetMapping("/new")
   public ModelAndView newPark() {
-    ModelAndView mv = new ModelAndView("backEndStuff/parks/parkForm");
+    ModelAndView mv = new ModelAndView(DEV_DIR + "/parks/parkForm");
     mv.addObject(new Park());
     return mv;
   }
 
   @GetMapping("/update")
   public String updatePark(
-      @RequestParam String id,
+      @RequestParam(required = false) String id,
       Model model
   ){
-    Park park = parkService.findById(Long.valueOf(id));
+    Park park;
+    if(id == null) {
+      park = new Park();
+    } else {
+      park = parkService.findById(Long.valueOf(id));
+    }
     model.addAttribute(park);
-    return "backEndStuff/parks/parkForm";
+    return DEV_DIR + "/parks/parkForm";
   }
 
   @PostMapping("")
