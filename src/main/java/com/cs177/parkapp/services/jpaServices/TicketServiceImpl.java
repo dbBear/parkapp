@@ -4,20 +4,17 @@ import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.repositories.TicketRepository;
 import com.cs177.parkapp.services.TicketService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 @Service
 public class TicketServiceImpl implements TicketService {
 
   private final TicketRepository ticketRepository;
-  public TicketServiceImpl(
-      TicketRepository ticketRepository)
-  {
-    this.ticketRepository = ticketRepository;
-  }
 
   @Override
   public Set<Ticket> getTickets() {

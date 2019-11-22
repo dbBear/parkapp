@@ -4,21 +4,17 @@ import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.repositories.CategoryRepository;
 import com.cs177.parkapp.services.CategoryService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository categoryRepository;
-
-  public CategoryServiceImpl(
-      CategoryRepository categoryRepository)
-  {
-    this.categoryRepository = categoryRepository;
-  }
 
   @Override
   public Set<Category> getCategories() {

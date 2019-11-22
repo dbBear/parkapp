@@ -4,6 +4,7 @@ import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.repositories.ParkRepository;
 import com.cs177.parkapp.services.ParkService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
+@AllArgsConstructor
 @Service
 public class ParkServiceImpl implements ParkService {
 
   private final ParkRepository parkRepository;
-
-  public ParkServiceImpl(ParkRepository parkRepository) {
-    this.parkRepository = parkRepository;
-  }
 
   @Override
   public Set<Park> getParks() {

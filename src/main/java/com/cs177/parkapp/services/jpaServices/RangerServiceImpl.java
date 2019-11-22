@@ -4,19 +4,17 @@ import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.repositories.RangerRepository;
 import com.cs177.parkapp.services.RangerService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 @Service
 public class RangerServiceImpl implements RangerService {
 
   private final RangerRepository rangerRepository;
-
-  public RangerServiceImpl(RangerRepository rangerRepository) {
-    this.rangerRepository = rangerRepository;
-  }
 
   @Override
   public Set<Ranger> getRangers() {

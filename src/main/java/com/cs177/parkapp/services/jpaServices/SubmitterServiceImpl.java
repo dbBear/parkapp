@@ -4,19 +4,17 @@ import com.cs177.parkapp.exceptions.EntityNotFoundException;
 import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.repositories.SubmitterRepository;
 import com.cs177.parkapp.services.SubmitterService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@AllArgsConstructor
 @Service
 public class SubmitterServiceImpl implements SubmitterService {
 
   private final SubmitterRepository submitterRepository;
-
-  public SubmitterServiceImpl(SubmitterRepository submitterRepository) {
-    this.submitterRepository = submitterRepository;
-  }
 
   @Override
   public Set<Submitter> getSubmitters() {

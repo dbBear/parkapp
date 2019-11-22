@@ -2,6 +2,7 @@ package com.cs177.parkapp.Bootstrap;
 
 import com.cs177.parkapp.model.*;
 import com.cs177.parkapp.repositories.*;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Slf4j
+@AllArgsConstructor
 @Component
 public class ParkAppBootstrap implements CommandLineRunner {
 
@@ -18,20 +20,6 @@ public class ParkAppBootstrap implements CommandLineRunner {
   private final SubmitterRepository submitterRepository;
   private final TicketRepository ticketRepository;
   private final CategoryRepository categoryRepository;
-
-  public ParkAppBootstrap(
-      RangerRepository rangerRepository,
-      ParkRepository parkRepository,
-      SubmitterRepository submitterRepository,
-      TicketRepository ticketRepository,
-      CategoryRepository categoryRepository)
-  {
-    this.rangerRepository = rangerRepository;
-    this.parkRepository = parkRepository;
-    this.submitterRepository = submitterRepository;
-    this.ticketRepository = ticketRepository;
-    this.categoryRepository = categoryRepository;
-  }
 
   @Override
   public void run(String... args) throws Exception {
