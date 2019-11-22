@@ -27,18 +27,38 @@ public class CategoryController {
 
   @GetMapping("/new")
   public String newCategory(Model model) {
-    Category c = new Category();
-    model.addAttribute("category", c);
+    model.addAttribute("category", new Category());
     return "backEndStuff/categories/categoryForm";
   }
 
-  @PostMapping("/categories/new")
+  @PostMapping("")
   public String saveOrUpdateCategory(
       @ModelAttribute Category category,
       Model model)
   {
     Category savedCategory =
-        categoryService.saveCategory(category);
+        categoryService.save(category);
+    return "redirect:/categories";
+  }
+
+  @GetMapping("/update")
+  public String updateCategory(
+      @RequestParam String id,
+      Model model
+  ) {
+    Category category = categoryService.findById(Long.valueOf(id));
+    model.addAttribute("category", category);
+    return "backEndStuff/categories/categoryForm";
+  }
+
+  @GetMapping("/delete")
+  public String deleteCategory(
+      @RequestParam String id,
+      Model model
+  ) {
+
+    Category category = categoryService.findById(Long.valueOf(id));
+    categoryService.delete(category);
     return "redirect:/categories";
   }
 }

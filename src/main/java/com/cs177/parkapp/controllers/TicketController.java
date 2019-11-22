@@ -64,7 +64,7 @@ public class TicketController {
       ticket.setSubmitter(submitterService.findByEmail("Anonymous.Anonymous" +
           "@email.com"));
     }
-    Ticket ticketSaved = ticketService.saveTicket(ticket);
+    Ticket ticketSaved = ticketService.save(ticket);
     return "redirect:/tickets";
   }
 }

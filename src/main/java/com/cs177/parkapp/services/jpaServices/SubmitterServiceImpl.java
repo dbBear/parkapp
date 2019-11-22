@@ -44,4 +44,14 @@ public class SubmitterServiceImpl implements SubmitterService {
   public Set<Submitter> findByEmailLike(String email) {
     return new HashSet<>(submitterRepository.findAllByEmailLike(email));
   }
+
+  @Override
+  public Submitter save(Submitter submitter) {
+    return submitterRepository.save(submitter);
+  }
+
+  @Override
+  public void delete(Submitter submitter) {
+    submitterRepository.delete(submitter);
+  }
 }

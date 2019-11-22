@@ -12,7 +12,7 @@ public class LoginController {
 
   @GetMapping({"","/"})
   public ModelAndView getLoginPage(Model model) {
-    ModelAndView mav = new ModelAndView("backEndStuff/login/login");
+    ModelAndView mav = new ModelAndView("backEndStuff/login/loginForm");
     return mav;
   }
 }

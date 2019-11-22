@@ -41,7 +41,12 @@ public class RangerServiceImpl implements RangerService {
   }
 
   @Override
-  public Ranger saveRanger(Ranger ranger) {
+  public Ranger save(Ranger ranger) {
     return rangerRepository.save(ranger);
+  }
+
+  @Override
+  public void delete(Ranger ranger) {
+    rangerRepository.delete(ranger);
   }
 }

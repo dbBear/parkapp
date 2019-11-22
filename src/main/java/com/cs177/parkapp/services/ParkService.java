@@ -11,4 +11,6 @@ public interface ParkService {
   Park findById(Long id);
   Park findByName(String name);
   Set<Park> findByNameLike(String name);
+  Park save(Park park);
+  void delete(Park park);
 }

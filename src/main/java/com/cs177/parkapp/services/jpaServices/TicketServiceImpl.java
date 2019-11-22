@@ -33,7 +33,12 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
-  public Ticket saveTicket(Ticket ticket) {
+  public Ticket save(Ticket ticket) {
     return ticketRepository.save(ticket);
+  }
+
+  @Override
+  public void delete(Ticket ticket) {
+    ticketRepository.delete(ticket);
   }
 }

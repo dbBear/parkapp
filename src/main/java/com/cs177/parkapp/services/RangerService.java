@@ -8,5 +8,6 @@ public interface RangerService {
   Set<Ranger> getRangers();
   Ranger findById(Long id);
   Ranger findByEmail(String email);
-  Ranger saveRanger(Ranger ranger);
+  Ranger save(Ranger ranger);
+  void delete(Ranger ranger);
 }

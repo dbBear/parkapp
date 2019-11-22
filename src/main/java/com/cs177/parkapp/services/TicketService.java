@@ -7,5 +7,6 @@ import java.util.Set;
 public interface TicketService {
   Set<Ticket> getTickets();
   Ticket findBydId(Long id);
-  Ticket saveTicket(Ticket ticket);
+  Ticket save(Ticket ticket);
+  void delete(Ticket ticket);
 }

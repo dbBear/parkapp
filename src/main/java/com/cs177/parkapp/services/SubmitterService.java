@@ -9,5 +9,7 @@ public interface SubmitterService {
   Submitter findById(Long id);
   Submitter findByEmail(String email);
   Set<Submitter> findByEmailLike(String email);
+  Submitter save(Submitter submitter);
+  void delete(Submitter submitter);
 
 }

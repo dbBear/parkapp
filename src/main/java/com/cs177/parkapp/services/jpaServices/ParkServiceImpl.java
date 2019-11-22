@@ -45,4 +45,14 @@ public class ParkServiceImpl implements ParkService {
   public Set<Park> findByNameLike(String name) {
     return new HashSet<Park>(parkRepository.findAllByNameLike(name));
   }
+
+  @Override
+  public Park save(Park park) {
+    return parkRepository.save(park);
+  }
+
+  @Override
+  public void delete(Park park) {
+    parkRepository.delete(park);
+  }
 }

@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:include="~{backEndStuff/fragments/header/header::header}">
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Park Form</title>
 </head>
 <body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<section class="mainSection">
+  <div class="container justify-content-md-center">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            New/Update Park
+          </div>
+          <div class="card-body">
+            <!--/*@thymesVar id="category" type="com.cs177.parkapp.model.Park"*/-->
+            <form
+                th:object="${park}"
+                th:action="@{/parks}"
+                method="post"
+            >
+              <input type="hidden" th:field="*{id}" />
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input class="form-control" id="name" type="text" th:field="*{name}" />
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
 
 </body>
 </html>

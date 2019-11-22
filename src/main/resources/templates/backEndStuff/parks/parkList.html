@@ -10,22 +10,25 @@
 <section class="mainSection">
   <h1>Parks</h1>
   <a class="btn btn-primary" role="button"
-     href="/categories/categoryForm.html" th:href="@{categories/new}"
-  >Add Category</a>
+     href="/parks/parkForm.html" th:href="@{parks/new}"
+  >Add Park</a>
   <table class="table">
+    <!--/*@thymesVar id="park" type="com.cs177.parkapp.model.Park"*/-->
     <thead>
     <tr>
       <th></th>
       <th scope="col">Name</th>
       <th scope="col">Number of Tickets</th>
-      <th scope="col">Number of Officials</th>
+      <th scope="col">Number of Rangers</th>
     </tr>
     </thead>
     <tr th:each="park : ${parks}">
       <td>
         <div class="btn-group" role="group" aria-label="edit/delete">
-          <button type="button" class="btn btn-secondary">edit</button>
-          <button type="button" class="btn btn-secondary">delete</button>
+          <a role="button" class="btn btn-secondary" href="./parkForm.html"
+             th:href="@{/parks/update(id=${park.id})}">edit</a>
+          <a role="button" class="btn btn-secondary" href="#"
+             th:href="@{/parks/delete(id=${park.id})}">delete</a>
         </div>
       </td>
       <td th:text="${park.name}">Park Name</td>
@@ -34,6 +37,5 @@
     </tr>
   </table>
 </section>
-
 </body>
 </html>
