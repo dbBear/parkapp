@@ -87,7 +87,7 @@ You don't need the server running to work on the design. As long as you make all
 + [Git Repository](https://github.com/dbBear/parkapp)
 + [Slack Channel](https://cs177parkapp.slack.com)
 + [Google Drive](https://drive.google.com/drive/folders/1wA6F9TVSKuT24bAsBu-aqEe4TRkmf_Bn?usp=sharing)
-
++ [Trello Board](https://trello.com/cs177parkteam)
 
 ### Contacts
 + Daniel Blum [drumblum@gmail.com](mailto:drumblum@gmail.com)
