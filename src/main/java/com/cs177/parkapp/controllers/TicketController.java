@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+
 
 @Slf4j
 @RequestMapping({"/tickets"})
@@ -29,7 +31,7 @@ public class TicketController {
   @GetMapping({"", "/" })
   public String showTickets(Model model) {
     model.addAttribute("tickets", ticketService.getTickets());
-    return "backEndStuff/tickets/ticketList";
+    return DEV_DIR + "/tickets/ticketList";
   }
 
   @GetMapping({"/new"})
@@ -40,7 +42,7 @@ public class TicketController {
     model.addAttribute("ticket", ticket);
     model.addAttribute("categories", categoryService.getCategories());
     model.addAttribute("parks", parkService.getParks());
-    return "backEndStuff/tickets/ticketForm";
+    return DEV_DIR + "/tickets/ticketForm";
   }
 
   @PostMapping({"/new"})
