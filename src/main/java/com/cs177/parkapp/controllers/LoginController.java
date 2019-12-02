@@ -12,9 +12,19 @@ import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
 @Controller
 public class LoginController {
 
-  @GetMapping({"","/"})
-  public ModelAndView getLoginPage(Model model) {
-    ModelAndView mav = new ModelAndView(DEV_DIR + "/login/loginForm");
-    return mav;
+//  @GetMapping({"","/"})
+//  public ModelAndView getLoginPage(Model model) {
+//    ModelAndView mav = new ModelAndView(DEV_DIR + "/login/loginForm");
+//    return mav;
+//  }
+
+  @GetMapping
+  public String getLoginPage() {
+    return DEV_DIR + "/login/loginForm";
+  }
+
+  @GetMapping("/logout-success")
+  public String getLogoutSuccess() {
+    return DEV_DIR + "/index?logout";
   }
 }

@@ -25,7 +25,7 @@ import java.util.Date;
 abstract class BaseEntity implements Serializable {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue
   private Long id;
 
   @CreationTimestamp

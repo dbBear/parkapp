@@ -1,11 +1,10 @@
 package com.cs177.parkapp.model;
 
+import com.cs177.parkapp.security.entity.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,19 +18,23 @@ import java.util.Set;
 @Entity
 public class Submitter extends BaseEntity {
 
-  private String firstName;
-  private String lastName;
-  private String email;
+//  private String firstName;
+//  private String lastName;
+//  private String email;
+
+  @OneToOne
+  @MapsId
+  private User user;
 
   @OneToMany(
       mappedBy = "submitter",
-      cascade = CascadeType.ALL,
-      orphanRemoval = true)
+      cascade = CascadeType.ALL
+  )
   @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();
 
   public String getFullName() {
-    return firstName + " " + lastName;
+    return user.getFirstName() + " " + user.getLastName();
   }
 
   public void addTicket(Ticket ticket) {
