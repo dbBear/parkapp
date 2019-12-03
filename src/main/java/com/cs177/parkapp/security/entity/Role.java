@@ -1,5 +1,6 @@
 package com.cs177.parkapp.security.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Role {
 

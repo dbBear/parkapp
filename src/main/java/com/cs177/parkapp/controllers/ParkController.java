@@ -4,17 +4,19 @@ import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.services.ParkService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 
 @Slf4j
-@RequestMapping({"/parks"})
 @AllArgsConstructor
 @Controller
+@RequestMapping({"/parks"})
+@PreAuthorize("hasRole('ROLE_OFFICIAL')")
 public class ParkController {
 
   private final ParkService parkService;

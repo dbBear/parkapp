@@ -3,13 +3,14 @@ package com.cs177.parkapp.model;
 import com.cs177.parkapp.security.entity.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
 @Getter
-@Setter()
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -19,8 +20,10 @@ public class Ranger extends BaseEntity{
 //  private String lastName;
 //  private String email;
 
-  @OneToOne
-  @MapsId
+  @OneToOne(
+      fetch = FetchType.EAGER
+  )
+//  @MapsId
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)

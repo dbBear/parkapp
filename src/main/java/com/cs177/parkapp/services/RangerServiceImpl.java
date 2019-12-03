@@ -1,6 +1,6 @@
-package com.cs177.parkapp.services.jpaServices;
+package com.cs177.parkapp.services;
 
-import com.cs177.parkapp.exceptions.EntityNotFoundException;
+import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.repositories.RangerRepository;
 import com.cs177.parkapp.security.entity.User;
@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
+//@Transactional
 @Service
 public class RangerServiceImpl implements RangerService {
 
@@ -30,16 +31,19 @@ public class RangerServiceImpl implements RangerService {
   public Ranger findById(Long id) {
     return rangerRepository.findById(id)
         .orElseThrow(() ->
-            new EntityNotFoundException("Ranger id:" + id + " not found")
+            new EmailNotFoundException("Ranger id:" + id + " not found")
         );
   }
 
   @Override
   public Ranger findByEmail(String email) {
-    User user = userRepository.findByEmail(email);
+    User user = userRepository.findByEmail(email)
+        .orElseThrow(() ->
+            new EmailNotFoundException("User email:" + email + " not found")
+        );
     return rangerRepository.findByUser(user)
         .orElseThrow(
-            () -> new EntityNotFoundException("Ranger email:" + email + " not" +
+            () -> new EmailNotFoundException("Ranger email:" + email + " not" +
                 " found")
         );
   }

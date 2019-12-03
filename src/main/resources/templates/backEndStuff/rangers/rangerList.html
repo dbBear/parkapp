@@ -26,8 +26,8 @@
           <button type="button" class="btn btn-secondary">delete</button>
         </div>
       </td>
-      <td th:text="${ranger.firstName+ ' ' + ranger.lastName}">Name</td>
-      <td th:text="${ranger.email}">Email</td>
+      <td th:text="${ranger.getFullName()}">Name</td>
+      <td th:text="${ranger.user.getEmail()}">Email</td>
     </tr>
   </table>
 </section>

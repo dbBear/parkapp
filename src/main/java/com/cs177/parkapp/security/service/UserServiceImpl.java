@@ -1,9 +1,10 @@
 package com.cs177.parkapp.security.service;
 
+import com.cs177.parkapp.exceptions.AnonymousNotFound;
+import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.security.dto.UserDto;
 import com.cs177.parkapp.security.entity.Role;
 import com.cs177.parkapp.security.entity.User;
-import com.cs177.parkapp.security.repository.RoleRepository;
 import com.cs177.parkapp.security.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,21 +16,23 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_EMAIL;
+
 @AllArgsConstructor
+//@Transactional
 @Service
 public class UserServiceImpl implements UserService{
 
   private UserRepository userRepository;
-//  private RoleRepository roleRepository;
 
   @Override
   public UserDetails loadUserByUsername(String email)
       throws UsernameNotFoundException
   {
-    User user = userRepository.findByEmail(email);
-    if(user == null) {
-      throw new UsernameNotFoundException("Invalid username or password.");
-    }
+    User user = userRepository.findByEmail(email)
+        .orElseThrow(() ->
+            new UsernameNotFoundException("Invalid username or password")
+        );
 
     return new org.springframework.security.core.userdetails.User(
         user.getEmail(),
@@ -46,8 +49,17 @@ public class UserServiceImpl implements UserService{
   }
 
   @Override
+  public User getAnonymousUser() {
+    return userRepository.findByEmail(ANONYMOUS_EMAIL)
+        .orElseThrow(AnonymousNotFound::new);
+  }
+
+  @Override
   public User findByEmail(String email) {
-    return userRepository.findByEmail(email);
+    return userRepository.findByEmail(email)
+        .orElseThrow(() ->
+            new EmailNotFoundException("User email: " + email + " not found")
+        );
   }
 
   @Override

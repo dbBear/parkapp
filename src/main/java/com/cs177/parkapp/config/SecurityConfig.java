@@ -15,9 +15,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @AllArgsConstructor
 @Configuration
-//todo re-enable when security ready
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private UserService userService;
@@ -33,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               "/js/**",
               "/img/**",
               "/webjars/**",
-              "/registration"
+              "/registration",
+              "/tickets/new"
               )
             .permitAll()
           // for h2 console access

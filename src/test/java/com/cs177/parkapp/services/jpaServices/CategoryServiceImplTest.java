@@ -3,6 +3,7 @@ package com.cs177.parkapp.services.jpaServices;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.repositories.CategoryRepository;
 import com.cs177.parkapp.services.CategoryService;
+import com.cs177.parkapp.services.CategoryServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

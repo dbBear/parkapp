@@ -4,6 +4,7 @@ import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.model.Ticket;
+import com.cs177.parkapp.security.facade.AuthenticationFacade;
 import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.SubmitterService;
@@ -18,7 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,6 +36,8 @@ class TicketControllerTest {
   ParkService parkService;
   @Mock
   SubmitterService submitterService;
+  @Mock
+  AuthenticationFacade authenticationFacade;
   private MockMvc mockMvc;
 
   @BeforeEach
@@ -47,7 +50,8 @@ class TicketControllerTest {
                     ticketService,
                     categoryService,
                     parkService,
-                    submitterService
+                    submitterService,
+                    authenticationFacade
                 ))
             .build();
   }

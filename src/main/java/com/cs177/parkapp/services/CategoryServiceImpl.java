@@ -1,6 +1,6 @@
-package com.cs177.parkapp.services.jpaServices;
+package com.cs177.parkapp.services;
 
-import com.cs177.parkapp.exceptions.EntityNotFoundException;
+import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.repositories.CategoryRepository;
 import com.cs177.parkapp.services.CategoryService;
@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
+//@Transactional
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -25,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
   public Category findById(Long id) {
     return categoryRepository.findById(id)
         .orElseThrow(() ->
-            new EntityNotFoundException("Category id:" + id + " not found")
+            new EmailNotFoundException("Category id:" + id + " not found")
         );
   }
 
@@ -33,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
   public Category findByName(String name) {
     return categoryRepository.findByName(name)
         .orElseThrow(() ->
-            new EntityNotFoundException("Category name:" + name + " not found")
+            new EmailNotFoundException("Category name:" + name + " not found")
         );
   }
 

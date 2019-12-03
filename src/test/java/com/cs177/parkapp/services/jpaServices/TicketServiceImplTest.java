@@ -5,6 +5,9 @@ import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.repositories.TicketRepository;
+import com.cs177.parkapp.services.SubmitterService;
+import com.cs177.parkapp.security.facade.AuthenticationFacade;
+import com.cs177.parkapp.services.TicketServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -30,6 +33,9 @@ class TicketServiceImplTest {
   @Mock Park park;
   @Mock
   TicketRepository ticketRepository;
+  @Mock
+  SubmitterService submitterService;
+  AuthenticationFacade authenticationFacade;
   private TicketServiceImpl ticketService;
 
   private Ticket ticket1;
@@ -39,7 +45,8 @@ class TicketServiceImplTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.initMocks(this);
-    ticketService = new TicketServiceImpl(ticketRepository);
+    ticketService = new TicketServiceImpl(ticketRepository,
+        submitterService, authenticationFacade);
     ticket1 = Ticket.builder()
         .id(ID_1)
         .category(category)

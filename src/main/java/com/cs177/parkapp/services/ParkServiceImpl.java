@@ -1,6 +1,6 @@
-package com.cs177.parkapp.services.jpaServices;
+package com.cs177.parkapp.services;
 
-import com.cs177.parkapp.exceptions.EntityNotFoundException;
+import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.repositories.ParkRepository;
 import com.cs177.parkapp.services.ParkService;
@@ -13,6 +13,7 @@ import java.util.Set;
 
 @Slf4j
 @AllArgsConstructor
+//@Transactional
 @Service
 public class ParkServiceImpl implements ParkService {
 
@@ -27,7 +28,7 @@ public class ParkServiceImpl implements ParkService {
   public Park findById(Long id) {
     return parkRepository.findById(id)
         .orElseThrow(() ->
-          new EntityNotFoundException("Park id:" + id + " not found")
+          new EmailNotFoundException("Park id:" + id + " not found")
         );
   }
 
@@ -35,7 +36,7 @@ public class ParkServiceImpl implements ParkService {
   public Park findByName(String name) {
     return parkRepository.findByName(name)
         .orElseThrow(() ->
-            new EntityNotFoundException("Park name:" + name + " not found")
+            new EmailNotFoundException("Park name:" + name + " not found")
         );
   }
 

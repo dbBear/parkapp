@@ -28,8 +28,7 @@ public class Park extends BaseEntity {
 
   @OneToMany(
       mappedBy = "park",
-      cascade = CascadeType.ALL,
-      orphanRemoval = true
+      cascade = CascadeType.ALL
   )
   @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();

@@ -2,7 +2,6 @@ package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.services.CategoryService;
-import com.cs177.parkapp.services.ParkService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,7 +12,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;

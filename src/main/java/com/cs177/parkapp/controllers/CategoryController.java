@@ -2,17 +2,18 @@ package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.services.CategoryService;
-import com.cs177.parkapp.services.ParkService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 
-@RequestMapping({"/categories"})
 @AllArgsConstructor
 @Controller
+@RequestMapping({"/categories"})
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CategoryController {
 
   private final CategoryService categoryService;

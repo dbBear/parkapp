@@ -1,8 +1,9 @@
 package com.cs177.parkapp.services.jpaServices;
 
-import com.cs177.parkapp.exceptions.EntityNotFoundException;
+import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.repositories.ParkRepository;
+import com.cs177.parkapp.services.ParkServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -82,7 +83,7 @@ class ParkServiceImplTest {
     when(parkRepository.findById(anyLong())).thenReturn(Optional.empty());
     //when
     //then
-    Assertions.assertThrows(EntityNotFoundException.class, () -> {
+    Assertions.assertThrows(EmailNotFoundException.class, () -> {
       Park returnPark = parkService.findById(ID_1);
     });
     verify(parkRepository,times(1)).findById(anyLong());
@@ -108,7 +109,7 @@ class ParkServiceImplTest {
     when(parkRepository.findByName(anyString())).thenReturn(Optional.empty());
     //when
     //then
-    Assertions.assertThrows(EntityNotFoundException.class, () -> {
+    Assertions.assertThrows(EmailNotFoundException.class, () -> {
       Park returnPark = parkService.findByName("");
     });
   }

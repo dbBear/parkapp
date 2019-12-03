@@ -10,11 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

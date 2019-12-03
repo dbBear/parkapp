@@ -1,17 +1,21 @@
 package com.cs177.parkapp.security.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.cs177.parkapp.model.Ranger;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"ranger"})
+@ToString(exclude = {"ranger"})
 @Builder
 @Entity
 public class User {
@@ -25,7 +29,10 @@ public class User {
   private String password;
   private boolean enabled = true;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToMany(
+      fetch = FetchType.EAGER
+//      cascade = CascadeType.ALL
+  )
   @JoinTable(
       name = "users_roles",
       joinColumns = @JoinColumn(
@@ -33,7 +40,14 @@ public class User {
       inverseJoinColumns = @JoinColumn(
           name = "role_id", referencedColumnName = "id")
       )
-  private Collection<Role> roles;
+  @Builder.Default
+  private Collection<Role> roles = new ArrayList<>();
+
+//  @OneToOne(
+//      mappedBy = "user",
+//      fetch = FetchType.LAZY
+//  )
+//  private Ranger ranger;
 
   public User(String firstName, String lastName, String email,
               String password
@@ -52,5 +66,22 @@ public class User {
     this.email = email;
     this.password = password;
     this.roles = roles;
+  }
+
+
+  public void addRoles(Collection<Role> rolesAdding) {
+    roles.addAll(rolesAdding);
+  }
+
+  public void addRoles(Role role) {
+    roles.add(role);
+  }
+
+  public void removeRole(Role role) {
+    Role roleToRemove = roles.stream()
+        .filter(r -> r.getId().equals(role.getId()))
+        .findFirst()
+        .orElse(null);
+    roles.remove(roleToRemove);
   }
 }

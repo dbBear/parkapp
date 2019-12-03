@@ -1,14 +1,10 @@
 package com.cs177.parkapp.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 
-@RequestMapping("/login")
 @Controller
 public class LoginController {
 
@@ -18,13 +14,13 @@ public class LoginController {
 //    return mav;
 //  }
 
-  @GetMapping
+  @GetMapping("/login")
   public String getLoginPage() {
     return DEV_DIR + "/login/loginForm";
   }
 
   @GetMapping("/logout-success")
   public String getLogoutSuccess() {
-    return DEV_DIR + "/index?logout";
+    return DEV_DIR + "/index";
   }
 }

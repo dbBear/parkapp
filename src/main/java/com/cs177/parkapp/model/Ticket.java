@@ -23,9 +23,23 @@ public class Ticket extends BaseEntity{
   private String description;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "submitter_id")
+  @Setter(AccessLevel.NONE)
   private Submitter submitter;
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "park_id")
+  @Setter(AccessLevel.NONE)
   private Park park;
+
+  public void setSubmitter(Submitter submitter) {
+    submitter.getTickets().add(this);
+    this.submitter = submitter;
+  }
+
+  public void setPark(Park park) {
+    park.getTickets().add(this);
+    this.park = park;
+  }
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.cs177.parkapp.security.service;
 
+import com.cs177.parkapp.exceptions.RoleNotFoundException;
 import com.cs177.parkapp.security.entity.Role;
 import com.cs177.parkapp.security.repository.RoleRepository;
 import lombok.AllArgsConstructor;
@@ -14,13 +15,19 @@ public class RoleServiceImpl implements RoleService{
   RoleRepository roleRepository;
 
   @Override
-  public Role getRoleByName(String name) {
-    return roleRepository.findByName(name);
+  public Role getRoleByName(String role) {
+    return roleRepository.findByName(role)
+        .orElseThrow(() ->
+            new RoleNotFoundException("Role: " + role + " not found")
+        );
   }
 
   @Override
-  public Role getRoleByShortName(String name) {
-    return roleRepository.findByName("ROLE_" + name.toUpperCase());
+  public Role getRoleByShortName(String role) {
+    return roleRepository.findByName("ROLE_" + role.toUpperCase())
+        .orElseThrow(() ->
+            new RoleNotFoundException("Role: " + role + " not found")
+        );
   }
 
   @Override

@@ -10,7 +10,7 @@ public class ParkappApplication {
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder(10);
 	}
 
 	public static void main(String[] args) {

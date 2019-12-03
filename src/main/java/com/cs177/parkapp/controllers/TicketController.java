@@ -1,12 +1,15 @@
 package com.cs177.parkapp.controllers;
 
+import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.model.Ticket;
+import com.cs177.parkapp.security.facade.AuthenticationFacade;
 import com.cs177.parkapp.services.CategoryService;
 import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.SubmitterService;
 import com.cs177.parkapp.services.TicketService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 
 
 @Slf4j
@@ -27,8 +30,10 @@ public class TicketController {
   private final CategoryService categoryService;
   private final ParkService parkService;
   private final SubmitterService submitterService;
+  private final AuthenticationFacade authenticationFacade;
 
   @GetMapping({"", "/" })
+  @PreAuthorize("hasRole('ROLE_USER')")
   public String showTickets(Model model) {
     model.addAttribute("tickets", ticketService.getTickets());
     return DEV_DIR + "/tickets/ticketList";
@@ -51,11 +56,11 @@ public class TicketController {
       BindingResult result)
   {
     log.debug(result.toString());
-    if(ticket.getSubmitter() == null) {
-      ticket.setSubmitter(submitterService.findByEmail("Anonymous.Anonymous" +
-          "@email.com"));
-    }
+    log.info(">>>>> current user: {}",
+        authenticationFacade.getAuthentication().getName());
+
+
     Ticket ticketSaved = ticketService.save(ticket);
-    return "redirect:/tickets";
+    return "redirect:/";
   }
 }

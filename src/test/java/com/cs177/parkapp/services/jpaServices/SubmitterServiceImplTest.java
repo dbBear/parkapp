@@ -7,6 +7,7 @@ import com.cs177.parkapp.security.repository.UserRepository;
 import com.cs177.parkapp.security.service.UserService;
 import com.cs177.parkapp.services.SubmitterService;
 
+import com.cs177.parkapp.services.SubmitterServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,6 @@ import static org.hamcrest.core.IsIterableContaining.hasItem;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import javax.persistence.MapKeyClass;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +37,7 @@ class SubmitterServiceImplTest {
   @Mock
   SubmitterRepository submitterRepository;
   @Mock
-  UserRepository userRepository;
+  UserService userService;
 
   private SubmitterService submitterService;
 
@@ -51,7 +51,7 @@ class SubmitterServiceImplTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.initMocks(this);
-    submitterService = new SubmitterServiceImpl(submitterRepository, userRepository);
+    submitterService = new SubmitterServiceImpl(submitterRepository, userService);
     user1 = User.builder()
         .firstName(F_NAME_1)
         .lastName(L_NAME_1)

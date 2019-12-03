@@ -5,6 +5,7 @@ import com.cs177.parkapp.model.Submitter;
 import java.util.Set;
 
 public interface SubmitterService {
+  Submitter getAnonymousSubmitter();
   Set<Submitter> getSubmitters();
   Submitter findById(Long id);
   Submitter findByEmail(String email);

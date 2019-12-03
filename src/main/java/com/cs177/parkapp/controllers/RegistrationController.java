@@ -2,7 +2,6 @@ package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.security.dto.UserDto;
 import com.cs177.parkapp.security.entity.User;
-import com.cs177.parkapp.security.repository.RoleRepository;
 import com.cs177.parkapp.security.service.RoleService;
 import com.cs177.parkapp.security.service.UserService;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static com.cs177.parkapp.controllers.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 
 @AllArgsConstructor
 @Controller

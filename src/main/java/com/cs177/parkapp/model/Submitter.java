@@ -23,7 +23,6 @@ public class Submitter extends BaseEntity {
 //  private String email;
 
   @OneToOne
-  @MapsId
   private User user;
 
   @OneToMany(
@@ -36,6 +35,7 @@ public class Submitter extends BaseEntity {
   public String getFullName() {
     return user.getFirstName() + " " + user.getLastName();
   }
+
 
   public void addTicket(Ticket ticket) {
     ticket.setSubmitter(this);
