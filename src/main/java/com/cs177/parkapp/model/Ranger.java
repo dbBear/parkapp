@@ -16,14 +16,9 @@ import javax.persistence.*;
 @Entity
 public class Ranger extends BaseEntity{
 
-//  private String firstName;
-//  private String lastName;
-//  private String email;
-
   @OneToOne(
       fetch = FetchType.EAGER
   )
-//  @MapsId
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)

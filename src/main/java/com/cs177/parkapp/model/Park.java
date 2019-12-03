@@ -39,6 +39,7 @@ public class Park extends BaseEntity {
   }
 
   public void removeRanger(Ranger ranger) {
+    // todo better error checking
     Ranger rangerToRemove = rangers.stream()
         .filter(o -> o.getId().equals(ranger.getId()))
         .findFirst()
@@ -53,6 +54,7 @@ public class Park extends BaseEntity {
   }
 
   public void removeTicket(Ticket ticket) {
+    // todo better error checking
     Ticket ticketToRemove = tickets.stream()
         .filter(t -> t.getId().equals(ticket.getId()))
         .findFirst()

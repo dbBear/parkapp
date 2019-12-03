@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_NAME;
 import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 
 
@@ -55,12 +56,12 @@ public class TicketController {
       Ticket ticket,
       BindingResult result)
   {
-    log.debug(result.toString());
-    log.info(">>>>> current user: {}",
-        authenticationFacade.getAuthentication().getName());
-
-
+    String user = authenticationFacade.getAuthentication().getName();
     Ticket ticketSaved = ticketService.save(ticket);
-    return "redirect:/";
+    if(user.equalsIgnoreCase(ANONYMOUS_NAME)) {
+      return "redirect:/";
+    } else {
+      return "redirect:/tickets";
+    }
   }
 }

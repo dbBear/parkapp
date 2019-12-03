@@ -10,9 +10,8 @@ import java.util.Optional;
 
 public interface RangerRepository extends JpaRepository<Ranger, Long> {
 
-//  Optional<Ranger> findByEmail(String email);
-//  List<Ranger> findAllByLastNameIsLike(String name);
-
   Optional<Ranger> findByUser(User user);
   List<Ranger> findByIdIn(Collection<Long> ids);
+  Optional<Ranger> findByUserId_Email(String email);
+  List<Ranger> findAllByUserId_EmailLike(String email);
 }

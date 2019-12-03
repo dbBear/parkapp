@@ -21,7 +21,7 @@ public class ParkServiceImpl implements ParkService {
 
   @Override
   public Set<Park> getParks() {
-    return new HashSet<Park>(parkRepository.findAll());
+    return new HashSet<>(parkRepository.findAll());
   }
 
   @Override
@@ -42,7 +42,7 @@ public class ParkServiceImpl implements ParkService {
 
   @Override
   public Set<Park> findByNameLike(String name) {
-    return new HashSet<Park>(parkRepository.findAllByNameLike(name));
+    return new HashSet<>(parkRepository.findAllByNameLike(name));
   }
 
   @Override

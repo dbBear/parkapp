@@ -18,16 +18,12 @@ import java.util.Set;
 @Entity
 public class Submitter extends BaseEntity {
 
-//  private String firstName;
-//  private String lastName;
-//  private String email;
-
   @OneToOne
   private User user;
 
   @OneToMany(
-      mappedBy = "submitter",
-      cascade = CascadeType.ALL
+      mappedBy = "submitter"
+//      cascade = CascadeType.ALL
   )
   @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();

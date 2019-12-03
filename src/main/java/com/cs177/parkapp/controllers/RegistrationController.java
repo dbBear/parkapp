@@ -23,7 +23,6 @@ public class RegistrationController {
   private RoleService roleService;
   private UserService userService;
 
-
   @ModelAttribute("user")
   public UserDto userDto() {
     return new UserDto();

@@ -17,14 +17,18 @@ import java.util.Date;
 public class Ticket extends BaseEntity{
 
   private String name;
+
   @OneToOne(fetch = FetchType.EAGER)
   private Category category;
+
   @Lob
   private String description;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "submitter_id")
   @Setter(AccessLevel.NONE)
   private Submitter submitter;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "park_id")
   @Setter(AccessLevel.NONE)
@@ -39,7 +43,5 @@ public class Ticket extends BaseEntity{
     park.getTickets().add(this);
     this.park = park;
   }
-
-
 
 }

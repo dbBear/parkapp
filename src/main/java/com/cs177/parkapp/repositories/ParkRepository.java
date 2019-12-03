@@ -11,4 +11,5 @@ public interface ParkRepository extends JpaRepository<Park, Long> {
 
   List<Park> findAllByNameLike(String name);
   Optional<Park> findByName(String name);
+
 }

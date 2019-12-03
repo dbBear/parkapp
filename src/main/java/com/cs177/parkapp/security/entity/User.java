@@ -9,13 +9,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 
-//@Data
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"ranger"})
-@ToString(exclude = {"ranger"})
 @Builder
 @Entity
 public class User {
@@ -43,12 +39,6 @@ public class User {
   @Builder.Default
   private Collection<Role> roles = new ArrayList<>();
 
-//  @OneToOne(
-//      mappedBy = "user",
-//      fetch = FetchType.LAZY
-//  )
-//  private Ranger ranger;
-
   public User(String firstName, String lastName, String email,
               String password
   ) {
@@ -69,11 +59,11 @@ public class User {
   }
 
 
-  public void addRoles(Collection<Role> rolesAdding) {
+  public void addRole(Collection<Role> rolesAdding) {
     roles.addAll(rolesAdding);
   }
 
-  public void addRoles(Role role) {
+  public void addRole(Role role) {
     roles.add(role);
   }
 

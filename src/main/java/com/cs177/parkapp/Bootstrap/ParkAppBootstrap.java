@@ -55,7 +55,6 @@ public class ParkAppBootstrap implements CommandLineRunner {
     categoryRepository.saveAll(Arrays.asList(trashCategory,
         facilitiesCategory));
 
-
     Park park1 = Park.builder()
         .name("Park Number 1")
         .build();
@@ -80,13 +79,13 @@ public class ParkAppBootstrap implements CommandLineRunner {
         .password(PASSWORD)
         .enabled(true)
         .build();
-    userAnonymous.addRoles(Arrays.asList(userRole));
+    userAnonymous.addRole(Arrays.asList(userRole));
     User userRanger = generateUser("Daniel", "Blum");
-    userRanger.addRoles(Arrays.asList(userRole, rangerRole));
+    userRanger.addRole(Arrays.asList(userRole, rangerRole));
     User user1 = generateUser("Travis", "Kinkade");
-    user1.addRoles(userRole);
+    user1.addRole(userRole);
     User user2 = generateUser("Fluffy", "Wuffy");
-    user2.addRoles(userRole);
+    user2.addRole(userRole);
     userRepository.save(userAnonymous);
     userRepository.save(userRanger);
     userRepository.save(user1);
@@ -116,8 +115,6 @@ public class ParkAppBootstrap implements CommandLineRunner {
     Submitter anonymousSubmitter = Submitter.builder().user(userAnonymous).build();
     submitterRepository.save(anonymousSubmitter);
   }
-
-
 
   private User generateUser(String first, String last) {
     return User.builder()

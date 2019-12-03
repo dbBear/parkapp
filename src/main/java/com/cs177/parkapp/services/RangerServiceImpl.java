@@ -15,12 +15,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-//@Transactional
 @Service
 public class RangerServiceImpl implements RangerService {
 
   private final RangerRepository rangerRepository;
-  private final UserRepository userRepository;
 
   @Override
   public Set<Ranger> getRangers() {
@@ -37,11 +35,7 @@ public class RangerServiceImpl implements RangerService {
 
   @Override
   public Ranger findByEmail(String email) {
-    User user = userRepository.findByEmail(email)
-        .orElseThrow(() ->
-            new EmailNotFoundException("User email:" + email + " not found")
-        );
-    return rangerRepository.findByUser(user)
+    return rangerRepository.findByUserId_Email(email)
         .orElseThrow(
             () -> new EmailNotFoundException("Ranger email:" + email + " not" +
                 " found")
@@ -50,11 +44,7 @@ public class RangerServiceImpl implements RangerService {
 
   @Override
   public Set<Ranger> findByEmailLike(String email) {
-    List<Long> userIds = userRepository.findAllByEmailLike(email).stream()
-        .map(User::getId)
-        .collect(Collectors.toList());
-    return new HashSet<>(rangerRepository.findByIdIn(userIds));
-
+    return new HashSet<>(rangerRepository.findAllByUserId_EmailLike(email));
   }
 
   @Override
