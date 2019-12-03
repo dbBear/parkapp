@@ -25,8 +25,13 @@ import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_NAME;
 @Component
 public class ParkAppBootstrap implements CommandLineRunner {
 
+  // string = password
   private static final String
       PASSWORD = "$2a$10$3a66ixKMQ6otrU4qO.DUA.x9isbeunQQ/7mFtHqd/uBy4O5NQurv2";
+  // string = admin
+  private static final String
+      ADMIN_PASSWORD = "$2a$10$KJwv2lUFs/i.I9zWg/ocR.cFh5PKla5KQDEggLM6OAY" +
+      ".g7wAHLeBm";
 
   private final RoleRepository roleRepository;
   private final UserRepository userRepository;
@@ -86,10 +91,17 @@ public class ParkAppBootstrap implements CommandLineRunner {
     user1.addRole(userRole);
     User user2 = generateUser("Fluffy", "Wuffy");
     user2.addRole(userRole);
-    userRepository.save(userAnonymous);
-    userRepository.save(userRanger);
-    userRepository.save(user1);
-    userRepository.save(user2);
+    User userAdmin = User.builder()
+        .firstName("admin")
+        .lastName("admin")
+        .email("admin@admin.com")
+        .password(ADMIN_PASSWORD)
+        .enabled(true)
+        .build();
+    userAdmin.addRole(adminRole);
+    userRepository.saveAll(Arrays.asList(
+        userAnonymous, userRanger, user1, user2, userAdmin
+    ));
 
 
     Ranger ranger1 = Ranger.builder().user(userRanger).build();

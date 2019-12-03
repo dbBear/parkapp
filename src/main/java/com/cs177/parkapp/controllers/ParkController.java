@@ -16,7 +16,7 @@ import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 @AllArgsConstructor
 @Controller
 @RequestMapping({"/parks"})
-@PreAuthorize("hasRole('ROLE_OFFICIAL')")
+@PreAuthorize("hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')")
 public class ParkController {
 
   private final ParkService parkService;

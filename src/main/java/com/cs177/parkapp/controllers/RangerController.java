@@ -12,7 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 @AllArgsConstructor
 @Controller
 @RequestMapping({"/rangers"})
-@PreAuthorize("hasRole('ROLE_RANGER')")
+@PreAuthorize(
+    "hasRole('ROLE_RANGER') " +
+        "or hasRole('ROLE_OFFICIAL') " +
+        "or hasRole('ROLE_ADMIN')"
+)
 public class RangerController {
 
   private final RangerService rangerService;

@@ -34,7 +34,7 @@ public class TicketController {
   private final AuthenticationFacade authenticationFacade;
 
   @GetMapping({"", "/" })
-  @PreAuthorize("hasRole('ROLE_USER')")
+  @PreAuthorize("isAuthenticated()")
   public String showTickets(Model model) {
     model.addAttribute("tickets", ticketService.getTickets());
     return DEV_DIR + "/tickets/ticketList";
