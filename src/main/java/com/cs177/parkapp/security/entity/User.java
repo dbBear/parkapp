@@ -59,7 +59,7 @@ public class User {
   }
 
 
-  public void addRole(Collection<Role> rolesAdding) {
+  public void addRoles(Collection<Role> rolesAdding) {
     roles.addAll(rolesAdding);
   }
 

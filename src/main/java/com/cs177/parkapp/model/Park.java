@@ -12,8 +12,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true, exclude = {"rangers", "tickets"})
-@ToString(exclude = {"rangers", "tickets"})
+@EqualsAndHashCode(callSuper = true, exclude = {"official", "rangers",
+    "tickets"})
+@ToString(exclude = {"official", "rangers", "tickets"})
 @Entity
 public class Park extends BaseEntity {
 
@@ -25,6 +26,9 @@ public class Park extends BaseEntity {
   )
   @Builder.Default
   private Set<Ranger> rangers = new HashSet<>();
+
+  @OneToOne
+  private Ranger official;
 
   @OneToMany(
       mappedBy = "park",

@@ -49,6 +49,16 @@ public class ParkAppBootstrap implements CommandLineRunner {
 
 
   private void loadData() {
+    // ROLES
+    Role userRole = new Role(1L,"ROLE_USER");
+    Role rangerRole = new Role(2L,"ROLE_RANGER");
+    Role officialRole = new Role(3L,"ROLE_OFFICIAL");
+    Role adminRole = new Role(4L, "ROLE_ADMIN");
+    roleRepository.saveAll(Arrays.asList(userRole, rangerRole, officialRole,
+        adminRole));
+
+
+    // CATEGORIES
     Category trashCategory = Category.builder()
         .name("Trash")
         .description("Any trash related issues")
@@ -57,26 +67,32 @@ public class ParkAppBootstrap implements CommandLineRunner {
         .name("Facilities")
         .description("Any facilities related issues")
         .build();
-    categoryRepository.saveAll(Arrays.asList(trashCategory,
-        facilitiesCategory));
+    Category trailCategory = Category.builder()
+        .name("Trail Repair")
+        .description("Trails are in need of maintenance")
+        .build();
+    Category otherCategory = Category.builder()
+        .name("Other")
+        .description("Other")
+        .build();
 
+    categoryRepository.saveAll(Arrays.asList(
+        trashCategory, facilitiesCategory, trailCategory, otherCategory
+    ));
+
+
+    // PARKS
     Park park1 = Park.builder()
-        .name("Park Number 1")
+        .name("Park 1")
         .build();
     parkRepository.save(park1);
 
     Park park2 = Park.builder()
-        .name("The Second Park")
+        .name("Park 2")
         .build();
     parkRepository.save(park2);
 
-    Role userRole = new Role(1L,"ROLE_USER");
-    Role rangerRole = new Role(2L,"ROLE_RANGER");
-    Role parkRole = new Role(3L,"ROLE_OFFICIAL");
-    Role adminRole = new Role(4L, "ROLE_ADMIN");
-    roleRepository.saveAll(Arrays.asList(userRole, rangerRole, parkRole,
-        adminRole));
-
+    // USERS
     User userAnonymous = User.builder()
         .firstName(ANONYMOUS_NAME)
         .lastName(ANONYMOUS_NAME)
@@ -84,13 +100,8 @@ public class ParkAppBootstrap implements CommandLineRunner {
         .password(PASSWORD)
         .enabled(true)
         .build();
-    userAnonymous.addRole(Arrays.asList(userRole));
-    User userRanger = generateUser("Daniel", "Blum");
-    userRanger.addRole(Arrays.asList(userRole, rangerRole));
-    User user1 = generateUser("Travis", "Kinkade");
-    user1.addRole(userRole);
-    User user2 = generateUser("Fluffy", "Wuffy");
-    user2.addRole(userRole);
+    userAnonymous.addRole(userRole);
+
     User userAdmin = User.builder()
         .firstName("admin")
         .lastName("admin")
@@ -99,52 +110,127 @@ public class ParkAppBootstrap implements CommandLineRunner {
         .enabled(true)
         .build();
     userAdmin.addRole(adminRole);
+
+    User userOfficialPark1 = generateUser("official", "park1");
+    userOfficialPark1.addRoles(Arrays.asList(userRole, rangerRole));
+
+    User userRangerPark1 = generateUser("ranger", "park1");
+    userRangerPark1.addRoles(Arrays.asList(userRole, rangerRole));
+
+    User userOfficialPark2 = generateUser("official", "park2");
+    userOfficialPark2.addRoles(Arrays.asList(userRole, rangerRole,
+        officialRole));
+
+    User userRangerPark2 = generateUser("ranger", "park2");
+    userRangerPark2.addRoles(Arrays.asList(userRole, rangerRole));
+
+    User userSubmitter1 = generateUser("submitter", "1");
+    userSubmitter1.addRole(userRole);
+
+    User userSubmitter2 = generateUser("submitter", "2");
+    userSubmitter2.addRole(userRole);
+
+
     userRepository.saveAll(Arrays.asList(
-        userAnonymous, userRanger, user1, user2, userAdmin
+        userAnonymous, userAdmin, userOfficialPark1, userRangerPark1,
+        userOfficialPark2, userRangerPark2, userSubmitter1, userSubmitter2
+    ));
+
+    // RANGERS
+    Ranger rangerOfficialPark1 = Ranger.builder().user(userOfficialPark1).build();
+    park1.addRanger(rangerOfficialPark1);
+    park1.setOfficial(rangerOfficialPark1);
+
+    Ranger rangerPark1 = Ranger.builder().user(userRangerPark1).build();
+    park1.addRanger(rangerPark1);
+
+    Ranger rangerOfficialPark2 = Ranger.builder().user(userRangerPark1).build();
+    park2.addRanger(rangerOfficialPark2);
+    park2.setOfficial(rangerOfficialPark2);
+
+    Ranger rangerPark2 = Ranger.builder().user(userRangerPark2).build();
+    park2.addRanger(rangerPark2);
+
+    rangerRepository.saveAll(Arrays.asList(
+        rangerOfficialPark1, rangerPark1,
+        rangerOfficialPark2, rangerPark2
     ));
 
 
-    Ranger ranger1 = Ranger.builder().user(userRanger).build();
-    park1.addRanger(ranger1);
-    rangerRepository.save(ranger1);
-
-    Submitter submitter1 = Submitter.builder().user(user1).build();
-    submitterRepository.save(submitter1);
-
-    Ticket ticket1 = generateTicket("Ticket 1", trashCategory );
-    submitter1.addTicket(ticket1);
-    park1.addTicket(ticket1);
-    ticketRepository.save(ticket1);
-
-    Submitter submitter2 = Submitter.builder().user(user2).build();
-    submitterRepository.save(submitter2);
-
-    Ticket ticket2 = generateTicket("Ticket 2", facilitiesCategory);
-    submitter2.addTicket(ticket2);
-    park1.addTicket(ticket2);
-    ticketRepository.save(ticket2);
-
+    // SUBMITTERS
     Submitter anonymousSubmitter = Submitter.builder().user(userAnonymous).build();
-    submitterRepository.save(anonymousSubmitter);
+    Submitter submitter1 = Submitter.builder().user(userSubmitter1).build();
+    Submitter submitter2 = Submitter.builder().user(userSubmitter2).build();
+    submitterRepository.saveAll(Arrays.asList(
+        anonymousSubmitter, submitter1, submitter2
+    ));
+
+
+    // trash, facilities, trail, other
+    // TICKETS
+    Ticket ticket1 = generateTicket(
+        "Ticket 1", trashCategory,
+        anonymousSubmitter, park1
+    );
+
+    Ticket ticket2 = generateTicket(
+        "Ticket 2", facilitiesCategory,
+        anonymousSubmitter, park2
+    );
+
+    Ticket ticket3 = generateTicket(
+       "Ticket 3", trailCategory,
+       submitter1, park1
+    );
+
+    Ticket ticket4 = generateTicket(
+        "Ticket 4", otherCategory,
+        submitter2, park2
+    );
+
+    Ticket ticket5 = generateTicket(
+        "Ticket 5", trashCategory,
+        submitter1, park2
+    );
+    ticket5.setStatus(Status.CLOSED);
+
+    Ticket ticket6 = generateTicket(
+        "Ticket 6", trailCategory,
+        submitter2, park1
+    );
+    ticket6.setStatus(Status.CLOSED);
+
+    ticketRepository.saveAll(Arrays.asList(
+        ticket1, ticket2, ticket3, ticket4, ticket5, ticket6
+    ));
   }
 
   private User generateUser(String first, String last) {
     return User.builder()
         .firstName(first)
         .lastName(last)
-        .email(first.toLowerCase() + "." + last.toLowerCase() + "@email.com")
+        .email(first + "." + last + "@email.com")
         .enabled(true)
         .password(PASSWORD)
         .build();
   }
 
-
-  private Ticket generateTicket(String name, Category category) {
-    return Ticket.builder()
+  private Ticket generateTicket(
+      String name,
+      Category category,
+      Submitter submitter,
+      Park park
+  ) {
+    Ticket ticket = Ticket.builder()
         .name(name)
         .status(Status.OPEN)
         .description(name)
         .category(category)
+        .submitter(submitter)
+        .park(park)
         .build();
+    submitter.addTicket(ticket);
+    park.addTicket(ticket);
+    return ticket;
   }
 }

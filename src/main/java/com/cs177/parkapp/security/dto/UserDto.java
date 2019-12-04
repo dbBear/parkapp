@@ -31,9 +31,9 @@ public class UserDto {
 
   public User toUser() {
     User user = new User();
-    user.setFirstName(firstName);
-    user.setLastName(lastName);
-    user.setEmail(email);
+    user.setFirstName(firstName.toLowerCase());
+    user.setLastName(lastName.toLowerCase());
+    user.setEmail(email.toLowerCase());
     user.setPassword(passwordEncoder.encode(password));
 
     List<Role> roles = roleService.getAll().stream()
