@@ -12,11 +12,26 @@
 </header>
 <section class="mainSection">
 <!--/*@thymesVar id="ticket" type="com.cs177.parkapp.model.Ticket"*/-->
+<!--/*@thymesVar id="category" type="com.cs177.parkapp.model.Category"*/-->
+<!--/*@thymesVar id="park" type="com.cs177.parkapp.model.Park"*/-->
   <form
       class="ticketForm"
       th:object="${ticket}"
       th:action="@{/tickets/new}"
       method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{submitter.id}"/>
+    <div class="row" th:if="*{id}">
+      <div class="col">
+        <label for="status">Status</label>
+        <select id="status" name="status" class="form-control" th:field="*{status}">
+          <option th:each="statusValue : ${T(com.cs177.parkapp.model.Status).values()}"
+                  th:value="${statusValue.name()}"
+                  th:text="${statusValue.toString()}"
+          >Val</option>
+        </select>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
         <label for="name"></label>
@@ -29,6 +44,7 @@
         <select class="form-control form-control-sm" id="category" name="category.id" th:field="*{category}">
           <option th:each="category : ${categories}"
                   th:value="${category.id}"
+                  th:selected="${category.id.equals(ticket.category.id)}"
                   th:text="${category.name}"
           >Category</option>
         </select>
@@ -38,6 +54,7 @@
         <select class="form-control form-control-sm" id="park" name="park.id" th:field="*{park}">
           <option th:each="park : ${parks}"
                   th:value="${park.id}"
+                  th:selected="${park.id.equals(ticket.park.id)}"
                   th:text="${park.name}"
           >Park</option>
         </select>

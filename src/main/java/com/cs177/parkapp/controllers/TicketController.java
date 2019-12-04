@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_NAME;
 import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
@@ -53,9 +54,9 @@ public class TicketController {
 
   @PostMapping({"/new"})
   public String saveTicket(
-      Ticket ticket,
-      BindingResult result)
-  {
+      Ticket ticket
+//      BindingResult result
+  ) {
     String user = authenticationFacade.getAuthentication().getName();
     Ticket ticketSaved = ticketService.save(ticket);
     if(user.equalsIgnoreCase(ANONYMOUS_NAME)) {
@@ -63,5 +64,16 @@ public class TicketController {
     } else {
       return "redirect:/tickets";
     }
+  }
+
+  @GetMapping({"/update"})
+  public String updateTicket(
+      @RequestParam Long id,
+      Model model
+  ){
+    model.addAttribute("ticket", ticketService.findBydId(id));
+    model.addAttribute("categories", categoryService.getCategories());
+    model.addAttribute("parks", parkService.getParks());
+    return DEV_DIR + "/tickets/ticketForm";
   }
 }

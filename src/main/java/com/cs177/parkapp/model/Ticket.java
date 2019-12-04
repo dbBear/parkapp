@@ -18,6 +18,9 @@ public class Ticket extends BaseEntity{
 
   private String name;
 
+  @Enumerated(value = EnumType.STRING)
+  private Status status;
+
   @OneToOne(fetch = FetchType.EAGER)
   private Category category;
 

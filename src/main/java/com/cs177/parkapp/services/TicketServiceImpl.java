@@ -1,6 +1,7 @@
 package com.cs177.parkapp.services;
 
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
+import com.cs177.parkapp.exceptions.TicketNotFoundException;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.repositories.SubmitterRepository;
 import com.cs177.parkapp.repositories.TicketRepository;
@@ -42,9 +43,22 @@ public class TicketServiceImpl implements TicketService {
 
   @Override
   public Ticket save(Ticket ticket) {
-    String currentUser = authenticationFacade.getAuthentication().getName();
-    ticket.setSubmitter(submitterService.findByEmail(currentUser));
-    return ticketRepository.save(ticket);
+    if(!ticketRepository.existsById(ticket.getId())) {
+      String currentUser = authenticationFacade.getAuthentication().getName();
+      ticket.setSubmitter(submitterService.findByEmail(currentUser));
+      return ticketRepository.save(ticket);
+    }
+    Ticket ticketFound = ticketRepository.findById(ticket.getId())
+        .orElseThrow(() ->
+            new TicketNotFoundException("Ticket id: " + ticket.getId() + " not found.")
+        );
+
+    ticketFound.setName(ticket.getName());
+    ticketFound.setStatus(ticket.getStatus());
+    ticketFound.setCategory(ticket.getCategory());
+    ticketFound.setDescription(ticket.getDescription());
+    ticketFound.setPark(ticket.getPark());
+    return ticketRepository.save(ticketFound);
   }
 
   @Override

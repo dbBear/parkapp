@@ -7,6 +7,7 @@
 <body>
 <nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <section class="mainSection">
+<!--/*@thymesVar id="ticket" type="com.cs177.parkapp.model.Ticket"*/-->
   <h1>All Tickets</h1>
   <table class="table table-hover">
     <thead>
@@ -23,8 +24,12 @@
     <tr th:each="ticket : ${tickets}">
       <td>
         <div class="btn-group" role="group" aria-label="edit/delete">
-          <button type="button" class="btn btn-secondary">edit</button>
-          <button type="button" class="btn btn-secondary">delete</button>
+          <a role="button" class="btn btn-secondary" href="ticketForm.html"
+             th:href="@{/tickets/update(id=${ticket.id})}">edit</a>
+          <a role="button" class="btn btn-secondary" href="ticketList.html"
+             th:href="@{/tickets/delete}">edit</a>
+<!--          <button type="button" class="btn btn-secondary">edit</button>-->
+<!--          <button type="button" class="btn btn-secondary">delete</button>-->
         </div>
       </td>
       <td th:text="${ticket.name}">Name</td>

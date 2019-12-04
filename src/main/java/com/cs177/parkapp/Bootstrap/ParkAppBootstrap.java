@@ -142,6 +142,7 @@ public class ParkAppBootstrap implements CommandLineRunner {
   private Ticket generateTicket(String name, Category category) {
     return Ticket.builder()
         .name(name)
+        .status(Status.OPEN)
         .description(name)
         .category(category)
         .build();
