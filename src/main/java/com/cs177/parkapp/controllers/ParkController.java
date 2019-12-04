@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
 
 @Slf4j
 @AllArgsConstructor

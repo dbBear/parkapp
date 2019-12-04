@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Ranger extends BaseEntity{
 
   @OneToOne(
-      fetch = FetchType.EAGER
+      fetch = FetchType.LAZY
   )
   private User user;
 

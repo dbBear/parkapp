@@ -1,6 +1,7 @@
 package com.cs177.parkapp.security.entity;
 
 import com.cs177.parkapp.model.Ranger;
+import com.cs177.parkapp.model.Submitter;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,9 +10,13 @@ import java.util.Arrays;
 import java.util.Collection;
 
 
-@Data
+//@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"submitter", "ranger"})
+@ToString(exclude = {"submitter", "ranger"})
 @Builder
 @Entity
 public class User {
@@ -37,6 +42,22 @@ public class User {
       )
   @Builder.Default
   private Collection<Role> roles = new ArrayList<>();
+
+
+  @OneToOne(
+      mappedBy = "user",
+      cascade = CascadeType.ALL,
+      fetch = FetchType.LAZY
+  )
+  private Submitter submitter;
+
+  @OneToOne(
+      mappedBy = "user",
+      cascade = CascadeType.ALL,
+      fetch = FetchType.LAZY
+  )
+  private Ranger ranger;
+
 
   public User(String firstName, String lastName, String email,
               String password

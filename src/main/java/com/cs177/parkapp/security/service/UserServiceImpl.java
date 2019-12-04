@@ -1,7 +1,8 @@
 package com.cs177.parkapp.security.service;
 
 import com.cs177.parkapp.exceptions.AnonymousNotFound;
-import com.cs177.parkapp.exceptions.EmailNotFoundException;
+import com.cs177.parkapp.model.Ranger;
+import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.security.dto.UserDto;
 import com.cs177.parkapp.security.entity.Role;
 import com.cs177.parkapp.security.entity.User;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_EMAIL;
+import static com.cs177.parkapp.config.StaticNames.ANONYMOUS_EMAIL;
 
 @AllArgsConstructor
 //@Transactional
@@ -67,6 +68,24 @@ public class UserServiceImpl implements UserService{
     return userRepository.findById(id)
         .orElseThrow(() ->
             new UsernameNotFoundException("User id: " + id + " not found")
+        );
+  }
+
+  @Override
+  public User findBySubmitter(Submitter submitter) {
+    return userRepository.findBySubmitter(submitter)
+        .orElseThrow(() ->
+            new UsernameNotFoundException("User with submitter" +
+            " id:" + submitter.getId() + " not found")
+        );
+  }
+
+  @Override
+  public User findByRanger(Ranger ranger) {
+    return userRepository.findByRanger(ranger)
+        .orElseThrow(() ->
+            new UsernameNotFoundException("Ranger with submitter" +
+                " id:" + ranger.getId() + " not found")
         );
   }
 

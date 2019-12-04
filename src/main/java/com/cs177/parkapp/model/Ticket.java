@@ -21,7 +21,8 @@ public class Ticket extends BaseEntity{
   @Enumerated(value = EnumType.STRING)
   private Status status;
 
-  @OneToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "category_id")
   private Category category;
 
   @Lob
@@ -34,6 +35,7 @@ public class Ticket extends BaseEntity{
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "park_id")
   private Park park;
+
 
 //  public void setSubmitter(Submitter submitter) {
 //    submitter.getTickets().add(this);

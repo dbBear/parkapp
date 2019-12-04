@@ -17,8 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_EMAIL;
-import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_NAME;
+import static com.cs177.parkapp.config.StaticNames.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -50,10 +49,10 @@ public class ParkAppBootstrap implements CommandLineRunner {
 
   private void loadData() {
     // ROLES
-    Role userRole = new Role(1L,"ROLE_USER");
-    Role rangerRole = new Role(2L,"ROLE_RANGER");
-    Role officialRole = new Role(3L,"ROLE_OFFICIAL");
-    Role adminRole = new Role(4L, "ROLE_ADMIN");
+    Role userRole = new Role(1L, ROLE_USER);
+    Role rangerRole = new Role(2L, ROLE_RANGER);
+    Role officialRole = new Role(3L, ROLE_OFFICIAL);
+    Role adminRole = new Role(4L, ROLE_ADMIN);
     roleRepository.saveAll(Arrays.asList(userRole, rangerRole, officialRole,
         adminRole));
 

@@ -24,7 +24,7 @@ public class RangerController {
   @GetMapping({"", "/"})
   public ModelAndView showRangers(Model model) {
     ModelAndView mv = new ModelAndView("backEndStuff/rangers/rangerList");
-    mv.addObject("rangers", rangerService.getRangers());
+    mv.addObject("rangers", rangerService.findAll());
     return mv;
   }
 }

@@ -5,7 +5,7 @@ import com.cs177.parkapp.model.Ranger;
 import java.util.Set;
 
 public interface RangerService {
-  Set<Ranger> getRangers();
+  Set<Ranger> findAll();
   Ranger findById(Long id);
   Ranger findByEmail(String email);
   Set<Ranger> findByEmailLike(String email);

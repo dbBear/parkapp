@@ -71,7 +71,7 @@ class TicketServiceImplTest {
     //given
     //when
     when(ticketRepository.findAll()).thenReturn(tickets);
-    Set<Ticket> ticketsReturned = ticketService.getTickets();
+    Set<Ticket> ticketsReturned = ticketService.findAll();
     //then
     assertNotNull(ticketsReturned);
     assertEquals(tickets.size(), ticketsReturned.size());

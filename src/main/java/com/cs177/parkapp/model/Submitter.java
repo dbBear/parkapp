@@ -18,7 +18,9 @@ import java.util.Set;
 @Entity
 public class Submitter extends BaseEntity {
 
-  @OneToOne
+  @OneToOne(
+      fetch = FetchType.LAZY
+  )
   private User user;
 
   @OneToMany(
@@ -39,6 +41,7 @@ public class Submitter extends BaseEntity {
   }
 
   public void removeTicket(Ticket ticket) {
+    // todo add better error handling
     Ticket ticketToRemove = tickets.stream()
         .filter(t -> t.getId().equals(ticket.getId()))
         .findFirst()

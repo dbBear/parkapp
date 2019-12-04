@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
 
-import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -33,7 +33,7 @@ class RangerControllerTest {
   @Test
   void showRangers() throws Exception {
     //given
-    when(rangerService.getRangers()).thenReturn(new HashSet<>());
+    when(rangerService.findAll()).thenReturn(new HashSet<>());
     //when
     //then
     mockMvc.perform(get("/rangers")).andDo(print())

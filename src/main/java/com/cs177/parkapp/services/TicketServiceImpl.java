@@ -2,26 +2,14 @@ package com.cs177.parkapp.services;
 
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.exceptions.TicketNotFoundException;
-import com.cs177.parkapp.model.Status;
-import com.cs177.parkapp.model.Submitter;
-import com.cs177.parkapp.model.Ticket;
-import com.cs177.parkapp.repositories.SubmitterRepository;
+import com.cs177.parkapp.model.*;
 import com.cs177.parkapp.repositories.TicketRepository;
-import com.cs177.parkapp.security.entity.User;
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
-import com.cs177.parkapp.security.repository.UserRepository;
-import com.cs177.parkapp.security.service.UserService;
-import com.cs177.parkapp.services.SubmitterService;
-import com.cs177.parkapp.services.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_EMAIL;
-import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_NAME;
 
 @AllArgsConstructor
 @Service
@@ -32,7 +20,7 @@ public class TicketServiceImpl implements TicketService {
   private final AuthenticationFacade authenticationFacade;
 
   @Override
-  public Set<Ticket> getTickets() {
+  public Set<Ticket> findAll() {
     return new HashSet<Ticket>(ticketRepository.findAll());
   }
 
@@ -70,5 +58,27 @@ public class TicketServiceImpl implements TicketService {
   @Override
   public void delete(Ticket ticket) {
     ticketRepository.delete(ticket);
+  }
+
+  @Override
+  public Set<Ticket> findAllByPark(Park park) {
+    return new HashSet<>(ticketRepository.findByPark(park));
+  }
+
+  @Override
+  public Set<Ticket> findAllBySubmitter(Submitter submitter) {
+    return new HashSet<>(ticketRepository.findBySubmitter(submitter));
+  }
+
+  @Override
+  public Set<Ticket> findAllByCategory(Category category) {
+    return new HashSet<>(ticketRepository.findByCategory(category));
+  }
+
+  @Override
+  public Set<Ticket> findAllByParkAndCategory(Park park, Category category) {
+    return new HashSet<>(
+        ticketRepository.findByParkAndCategory(park, category)
+    );
   }
 }

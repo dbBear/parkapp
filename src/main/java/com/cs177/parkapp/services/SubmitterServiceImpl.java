@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_EMAIL;
-import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_NAME;
+import static com.cs177.parkapp.config.StaticNames.ANONYMOUS_EMAIL;
+import static com.cs177.parkapp.config.StaticNames.ANONYMOUS_NAME;
 
 @AllArgsConstructor
 @Service

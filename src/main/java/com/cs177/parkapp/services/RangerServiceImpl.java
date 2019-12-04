@@ -3,16 +3,11 @@ package com.cs177.parkapp.services;
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.repositories.RangerRepository;
-import com.cs177.parkapp.security.entity.User;
-import com.cs177.parkapp.security.repository.UserRepository;
-import com.cs177.parkapp.services.RangerService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -21,7 +16,7 @@ public class RangerServiceImpl implements RangerService {
   private final RangerRepository rangerRepository;
 
   @Override
-  public Set<Ranger> getRangers() {
+  public Set<Ranger> findAll() {
     return new HashSet<>(rangerRepository.findAll());
   }
 
@@ -35,7 +30,7 @@ public class RangerServiceImpl implements RangerService {
 
   @Override
   public Ranger findByEmail(String email) {
-    return rangerRepository.findByUserId_Email(email)
+    return rangerRepository.findByUserEmail(email)
         .orElseThrow(
             () -> new EmailNotFoundException("Ranger email:" + email + " not" +
                 " found")
@@ -44,7 +39,7 @@ public class RangerServiceImpl implements RangerService {
 
   @Override
   public Set<Ranger> findByEmailLike(String email) {
-    return new HashSet<>(rangerRepository.findAllByUserId_EmailLike(email));
+    return new HashSet<>(rangerRepository.findAllByUserEmailLike(email));
   }
 
   @Override

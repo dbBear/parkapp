@@ -10,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.stream.Collectors;
-
-import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
 
 @AllArgsConstructor
 @Controller

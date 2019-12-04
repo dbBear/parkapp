@@ -3,7 +3,7 @@ package com.cs177.parkapp.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
 
 @Controller
 public class LoginController {

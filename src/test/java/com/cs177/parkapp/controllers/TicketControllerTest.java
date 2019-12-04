@@ -5,10 +5,7 @@ import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
-import com.cs177.parkapp.services.CategoryService;
-import com.cs177.parkapp.services.ParkService;
-import com.cs177.parkapp.services.SubmitterService;
-import com.cs177.parkapp.services.TicketService;
+import com.cs177.parkapp.services.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,7 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.HashSet;
 
-import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
+import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,6 +31,8 @@ class TicketControllerTest {
   CategoryService categoryService;
   @Mock
   ParkService parkService;
+  @Mock
+  RangerService rangerService;
   @Mock
   SubmitterService submitterService;
   @Mock
@@ -50,6 +49,7 @@ class TicketControllerTest {
                     ticketService,
                     categoryService,
                     parkService,
+                    rangerService,
                     submitterService,
                     authenticationFacade
                 ))
@@ -59,7 +59,7 @@ class TicketControllerTest {
   @Test
   void showTickets() throws Exception {
     //given
-    when(ticketService.getTickets()).thenReturn(new HashSet<Ticket>());
+    when(ticketService.findAll()).thenReturn(new HashSet<Ticket>());
     //when
     //then
     mockMvc.perform(get("/tickets")).andDo(print())
@@ -98,7 +98,7 @@ class TicketControllerTest {
         .submitter(new Submitter())
         .park(new Park())
         .build();
-    when(submitterService.findByEmail(anyString())).thenReturn(null);
+//    when(submitterService.findByEmail(anyString())).thenReturn(null);
     when(ticketService.save(any(Ticket.class))).thenReturn(ticket);
     //when
     //then
@@ -111,9 +111,9 @@ class TicketControllerTest {
     ).andDo(print())
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/tickets"));
-    verify(submitterService, times(1)).findByEmail(anyString());
+//    verify(submitterService, times(1)).findByEmail(anyString());
     verify(ticketService, times(1)).save(any(Ticket.class));
-    verifyNoMoreInteractions(submitterService);
+//    verifyNoMoreInteractions(submitterService);
     verifyNoMoreInteractions(ticketService);
   }
 }
