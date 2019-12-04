@@ -32,7 +32,7 @@ public class Park extends BaseEntity {
 
   @OneToMany(
       mappedBy = "park",
-      cascade = CascadeType.ALL
+      cascade = {CascadeType.ALL}
   )
   @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();

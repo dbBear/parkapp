@@ -29,12 +29,10 @@ public class Ticket extends BaseEntity{
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "submitter_id")
-//  @Setter(AccessLevel.NONE)
   private Submitter submitter;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "park_id")
-//  @Setter(AccessLevel.NONE)
   private Park park;
 
 //  public void setSubmitter(Submitter submitter) {

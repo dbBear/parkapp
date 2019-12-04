@@ -23,7 +23,7 @@ public class Submitter extends BaseEntity {
 
   @OneToMany(
       mappedBy = "submitter",
-      cascade = CascadeType.ALL
+      cascade = {CascadeType.PERSIST, CascadeType.MERGE}
   )
   @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();
