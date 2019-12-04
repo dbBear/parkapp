@@ -13,6 +13,7 @@
     <thead>
     <tr>
       <th></th>
+      <th>Status</th>
       <th>Name</th>
       <th>Category</th>
       <th>Date</th>
@@ -30,6 +31,7 @@
              th:href="@{/tickets/delete}">delete</a>
         </div>
       </td>
+      <td th:text="${ticket.status}">Status</td>
       <td th:text="${ticket.name}">Name</td>
       <td th:text="${ticket.category.name}">Category</td>
       <td th:text="${ticket.createDateTime.toLocaleString()}">Date</td>

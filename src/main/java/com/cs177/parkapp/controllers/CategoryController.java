@@ -1,6 +1,6 @@
 package com.cs177.parkapp.controllers;
 
-import com.cs177.parkapp.dto.CategoryDto;
+//import com.cs177.parkapp.dto.CategoryDto;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.services.CategoryService;
 import lombok.AllArgsConstructor;
