@@ -20,7 +20,8 @@
       th:action="@{/tickets/new}"
       method="post">
     <input type="hidden" th:field="*{id}"/>
-    <input type="hidden" th:field="*{submitter.id}"/>
+<!--    need to make submitter ID conditional so that hibernate doesn't create a new one on POST-->
+    <input type="hidden" th:if="*{id}" th:field="*{submitter.id}"/>
     <div class="row" th:if="*{id}">
       <div class="col">
         <label for="status">Status</label>
@@ -44,7 +45,6 @@
         <select class="form-control form-control-sm" id="category" name="category.id" th:field="*{category}">
           <option th:each="category : ${categories}"
                   th:value="${category.id}"
-                  th:selected="${category.id.equals(ticket.category.id)}"
                   th:text="${category.name}"
           >Category</option>
         </select>
@@ -54,7 +54,6 @@
         <select class="form-control form-control-sm" id="park" name="park.id" th:field="*{park}">
           <option th:each="park : ${parks}"
                   th:value="${park.id}"
-                  th:selected="${park.id.equals(ticket.park.id)}"
                   th:text="${park.name}"
           >Park</option>
         </select>

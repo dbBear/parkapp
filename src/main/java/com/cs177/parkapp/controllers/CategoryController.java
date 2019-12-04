@@ -1,12 +1,16 @@
 package com.cs177.parkapp.controllers;
 
+import com.cs177.parkapp.dto.CategoryDto;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.services.CategoryService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 
@@ -17,9 +21,16 @@ import static com.cs177.parkapp.config.StaticStuff.DEV_DIR;
 public class CategoryController {
 
   private final CategoryService categoryService;
+  private final ModelMapper modelMapper;
 
   @GetMapping({"","/"})
   public String listCategories(Model model) {
+
+//    model.addAttribute("categories", categoryService.getCategories()
+//        .stream()
+//        .map(category -> modelMapper.map(category, CategoryDto.class))
+//        .collect(Collectors.toList())
+//    );
     model.addAttribute("categories", categoryService.getCategories());
     return DEV_DIR + "/categories/categoryList";
   }

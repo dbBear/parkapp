@@ -12,8 +12,9 @@ import java.util.Optional;
 public interface SubmitterRepository extends JpaRepository<Submitter, Long> {
 
   Optional<Submitter> findByUser(User user);
-  Optional<Submitter> findByUserId_Email(String email);
-  List<Submitter> findAllByUserId_EmailLike(String email);
+  Optional<Submitter> findByUserEmail(String email);
+//  List<Submitter> findByUserEmail(String email);
+  List<Submitter> findAllByUserEmailLike(String email);
   List<Submitter> findByIdIn(Collection<Long> ids);
 
 }

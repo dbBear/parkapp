@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,6 +27,8 @@ class CategoryControllerTest {
 
   @Mock
   CategoryService categoryService;
+  @Mock
+  ModelMapper modelMapper;
   private MockMvc mockMvc;
 
   @BeforeEach
@@ -33,7 +36,7 @@ class CategoryControllerTest {
     MockitoAnnotations.initMocks(this);
     mockMvc =
         MockMvcBuilders
-            .standaloneSetup(new CategoryController(categoryService))
+            .standaloneSetup(new CategoryController(categoryService, modelMapper))
             .build();
   }
 

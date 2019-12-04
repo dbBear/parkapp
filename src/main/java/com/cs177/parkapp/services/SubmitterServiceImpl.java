@@ -24,7 +24,7 @@ public class SubmitterServiceImpl implements SubmitterService {
 
   @Override
   public Submitter getAnonymousSubmitter() {
-    return submitterRepository.findByUserId_Email(ANONYMOUS_EMAIL)
+    return submitterRepository.findByUserEmail(ANONYMOUS_EMAIL)
         .orElseThrow(() ->
             new EmailNotFoundException("ANONYMOUS EMAIL NOT FOUND!!!!!")
         );
@@ -49,11 +49,11 @@ public class SubmitterServiceImpl implements SubmitterService {
     if(email.equalsIgnoreCase(ANONYMOUS_EMAIL)
         || email.equalsIgnoreCase(ANONYMOUS_NAME))
     {
-      return submitterRepository.findByUserId_Email(ANONYMOUS_EMAIL)
+      return submitterRepository.findByUserEmail(ANONYMOUS_EMAIL)
           .orElseThrow(AnonymousNotFound::new);
     }
 
-    return submitterRepository.findByUserId_Email(email).orElseGet(() -> {
+    return submitterRepository.findByUserEmail(email).orElseGet(() -> {
       Submitter submitterNew = Submitter.builder()
           .user(userService.findByEmail(email))
           .build();
@@ -81,7 +81,7 @@ public class SubmitterServiceImpl implements SubmitterService {
 //        .map(User::getId)
 //        .collect(Collectors.toList());
 //    return new HashSet<>(submitterRepository.findByIdIn(userIds));
-    return new HashSet<>(submitterRepository.findAllByUserId_EmailLike(email));
+    return new HashSet<>(submitterRepository.findAllByUserEmailLike(email));
 
   }
 

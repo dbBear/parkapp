@@ -2,9 +2,12 @@ package com.cs177.parkapp.services;
 
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.exceptions.TicketNotFoundException;
+import com.cs177.parkapp.model.Status;
+import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.model.Ticket;
 import com.cs177.parkapp.repositories.SubmitterRepository;
 import com.cs177.parkapp.repositories.TicketRepository;
+import com.cs177.parkapp.security.entity.User;
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
 import com.cs177.parkapp.security.repository.UserRepository;
 import com.cs177.parkapp.security.service.UserService;
@@ -12,6 +15,7 @@ import com.cs177.parkapp.services.SubmitterService;
 import com.cs177.parkapp.services.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -42,10 +46,14 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
+  @Transactional
   public Ticket save(Ticket ticket) {
-    if(!ticketRepository.existsById(ticket.getId())) {
+    if(ticket.getId() == null) {
       String currentUser = authenticationFacade.getAuthentication().getName();
-      ticket.setSubmitter(submitterService.findByEmail(currentUser));
+      ticket.setStatus(Status.OPEN);
+      Submitter submitter = submitterService.findByEmail(currentUser);
+      ticket.setSubmitter(submitter);
+//      ticket.setSubmitter(submitterService.findByEmail(currentUser));
       return ticketRepository.save(ticket);
     }
     Ticket ticketFound = ticketRepository.findById(ticket.getId())
