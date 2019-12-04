@@ -24,7 +24,6 @@ import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_EMAIL;
 import static com.cs177.parkapp.config.StaticStuff.ANONYMOUS_NAME;
 
 @AllArgsConstructor
-//@Transactional
 @Service
 public class TicketServiceImpl implements TicketService {
 
@@ -46,7 +45,6 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
-  @Transactional
   public Ticket save(Ticket ticket) {
     if(ticket.getId() == null) {
       String currentUser = authenticationFacade.getAuthentication().getName();

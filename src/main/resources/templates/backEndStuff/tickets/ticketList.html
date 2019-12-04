@@ -27,9 +27,7 @@
           <a role="button" class="btn btn-secondary" href="ticketForm.html"
              th:href="@{/tickets/update(id=${ticket.id})}">edit</a>
           <a role="button" class="btn btn-secondary" href="ticketList.html"
-             th:href="@{/tickets/delete}">edit</a>
-<!--          <button type="button" class="btn btn-secondary">edit</button>-->
-<!--          <button type="button" class="btn btn-secondary">delete</button>-->
+             th:href="@{/tickets/delete}">delete</a>
         </div>
       </td>
       <td th:text="${ticket.name}">Name</td>

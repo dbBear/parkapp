@@ -54,8 +54,8 @@ public class TicketController {
 
   @PostMapping({"/new"})
   public String saveTicket(
-      Ticket ticket
-//      BindingResult result
+      Ticket ticket,
+      BindingResult result
   ) {
     String user = authenticationFacade.getAuthentication().getName();
     Ticket ticketSaved = ticketService.save(ticket);

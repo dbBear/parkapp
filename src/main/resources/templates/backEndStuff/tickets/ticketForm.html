@@ -21,7 +21,7 @@
       method="post">
     <input type="hidden" th:field="*{id}"/>
 <!--    need to make submitter ID conditional so that hibernate doesn't create a new one on POST-->
-    <input type="hidden" th:if="*{id}" th:field="*{submitter.id}"/>
+<!--    <input type="text" th:if="*{id}" th:field="*{submitter.id}"/>-->
     <div class="row" th:if="*{id}">
       <div class="col">
         <label for="status">Status</label>

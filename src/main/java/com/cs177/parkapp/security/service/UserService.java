@@ -8,6 +8,7 @@ public interface UserService extends UserDetailsService {
 
   User getAnonymousUser();
   User findByEmail(String email);
+  User findById(Long id);
   User save(UserDto userDto);
 
 }
