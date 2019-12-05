@@ -10,6 +10,9 @@
 <nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <section class="mainSection">
   <div class="container justify-content-md-center">
+    <div class="row" th:if="${param.registration}">
+      <h2>You've successfully registered! You can now login :)</h2>
+    </div>
     <div class="row">
       <div class="col">
         <div class="card">

@@ -10,6 +10,7 @@ public interface UserService extends UserDetailsService {
 
   User getAnonymousUser();
   User findByEmail(String email);
+  User testNewEmail(String email);
   User findById(Long id);
   User findBySubmitter(Submitter submitter);
   User findByRanger(Ranger ranger);

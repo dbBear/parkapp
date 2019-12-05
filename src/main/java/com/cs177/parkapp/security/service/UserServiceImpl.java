@@ -63,10 +63,15 @@ public class UserServiceImpl implements UserService{
   public User findByEmail(String email) {
     //todo better error checking between this and registration controller
     return userRepository.findByEmail(email)
+        .orElseThrow(() ->
+            new UsernameNotFoundException("User email: " + email + " not found")
+        );
+  }
+
+  @Override
+  public User testNewEmail(String email) {
+    return userRepository.findByEmail(email)
         .orElse(new User());
-//        .orElseThrow(() ->
-//            new UsernameNotFoundException("User email: " + email + " not found")
-//        );
   }
 
   @Override

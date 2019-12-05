@@ -40,7 +40,8 @@ public class RegistrationController {
       @ModelAttribute("user") @Valid UserDto userDto,
       BindingResult result
   ){
-    User userExisting = userService.findByEmail(userDto.getEmail());
+    //todo find better way to have userService check for non existing email
+    User userExisting = userService.testNewEmail(userDto.getEmail());
     if(userExisting.getId() != null) {
       result.rejectValue("email", "There is already an account registered " +
           "with this email.");
@@ -50,6 +51,6 @@ public class RegistrationController {
     }
     userDto.setRoleId(roleService.findByName(ROLE_USER).getId());
     userService.save(userDto);
-    return "redirect:/";
+    return "redirect:/login?registration=true";
   }
 }
