@@ -10,7 +10,7 @@
 <body>
 <nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <section class="mainSection container">
-  <!--/*@thymesVar id="user" type="com.cs177.parkapp.security.dto.UserDto"*/-->
+  <!--/*@thymesVar id="user" type="com.cs177.parkapp.security.dto.NewUserDto"*/-->
   <div class="row">
     <div class="col-md-6 offset-md-3">
       <h1>Registration</h1>
@@ -83,18 +83,6 @@
            th:each="error : ${#fields.errors('confirmPassword')}"
            th:text="${error}">Validation error</p>
       </div>
-<!--      <div class="form-group"-->
-<!--           th:classappend="${#fields.hasErrors('terms')}? 'has-error':''">-->
-<!--        <input id="terms"-->
-<!--               type="checkbox"-->
-<!--               th:field="*{terms}"/>-->
-<!--        <label class="control-label" for="terms">-->
-<!--          I agree with the <a href="#">terms and conditions</a> for Registration.-->
-<!--        </label>-->
-<!--        <p class="error-message"-->
-<!--           th:each="error : ${#fields.errors('terms')}"-->
-<!--           th:text="${error}">Validation error</p>-->
-<!--      </div>-->
       <div class="form-group">
         <button type="submit" class="btn btn-success">Register</button>
         <span>Already registered? <a href="/" th:href="@{/login}">Login here</a></span>

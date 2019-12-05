@@ -21,12 +21,22 @@ public class Ranger extends BaseEntity{
   )
   private User user;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(
+      fetch = FetchType.LAZY
+  )
   @JoinColumn(name = "park_id")
   private Park park;
 
   public String getFullName() {
     return user.getFirstName() + " " + user.getLastName();
   }
+
+//  public void setPark(Park park) {
+//    if(park != null) {
+//      this.park.removeRanger(this);
+//    }
+//    this.park = park;
+//    park.getRangers().add(this);
+//  }
 
 }

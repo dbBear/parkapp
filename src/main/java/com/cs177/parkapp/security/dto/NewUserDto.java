@@ -23,12 +23,12 @@ import java.util.stream.Collectors;
     @FieldMatch(first = "email", second = "confirmEmail",
         message = "The emails must match")
 })
-public class UserDto {
+public class NewUserDto {
 
 //  private BCryptPasswordEncoder passwordEncoder;
 //  private RoleService roleService;
 
-  private Long roleId;
+//  private Long roleId;
   @NotEmpty
   private String firstName;
   @NotEmpty

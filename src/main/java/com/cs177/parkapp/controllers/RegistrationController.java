@@ -1,6 +1,6 @@
 package com.cs177.parkapp.controllers;
 
-import com.cs177.parkapp.security.dto.UserDto;
+import com.cs177.parkapp.security.dto.NewUserDto;
 import com.cs177.parkapp.security.entity.User;
 import com.cs177.parkapp.security.service.RoleService;
 import com.cs177.parkapp.security.service.UserService;
@@ -26,8 +26,8 @@ public class RegistrationController {
   private final UserService userService;
 
   @ModelAttribute("user")
-  public UserDto userDto() {
-    return new UserDto();
+  public NewUserDto userDto() {
+    return new NewUserDto();
   }
 
   @GetMapping({"","/"})
@@ -37,11 +37,11 @@ public class RegistrationController {
 
   @PostMapping({"","/"})
   public String registerNewUser(
-      @ModelAttribute("user") @Valid UserDto userDto,
+      @ModelAttribute("user") @Valid NewUserDto newUserDto,
       BindingResult result
   ){
     //todo find better way to have userService check for non existing email
-    User userExisting = userService.testNewEmail(userDto.getEmail());
+    User userExisting = userService.testNewEmail(newUserDto.getEmail());
     if(userExisting.getId() != null) {
       result.rejectValue("email", "There is already an account registered " +
           "with this email.");
@@ -49,8 +49,8 @@ public class RegistrationController {
     if(result.hasErrors()) {
       return DEV_DIR + "/registration/registration-form";
     }
-    userDto.setRoleId(roleService.findByName(ROLE_USER).getId());
-    userService.save(userDto);
+//    userDto.setRoleId(roleService.findByName(ROLE_USER).getId());
+    userService.newSave(newUserDto);
     return "redirect:/login?registration=true";
   }
 }

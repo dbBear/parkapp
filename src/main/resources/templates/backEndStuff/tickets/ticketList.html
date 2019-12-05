@@ -32,7 +32,7 @@
           <a role="button" class="btn btn-secondary" href="ticketForm.html"
              th:href="@{/tickets/update(id=${ticket.id})}">edit</a>
           <a role="button" class="btn btn-secondary" href="ticketList.html"
-             sec:authorize="hasRole('ROLE_RANGER') or hasRole('ROLE_ADMIN')"
+             sec:authorize="hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')"
              th:href="@{/tickets/delete(id=${ticket.id})}">delete</a>
         </div>
       </td>

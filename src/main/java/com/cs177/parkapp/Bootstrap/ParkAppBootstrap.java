@@ -151,10 +151,10 @@ public class ParkAppBootstrap implements CommandLineRunner {
     Ranger rangerPark2 = Ranger.builder().user(userRangerPark2).build();
     park2.addRanger(rangerPark2);
 
-    rangerRepository.saveAll(Arrays.asList(
-        rangerOfficialPark1, rangerPark1,
-        rangerOfficialPark2, rangerPark2
-    ));
+//    rangerRepository.saveAll(Arrays.asList(
+//        rangerOfficialPark1, rangerPark1,
+//        rangerOfficialPark2, rangerPark2
+//    ));
     parkRepository.saveAll(Arrays.asList(park1, park2));
 
 

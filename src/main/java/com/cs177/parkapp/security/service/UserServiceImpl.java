@@ -3,7 +3,7 @@ package com.cs177.parkapp.security.service;
 import com.cs177.parkapp.exceptions.AnonymousNotFound;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.model.Submitter;
-import com.cs177.parkapp.security.dto.UserDto;
+import com.cs177.parkapp.security.dto.NewUserDto;
 import com.cs177.parkapp.security.entity.Role;
 import com.cs177.parkapp.security.entity.User;
 import com.cs177.parkapp.security.repository.UserRepository;
@@ -15,11 +15,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static com.cs177.parkapp.config.StaticNames.ANONYMOUS_EMAIL;
+import static com.cs177.parkapp.config.StaticNames.ROLE_USER;
 
 @AllArgsConstructor
 //@Transactional
@@ -101,16 +101,17 @@ public class UserServiceImpl implements UserService{
   }
 
   @Override
-  public User save(UserDto userDto) {
+  public User newSave(NewUserDto newUserDto) {
     User user = User.builder()
-        .firstName(userDto.getFirstName())
-        .lastName(userDto.getLastName())
-        .email(userDto.getEmail())
-        .password(passwordEncoder.encode(userDto.getPassword()))
+        .firstName(newUserDto.getFirstName())
+        .lastName(newUserDto.getLastName())
+        .email(newUserDto.getEmail())
+        .password(passwordEncoder.encode(newUserDto.getPassword()))
         .enabled(true)
         .build();
     user.getRoles().add(
-        roleService.findById(userDto.getRoleId())
+        roleService.findByName(ROLE_USER)
+//        roleService.findById(userDto.getRoleId())
     );
 
     return userRepository.save(user);
