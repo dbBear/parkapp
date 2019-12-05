@@ -14,7 +14,7 @@
 </header>
 <section class="mainSection">
 
-  <!--/*@thymesVar id="ranger" type="com.cs177.parkapp.model.Ranger"*/-->
+  <!--/*@thymesVar id="ranger" type="com.cs177.parkapp.dto.NewRangerDto"*/-->
   <!--/*@thymesVar id="park" type="com.cs177.parkapp.model.Park"*/-->
 
   <!--  <form-->
@@ -30,8 +30,11 @@
 <!--    </div>-->
 
 <!--  </form>-->
+  <div th:if="${(param.newPark != null)}">
+    <h2 th:text="Add Official Ranger to Park ${param.newPark}"></h2>
+  </div>
 
-  <form th:action="@{/rangers/new}" th:object="${ranger}" method="post">
+  <form th:action="@{/rangers/new(parkId=${param.parkId})}" th:object="${ranger}" method="post">
     <p class=""
        th:if="${#fields.hasGlobalErrors()}"
        th:each="error: ${#fields.errors('global')}"

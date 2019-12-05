@@ -27,11 +27,13 @@ public class ParkController {
     return DEV_DIR + "/parks/parkList";
   }
 
-  @GetMapping("/new")
-  public ModelAndView newPark() {
-    ModelAndView mv = new ModelAndView(DEV_DIR + "/parks/parkForm");
-    mv.addObject(new Park());
-    return mv;
+  @GetMapping({"/new"})
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public String newPark(
+      Model model
+  ) {
+    model.addAttribute("park", new Park());
+    return DEV_DIR + "/parks/parkForm";
   }
 
   @GetMapping("/update")
@@ -49,20 +51,22 @@ public class ParkController {
     return DEV_DIR + "/parks/parkForm";
   }
 
-  @PostMapping("")
-  public String saveOrUpdatePark(
-      @ModelAttribute Park park
-  ) {
-    Park savedPark = parkService.save(park);
-    return "redirect:/parks";
-  }
-
   @GetMapping("/delete")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
   public String deletePark(
       @RequestParam String id
   ){
     Park park = parkService.findById(Long.valueOf(id));
     parkService.delete(park);
     return "redirect:/parks";
+  }
+
+  @PostMapping({"/new"})
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  public String saveOrUpdatePark(
+      @ModelAttribute Park park
+  ) {
+    Park savedPark = parkService.save(park);
+    return "redirect:/rangers/new?parkId=" + savedPark.getId();
   }
 }

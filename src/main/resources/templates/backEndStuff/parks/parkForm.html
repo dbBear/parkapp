@@ -6,6 +6,7 @@
 </head>
 <body>
 <nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<!--/*@thymesVar id="park" type="com.cs177.parkapp.model.Park"*/-->
 <section class="mainSection">
   <div class="container justify-content-md-center">
     <div class="row">
@@ -15,10 +16,9 @@
             New/Update Park
           </div>
           <div class="card-body">
-            <!--/*@thymesVar id="category" type="com.cs177.parkapp.model.Park"*/-->
             <form
                 th:object="${park}"
-                th:action="@{/parks}"
+                th:action="@{/parks/new}"
                 method="post"
             >
               <input type="hidden" th:field="*{id}" />

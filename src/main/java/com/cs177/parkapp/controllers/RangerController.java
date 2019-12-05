@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -48,7 +49,11 @@ public class RangerController {
   }
 
   @GetMapping({"/new"})
-  public String newRanger(Model model) {
+  public String newRanger(
+      @RequestParam(required = false) Long parkId,
+      HttpServletRequest request,
+      Model model
+  ) {
     model.addAttribute("ranger", new NewRangerDto());
 
     Set<Park> parks;
@@ -57,10 +62,14 @@ public class RangerController {
       parks = new HashSet<>(Arrays.asList(
           parkService.findById(ranger.getPark().getId())
       ));
+    } else if(parkId != null) {
+      Park park = parkService.findById(parkId);
+      parks = new HashSet<>(Arrays.asList(park));
+      request.setAttribute("newParkName",park.getName());
+      request.setAttribute("parkId", park.getId());
     } else {
       parks = parkService.findAll();
     }
-
     model.addAttribute("parks", parks);
     return DEV_DIR + "/rangers/new-ranger-form";
   }
@@ -85,6 +94,7 @@ public class RangerController {
 
   @PostMapping({"/new"})
   public String saveRanger(
+      @RequestParam(required = false) Long parkId,
       @ModelAttribute("ranger") @Valid NewRangerDto rangerDto,
       BindingResult result
   ){
@@ -97,7 +107,11 @@ public class RangerController {
       return DEV_DIR + "/ranger/new-ranger-form";
     }
     User userNew = userService.newSave(rangerDto);
-    rangerService.newSave(userNew, rangerDto);
+    Ranger rangerSaved = rangerService.newSave(userNew, rangerDto);
+    if(parkId != null) {
+      rangerSaved.getPark().setOfficial(rangerSaved);
+      parkService.save(rangerSaved.getPark());
+    }
 
     return "redirect:/rangers?saved=true";
   }
