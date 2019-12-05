@@ -5,6 +5,7 @@ import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.security.entity.User;
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
+import com.cs177.parkapp.security.service.RoleService;
 import com.cs177.parkapp.security.service.UserService;
 import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.RangerService;
@@ -33,6 +34,7 @@ public class RangerController {
   private final RangerService rangerService;
   private final ParkService parkService;
   private final UserService userService;
+  private final RoleService roleService;
   private final AuthenticationFacade authenticationFacade;
 
   @GetMapping({"", "/"})
@@ -50,7 +52,7 @@ public class RangerController {
 
   @GetMapping({"/new"})
   public String newRanger(
-      @RequestParam(required = false) Long parkId,
+      @RequestParam(required = false) Long newParkId,
       HttpServletRequest request,
       Model model
   ) {
@@ -62,11 +64,11 @@ public class RangerController {
       parks = new HashSet<>(Arrays.asList(
           parkService.findById(ranger.getPark().getId())
       ));
-    } else if(parkId != null) {
-      Park park = parkService.findById(parkId);
+    } else if(newParkId != null) {
+      Park park = parkService.findById(newParkId);
       parks = new HashSet<>(Arrays.asList(park));
       request.setAttribute("newParkName",park.getName());
-      request.setAttribute("parkId", park.getId());
+      request.setAttribute("newParkId", park.getId());
     } else {
       parks = parkService.findAll();
     }
@@ -94,7 +96,7 @@ public class RangerController {
 
   @PostMapping({"/new"})
   public String saveRanger(
-      @RequestParam(required = false) Long parkId,
+      @RequestParam(required = false) Long newParkId,
       @ModelAttribute("ranger") @Valid NewRangerDto rangerDto,
       BindingResult result
   ){
@@ -108,7 +110,8 @@ public class RangerController {
     }
     User userNew = userService.newSave(rangerDto);
     Ranger rangerSaved = rangerService.newSave(userNew, rangerDto);
-    if(parkId != null) {
+    if(newParkId != null) {
+      rangerSaved.getUser().addRole(roleService.findByName(ROLE_OFFICIAL));
       rangerSaved.getPark().setOfficial(rangerSaved);
       parkService.save(rangerSaved.getPark());
     }

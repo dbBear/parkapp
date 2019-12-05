@@ -1,7 +1,9 @@
 package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.model.Park;
+import com.cs177.parkapp.security.facade.AuthenticationFacade;
 import com.cs177.parkapp.services.ParkService;
+import com.cs177.parkapp.services.RangerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,13 +25,17 @@ class ParkControllerTest {
 
   @Mock
   ParkService parkService;
+  @Mock
+  RangerService rangerService;
+  @Mock
+  AuthenticationFacade authenticationFacade;
   private ParkController parkController;
   private MockMvc mockMvc;
 
   @BeforeEach
   void setUp() {
     MockitoAnnotations.initMocks(this);
-    parkController = new ParkController(parkService);
+    parkController = new ParkController(parkService, rangerService, authenticationFacade);
     mockMvc = MockMvcBuilders.standaloneSetup(parkController)
 //        .setControllerAdvice(new ControllerExceptionHandler())
         .build();

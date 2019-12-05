@@ -30,11 +30,11 @@
 <!--    </div>-->
 
 <!--  </form>-->
-  <div th:if="${(param.newPark != null)}">
-    <h2 th:text="Add Official Ranger to Park ${param.newPark}"></h2>
+  <div th:if="${(param.newParkName != null)}">
+    <h2 th:text="Add Official Ranger to Park ${param.newParkName}"></h2>
   </div>
 
-  <form th:action="@{/rangers/new(parkId=${param.parkId})}" th:object="${ranger}" method="post">
+  <form th:action="@{/rangers/new(newParkId=${param.newParkId})}" th:object="${ranger}" method="post">
     <p class=""
        th:if="${#fields.hasGlobalErrors()}"
        th:each="error: ${#fields.errors('global')}"

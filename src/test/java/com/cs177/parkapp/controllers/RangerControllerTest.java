@@ -1,6 +1,7 @@
 package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
+import com.cs177.parkapp.security.service.RoleService;
 import com.cs177.parkapp.security.service.UserService;
 import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.RangerService;
@@ -28,6 +29,8 @@ class RangerControllerTest {
   @Mock
   UserService userService;
   @Mock
+  RoleService roleService;
+  @Mock
   AuthenticationFacade authenticationFacade;
   private MockMvc mockMvc;
 
@@ -36,7 +39,8 @@ class RangerControllerTest {
     MockitoAnnotations.initMocks(this);
     mockMvc =
         MockMvcBuilders.standaloneSetup(new RangerController(
-                rangerService, parkService, userService, authenticationFacade))
+            rangerService, parkService, userService, roleService,
+            authenticationFacade))
             .build();
   }
 
