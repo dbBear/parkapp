@@ -20,7 +20,7 @@ public class ParkServiceImpl implements ParkService {
   private final ParkRepository parkRepository;
 
   @Override
-  public Set<Park> getParks() {
+  public Set<Park> findAll() {
     return new HashSet<>(parkRepository.findAll());
   }
 

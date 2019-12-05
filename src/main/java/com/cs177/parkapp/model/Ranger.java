@@ -28,4 +28,5 @@ public class Ranger extends BaseEntity{
   public String getFullName() {
     return user.getFirstName() + " " + user.getLastName();
   }
+
 }

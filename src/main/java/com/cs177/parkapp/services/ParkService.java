@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ParkService {
-  Set<Park> getParks();
+  Set<Park> findAll();
   Park findById(Long id);
   Park findByName(String name);
   Set<Park> findByNameLike(String name);

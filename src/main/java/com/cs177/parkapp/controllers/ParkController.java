@@ -23,7 +23,7 @@ public class ParkController {
 
   @GetMapping({"", "/" })
   public String showParks(Model model) {
-    model.addAttribute("parks", parkService.getParks());
+    model.addAttribute("parks", parkService.findAll());
     return DEV_DIR + "/parks/parkList";
   }
 

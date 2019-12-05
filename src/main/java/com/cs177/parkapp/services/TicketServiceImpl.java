@@ -25,7 +25,7 @@ public class TicketServiceImpl implements TicketService {
   }
 
   @Override
-  public Ticket findBydId(Long id) {
+  public Ticket findById(Long id) {
     return ticketRepository.findById(id)
         .orElseThrow(() ->
             new EmailNotFoundException("Ticket id:" + id + " not found")

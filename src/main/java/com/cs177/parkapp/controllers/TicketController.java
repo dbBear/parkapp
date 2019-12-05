@@ -39,7 +39,7 @@ public class TicketController {
     Ticket ticket = Ticket.builder().build();
     model.addAttribute("ticket", ticket);
     model.addAttribute("categories", categoryService.getCategories());
-    model.addAttribute("parks", parkService.getParks());
+    model.addAttribute("parks", parkService.findAll());
     return DEV_DIR + "/tickets/ticketForm";
   }
 
@@ -58,7 +58,6 @@ public class TicketController {
           submitterService.findByEmail(authenticationFacade.getName());
       tickets = ticketService.findAllBySubmitter(submitter);
     }
-
     model.addAttribute("tickets", tickets);
     return DEV_DIR + "/tickets/ticketList";
   }
@@ -69,10 +68,19 @@ public class TicketController {
       @RequestParam Long id,
       Model model
   ){
-    model.addAttribute("ticket", ticketService.findBydId(id));
+    model.addAttribute("ticket", ticketService.findById(id));
     model.addAttribute("categories", categoryService.getCategories());
-    model.addAttribute("parks", parkService.getParks());
+    model.addAttribute("parks", parkService.findAll());
     return DEV_DIR + "/tickets/ticketForm";
+  }
+
+  @GetMapping({"/delete"})
+  @PreAuthorize("hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')")
+  public String deleteTicket(
+      @RequestParam Long id
+  ){
+    ticketService.delete(ticketService.findById(id));
+    return "redirect:/tickets?delete=true";
   }
 
   @PostMapping({"/new"})
@@ -82,9 +90,9 @@ public class TicketController {
   ) {
     Ticket ticketSaved = ticketService.save(ticket);
     if(authenticationFacade.getName().equalsIgnoreCase(ANONYMOUS_NAME)) {
-      return "redirect:/";
+      return "redirect:/?saved=true";
     } else {
-      return "redirect:/tickets";
+      return "redirect:/tickets?saved=true";
     }
   }
 

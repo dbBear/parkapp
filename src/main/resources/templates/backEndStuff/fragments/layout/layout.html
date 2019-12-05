@@ -13,26 +13,44 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
-
       <li class="nav-item">
         <a class="nav-link" href="../../tickets/ticketForm.html" th:href="@{/tickets/new}">New Ticket</a>
       </li>
       <li class="nav-item" sec:authorize="isAuthenticated()">
         <a class="nav-link" href="../../tickets/ticketList.html" th:href="@{/tickets}">Tickets</a>
       </li>
-      <li class="nav-item" sec:authorize="hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')">
-        <a class="nav-link" href="../../rangers/rangerList.html" th:href="@{/rangers}">Rangers</a>
+      <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRanger"  data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false"
+           >Rangers</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownRanger">
+          <a class="dropdown-item" href="../../rangers/rangerList.html" th:href="@{/rangers}">Ranger List</a>
+          <a class="dropdown-item" href=".././rangers/rangerForm.html" th:href="@{/rangers/new}">New Ranger</a>
+        </div>
       </li>
-      <li class="nav-item" sec:authorize="hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')">
-        <a class="nav-link" href="../../parks/parkList.html" th:href="@{/parks}">Parks</a>
+      <li class="nav-item" sec:authorize="hasRole('ROLE_OFFICIAL')">
+        <a class="nav-link" href="../../parks/parkForm.html" th:href="@{/parks/update}">Update Park</a>
       </li>
-      <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="nav-link" href="../../categories/categoryList.html" th:href="@{/categories}">Categories</a>
+      <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPark"  data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false"
+           >Parks</a>
+        <div class="dropdown-menu" aria-labelledby="navBarDropdownPark">
+          <a class="dropdown-item" href="../../parks/parkList.html" th:href="@{/parks}">Park List</a>
+          <a class="dropdown-item" href="../../parks/parkForm.html" th:href="@{/parks/new}">New Park</a>
+        </div>
       </li>
-      <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN') or hasRole('ROLE_OFFICIAL')">
-        <a class="nav-link" href="../../registration/admin-registration-form.html" th:href="@{/admin/new-user}"
-        >Register New User</a>
+      <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false"
+           >Admin</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+          <a class="dropdown-item" href="../../categories/categoryList.html" th:href="@{/categories}">Category List</a>
+          <a class="dropdown-item" href="../../categories/categoryForm.html" th:href="@{/categories/new}"
+              >New Category</a>
+        </div>
       </li>
+
 
     </ul>
 <!--    RIGHT SIDE NAV -->

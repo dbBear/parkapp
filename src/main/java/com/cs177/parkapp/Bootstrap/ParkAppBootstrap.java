@@ -111,7 +111,8 @@ public class ParkAppBootstrap implements CommandLineRunner {
     userAdmin.addRole(adminRole);
 
     User userOfficialPark1 = generateUser("official", "park1");
-    userOfficialPark1.addRoles(Arrays.asList(userRole, rangerRole));
+    userOfficialPark1.addRoles(Arrays.asList(userRole, rangerRole,
+        officialRole));
 
     User userRangerPark1 = generateUser("ranger", "park1");
     userRangerPark1.addRoles(Arrays.asList(userRole, rangerRole));
@@ -143,7 +144,7 @@ public class ParkAppBootstrap implements CommandLineRunner {
     Ranger rangerPark1 = Ranger.builder().user(userRangerPark1).build();
     park1.addRanger(rangerPark1);
 
-    Ranger rangerOfficialPark2 = Ranger.builder().user(userRangerPark1).build();
+    Ranger rangerOfficialPark2 = Ranger.builder().user(userOfficialPark2).build();
     park2.addRanger(rangerOfficialPark2);
     park2.setOfficial(rangerOfficialPark2);
 
@@ -154,6 +155,7 @@ public class ParkAppBootstrap implements CommandLineRunner {
         rangerOfficialPark1, rangerPark1,
         rangerOfficialPark2, rangerPark2
     ));
+    parkRepository.saveAll(Arrays.asList(park1, park2));
 
 
     // SUBMITTERS

@@ -38,7 +38,7 @@ class ParkControllerTest {
   @Test
   void showParks() throws Exception{
     //given
-    when(parkService.getParks()).thenReturn(new HashSet<>());
+    when(parkService.findAll()).thenReturn(new HashSet<>());
     //when
     //then
     mockMvc.perform(get("/parks")).andDo(print())
@@ -46,7 +46,7 @@ class ParkControllerTest {
         .andExpect(view().name(DEV_DIR + "/parks/parkList"))
         .andExpect(model().attributeExists("parks"));
 
-    verify(parkService, times(1)).getParks();
+    verify(parkService, times(1)).findAll();
   }
 
   @Test

@@ -53,7 +53,7 @@ class ParkServiceImplTest {
     //given
     when(parkRepository.findAll()).thenReturn(parks);
     //when
-    Set<Park> parksReturned = parkService.getParks();
+    Set<Park> parksReturned = parkService.findAll();
     //then
     assertNotNull(parksReturned);
     assertEquals(parks.size(), parksReturned.size());

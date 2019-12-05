@@ -17,7 +17,7 @@ public class TicketFormatter implements Formatter<Ticket> {
 
   @Override
   public Ticket parse(String s, Locale locale) throws ParseException {
-    return ticketService.findBydId(Long.parseLong(s));
+    return ticketService.findById(Long.parseLong(s));
   }
 
   @Override

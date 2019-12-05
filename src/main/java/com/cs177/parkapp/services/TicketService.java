@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface TicketService {
   Set<Ticket> findAll();
-  Ticket findBydId(Long id);
+  Ticket findById(Long id);
   Ticket save(Ticket ticket);
   void delete(Ticket ticket);
   Set<Ticket> findAllByPark(Park park);

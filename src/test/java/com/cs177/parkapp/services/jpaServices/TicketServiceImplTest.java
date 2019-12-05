@@ -88,7 +88,7 @@ class TicketServiceImplTest {
     //given
     when(ticketRepository.findById(anyLong())).thenReturn(Optional.of(ticket1));
     //when
-    Ticket ticketReturned = ticketService.findBydId(ID_1);
+    Ticket ticketReturned = ticketService.findById(ID_1);
     //then
     assertNotNull(ticketReturned);
     assertEquals(ticket1, ticketReturned);

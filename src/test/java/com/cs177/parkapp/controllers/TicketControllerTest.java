@@ -72,7 +72,7 @@ class TicketControllerTest {
   void newTicket() throws Exception {
     //given
     when(categoryService.getCategories()).thenReturn(new HashSet<>());
-    when(parkService.getParks()).thenReturn(new HashSet<>());
+    when(parkService.findAll()).thenReturn(new HashSet<>());
     //when
     //then
     mockMvc.perform(get("/tickets/new")).andDo(print())
@@ -83,7 +83,7 @@ class TicketControllerTest {
         .andExpect(view().name(DEV_DIR + "/tickets/ticketForm"));
     ;
     verify(categoryService, times(1)).getCategories();
-    verify(parkService, times(1)).getParks();
+    verify(parkService, times(1)).findAll();
     verifyNoMoreInteractions(categoryService);
     verifyNoMoreInteractions(parkService);
   }

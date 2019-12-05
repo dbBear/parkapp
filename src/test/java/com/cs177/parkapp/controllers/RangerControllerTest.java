@@ -1,5 +1,6 @@
 package com.cs177.parkapp.controllers;
 
+import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.RangerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ class RangerControllerTest {
 
   @Mock
   RangerService rangerService;
+  @Mock
+  ParkService parkService;
   private MockMvc mockMvc;
 
   @BeforeEach
@@ -27,7 +30,8 @@ class RangerControllerTest {
     MockitoAnnotations.initMocks(this);
     mockMvc =
         MockMvcBuilders
-            .standaloneSetup(new RangerController(rangerService)).build();
+            .standaloneSetup(new RangerController(rangerService, parkService))
+            .build();
   }
 
   @Test
