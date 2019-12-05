@@ -13,40 +13,42 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
+import javax.validation.Valid;
+
+import static com.cs177.parkapp.config.StaticNames.*;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/new-user")
 public class RegistrationController {
 
-  private RoleService roleService;
-  private UserService userService;
+  private final RoleService roleService;
+  private final UserService userService;
 
   @ModelAttribute("user")
   public UserDto userDto() {
     return new UserDto();
   }
 
-  @GetMapping
+  @GetMapping({"","/"})
   public String showRegistrationForm(Model model) {
-    model.addAttribute("role", roleService.getRoleByShortName("user"));
     return DEV_DIR + "/registration/registration-form";
   }
 
-  @PostMapping
+  @PostMapping({"","/"})
   public String registerNewUser(
-      @ModelAttribute("user") UserDto userDto,
+      @ModelAttribute("user") @Valid UserDto userDto,
       BindingResult result
   ){
     User userExisting = userService.findByEmail(userDto.getEmail());
-    if(userExisting != null) {
+    if(userExisting.getId() != null) {
       result.rejectValue("email", "There is already an account registered " +
           "with this email.");
     }
     if(result.hasErrors()) {
       return DEV_DIR + "/registration/registration-form";
     }
+    userDto.setRoleId(roleService.findByName(ROLE_USER).getId());
     userService.save(userDto);
     return "redirect:/";
   }

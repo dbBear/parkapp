@@ -12,8 +12,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,8 @@ import static com.cs177.parkapp.config.StaticNames.ANONYMOUS_EMAIL;
 public class UserServiceImpl implements UserService{
 
   private UserRepository userRepository;
+  private RoleService roleService;
+  private BCryptPasswordEncoder passwordEncoder;
 
   @Override
   public UserDetails loadUserByUsername(String email)
@@ -57,10 +61,12 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public User findByEmail(String email) {
+    //todo better error checking between this and registration controller
     return userRepository.findByEmail(email)
-        .orElseThrow(() ->
-            new UsernameNotFoundException("User email: " + email + " not found")
-        );
+        .orElse(new User());
+//        .orElseThrow(() ->
+//            new UsernameNotFoundException("User email: " + email + " not found")
+//        );
   }
 
   @Override
@@ -91,6 +97,18 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public User save(UserDto userDto) {
-    return userRepository.save(userDto.toUser());
+    User user = User.builder()
+        .firstName(userDto.getFirstName())
+        .lastName(userDto.getLastName())
+        .email(userDto.getEmail())
+        .password(passwordEncoder.encode(userDto.getPassword()))
+        .enabled(true)
+        .build();
+    user.getRoles().add(
+        roleService.findById(userDto.getRoleId())
+    );
+
+    return userRepository.save(user);
+
   }
 }

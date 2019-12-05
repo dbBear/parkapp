@@ -6,8 +6,9 @@ import java.util.Collection;
 
 public interface RoleService {
 
-  Role getRoleByName(String name);
-  Role getRoleByShortName(String name);
-  Collection<Role> getAll();
+  Role findById(Long id);
+  Role findByName(String name);
+  Role findByShortName(String name);
+  Collection<Role> findAll();
 
 }

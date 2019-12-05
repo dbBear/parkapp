@@ -15,7 +15,15 @@ public class RoleServiceImpl implements RoleService{
   RoleRepository roleRepository;
 
   @Override
-  public Role getRoleByName(String role) {
+  public Role findById(Long id) {
+    return roleRepository.findById(id)
+        .orElseThrow(() ->
+            new RoleNotFoundException("Role id:" + id + " not found")
+        );
+  }
+
+  @Override
+  public Role findByName(String role) {
     return roleRepository.findByName(role)
         .orElseThrow(() ->
             new RoleNotFoundException("Role: " + role + " not found")
@@ -23,7 +31,7 @@ public class RoleServiceImpl implements RoleService{
   }
 
   @Override
-  public Role getRoleByShortName(String role) {
+  public Role findByShortName(String role) {
     return roleRepository.findByName("ROLE_" + role.toUpperCase())
         .orElseThrow(() ->
             new RoleNotFoundException("Role: " + role + " not found")
@@ -31,7 +39,7 @@ public class RoleServiceImpl implements RoleService{
   }
 
   @Override
-  public Collection<Role> getAll() {
+  public Collection<Role> findAll() {
     return roleRepository.findAll();
   }
 }

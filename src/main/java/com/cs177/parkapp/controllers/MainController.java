@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
 
 @Slf4j
-@RequestMapping({"", "/"})
+@RequestMapping({"", "/","/index"})
 @Controller
 public class MainController {
 

@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
               "/js/**",
               "/img/**",
               "/webjars/**",
-              "/registration",
+              "/new-user",
               "/tickets/new"
               )
             .permitAll()
