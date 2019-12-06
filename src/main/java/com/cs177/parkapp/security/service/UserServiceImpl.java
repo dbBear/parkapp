@@ -113,8 +113,11 @@ public class UserServiceImpl implements UserService{
         roleService.findByName(ROLE_USER)
 //        roleService.findById(userDto.getRoleId())
     );
-
     return userRepository.save(user);
+  }
 
+  @Override
+  public User save(User user) {
+    return userRepository.save(user);
   }
 }

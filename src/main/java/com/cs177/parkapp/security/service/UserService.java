@@ -15,5 +15,6 @@ public interface UserService extends UserDetailsService {
   User findBySubmitter(Submitter submitter);
   User findByRanger(Ranger ranger);
   User newSave(NewUserDto newUserDto);
+  User save(User user);
 
 }

@@ -1,7 +1,9 @@
 package com.cs177.parkapp.services;
 
 import com.cs177.parkapp.dto.NewRangerDto;
+import com.cs177.parkapp.dto.UpdateRangerDto;
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
+import com.cs177.parkapp.exceptions.RangerNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.repositories.RangerRepository;
@@ -22,6 +24,7 @@ public class RangerServiceImpl implements RangerService {
 
   private final RangerRepository rangerRepository;
   private final ParkService parkService;
+  private final UserService userService;
   private final RoleService roleService;
 
   @Override
@@ -75,6 +78,30 @@ public class RangerServiceImpl implements RangerService {
     Ranger rangerSaved = rangerRepository.save(rangerDetached);
     parkService.save(park);
     return rangerSaved;
+  }
+
+  @Override
+  public Ranger update(UpdateRangerDto rangerDto) {
+    Ranger rangerDetached = rangerRepository.findById(rangerDto.getId())
+        .orElseThrow(
+            () -> new RangerNotFoundException("Ranger id:" + rangerDto.getId() +
+                " not found"));
+
+    Park park = parkService.findById(rangerDto.getParkId());
+    if(!rangerDetached.getPark().equals(park)){
+      rangerDetached.getPark().removeRanger(rangerDetached);
+      park.addRanger(rangerDetached);
+    }
+
+    User user = rangerDetached.getUser();
+    user.setFirstName(rangerDto.getFirstName());
+    user.setLastName(rangerDto.getLastName());
+    user.setEmail(rangerDto.getEmail());
+    userService.save(user);
+    return rangerRepository.findByUser(user)
+        .orElseThrow(() ->
+            new RangerNotFoundException("Ranger with user id: "
+                + user.getId() + " not found"));
   }
 
   @Override

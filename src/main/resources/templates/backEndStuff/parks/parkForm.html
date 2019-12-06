@@ -20,8 +20,7 @@
             <form
                 th:object="${park}"
                 th:action="@{/parks/new}"
-                method="post"
-            >
+                method="post">
               <input type="hidden" th:field="*{id}" />
               <div class="form-group">
                 <label for="name">Name:</label>

@@ -1,6 +1,7 @@
 package com.cs177.parkapp.controllers;
 
 import com.cs177.parkapp.dto.NewRangerDto;
+import com.cs177.parkapp.dto.UpdateRangerDto;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.security.entity.User;
@@ -76,24 +77,6 @@ public class RangerController {
     return DEV_DIR + "/rangers/new-ranger-form";
   }
 
-  @GetMapping({"/update"})
-  public String updateRanger(
-      @RequestParam Long id,
-      Model model
-  ){
-    model.addAttribute("ranger", rangerService.findById(id));
-    model.addAttribute("parks", parkService.findAll());
-    return DEV_DIR + "/rangers/update-ranger-form";
-  }
-
-  @GetMapping({"/delete"})
-  public String deleteRanger(
-      @RequestParam Long id
-  ){
-    rangerService.delete(rangerService.findById(id));
-    return "redirect:/rangers?delete=true";
-  }
-
   @PostMapping({"/new"})
   public String saveRanger(
       @RequestParam(required = false) Long newParkId,
@@ -117,5 +100,36 @@ public class RangerController {
     }
 
     return "redirect:/rangers?saved=true";
+  }
+
+  @GetMapping({"/update"})
+  public String updateRanger(
+      @RequestParam Long id,
+      Model model
+  ){
+    model.addAttribute("ranger",
+        new UpdateRangerDto(rangerService.findById(id)));
+    model.addAttribute("parks", parkService.findAll());
+    return DEV_DIR + "/rangers/update-ranger-form";
+  }
+
+  @PostMapping({"/update"})
+  public String updateRanger(
+      @ModelAttribute("ranger") @Valid UpdateRangerDto rangerDto,
+      BindingResult result
+  ){
+    if(result.hasErrors()) {
+      return DEV_DIR + "/rangers/update-ranger-form";
+    }
+    rangerService.update(rangerDto);
+    return "redirect:/rangers?updated=true";
+  }
+
+  @GetMapping({"/delete"})
+  public String deleteRanger(
+      @RequestParam Long id
+  ){
+    rangerService.delete(rangerService.findById(id));
+    return "redirect:/rangers?delete=true";
   }
 }
