@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:include="~{backEndStuff/fragments/header/header::header}">
+  <meta charset="UTF-8">
+  <title th:text="${errorCode.value() + 'Error'}">Error Page</title>
+</head>
+<body>
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<section class="mainSection">
+  <div class="container container-fluid">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h1 th:text="${errorCode} +': ' + ${errorMessage}">CODE: Reason</h1>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
