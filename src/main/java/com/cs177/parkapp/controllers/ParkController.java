@@ -1,5 +1,6 @@
 package com.cs177.parkapp.controllers;
 
+import com.cs177.parkapp.dto.ParkDto;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
@@ -41,7 +42,7 @@ public class ParkController {
   public String newPark(
       Model model
   ) {
-    model.addAttribute("park", new Park());
+    model.addAttribute("park", new ParkDto());
     return DEV_DIR + "/parks/parkForm";
   }
 
@@ -52,18 +53,20 @@ public class ParkController {
   ){
     boolean isOfficial =
         authenticationFacade.getRoles().contains(ROLE_OFFICIAL);
-    Park park;
+    ParkDto parkDto;
 
     if(id == null && !isOfficial) {
-      park = new Park();
+      parkDto = new ParkDto();
+//      park = new Park();
     } else if (isOfficial){
       Ranger ranger = rangerService.findByEmail(authenticationFacade.getName());
-      park = parkService.findById(ranger.getPark().getId());
+      parkDto = new ParkDto(parkService.findById(ranger.getPark().getId()));
     } else {
-      park = parkService.findById(Long.valueOf(id));
+      parkDto = new ParkDto(parkService.findById(Long.valueOf(id)));
+//      park = parkService.findById(Long.valueOf(id));
     }
 
-    model.addAttribute("park", park);
+    model.addAttribute("park", parkDto);
     return DEV_DIR + "/parks/parkForm";
   }
 
@@ -80,9 +83,19 @@ public class ParkController {
   @PostMapping({"/new"})
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   public String saveOrUpdatePark(
-      @ModelAttribute Park park
+      @ModelAttribute ParkDto parkDto
   ) {
-    Park savedPark = parkService.save(park);
-    return "redirect:/rangers/new?newParkId=" + savedPark.getId();
+    Park park;
+    if(parkDto.getId() == null) {
+      park = parkService.newDto(parkDto);
+    } else {
+      park = parkService.updateDto(parkDto);
+    }
+
+    if(park.getOfficial() == null) {
+      return "redirect:/rangers/new?newParkId=" + park.getId();
+    } else {
+      return "redirect:/parks";
+    }
   }
 }

@@ -19,6 +19,9 @@ import java.util.Set;
 public class Park extends BaseEntity {
 
   private String name;
+  @OneToOne
+  private Ranger official;
+
   @OneToMany(
       mappedBy = "park",
       cascade = CascadeType.ALL,
@@ -26,9 +29,6 @@ public class Park extends BaseEntity {
   )
   @Builder.Default
   private Set<Ranger> rangers = new HashSet<>();
-
-  @OneToOne
-  private Ranger official;
 
   @OneToMany(
       mappedBy = "park",

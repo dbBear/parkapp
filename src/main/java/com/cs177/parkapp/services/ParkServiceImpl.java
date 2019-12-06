@@ -1,6 +1,8 @@
 package com.cs177.parkapp.services;
 
+import com.cs177.parkapp.dto.ParkDto;
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
+import com.cs177.parkapp.exceptions.ParkNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.repositories.ParkRepository;
 import com.cs177.parkapp.services.ParkService;
@@ -18,6 +20,11 @@ import java.util.Set;
 public class ParkServiceImpl implements ParkService {
 
   private final ParkRepository parkRepository;
+
+  @Override
+  public boolean existsById(Long id) {
+    return parkRepository.existsById(id);
+  }
 
   @Override
   public Set<Park> findAll() {
@@ -47,6 +54,22 @@ public class ParkServiceImpl implements ParkService {
 
   @Override
   public Park save(Park park) {
+
+    return parkRepository.save(park);
+  }
+
+  @Override
+  public Park newDto(ParkDto parkDto) {
+    return parkRepository.save(parkDto.newPark());
+  }
+
+  @Override
+  public Park updateDto(ParkDto parkDto) {
+    Park park = parkRepository.findById(parkDto.getId())
+        .orElseThrow(() ->
+            new ParkNotFoundException("Park with id: " + parkDto.getId()
+                + " not found."));
+    park.setName(parkDto.getName());
     return parkRepository.save(park);
   }
 
