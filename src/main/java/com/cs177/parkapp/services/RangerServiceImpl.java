@@ -3,7 +3,7 @@ package com.cs177.parkapp.services;
 import com.cs177.parkapp.dto.NewRangerDto;
 import com.cs177.parkapp.dto.UpdateRangerDto;
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
-import com.cs177.parkapp.exceptions.RangerNotFoundException;
+import com.cs177.parkapp.exceptions.IdNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.repositories.RangerRepository;
@@ -36,16 +36,15 @@ public class RangerServiceImpl implements RangerService {
   public Ranger findById(Long id) {
     return rangerRepository.findById(id)
         .orElseThrow(() ->
-            new EmailNotFoundException("Ranger id:" + id + " not found")
+            new IdNotFoundException("Ranger id:" + id + " not found")
         );
   }
 
   @Override
   public Ranger findByEmail(String email) {
     return rangerRepository.findByUserEmail(email)
-        .orElseThrow(
-            () -> new EmailNotFoundException("Ranger email:" + email + " not" +
-                " found")
+        .orElseThrow(() ->
+            new EmailNotFoundException("Ranger email:" + email + " not found")
         );
   }
 
@@ -83,9 +82,9 @@ public class RangerServiceImpl implements RangerService {
   @Override
   public Ranger update(UpdateRangerDto rangerDto) {
     Ranger rangerDetached = rangerRepository.findById(rangerDto.getId())
-        .orElseThrow(
-            () -> new RangerNotFoundException("Ranger id:" + rangerDto.getId() +
-                " not found"));
+        .orElseThrow(() ->
+            new IdNotFoundException("Ranger id: " + rangerDto.getId() + " not" +
+                " found"));
 
     Park park = parkService.findById(rangerDto.getParkId());
     if(!rangerDetached.getPark().equals(park)){
@@ -100,7 +99,7 @@ public class RangerServiceImpl implements RangerService {
     userService.save(user);
     return rangerRepository.findByUser(user)
         .orElseThrow(() ->
-            new RangerNotFoundException("Ranger with user id: "
+            new IdNotFoundException("Ranger with user id: "
                 + user.getId() + " not found"));
   }
 

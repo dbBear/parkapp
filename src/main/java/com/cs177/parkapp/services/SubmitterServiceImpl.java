@@ -2,6 +2,7 @@ package com.cs177.parkapp.services;
 
 import com.cs177.parkapp.exceptions.AnonymousNotFound;
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
+import com.cs177.parkapp.exceptions.IdNotFoundException;
 import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.repositories.SubmitterRepository;
 import com.cs177.parkapp.security.service.UserService;
@@ -26,7 +27,7 @@ public class SubmitterServiceImpl implements SubmitterService {
   public Submitter getAnonymousSubmitter() {
     return submitterRepository.findByUserEmail(ANONYMOUS_EMAIL)
         .orElseThrow(() ->
-            new EmailNotFoundException("ANONYMOUS EMAIL NOT FOUND!!!!!")
+            new AnonymousNotFound("ANONYMOUS EMAIL NOT FOUND!!!!!")
         );
   }
 
@@ -39,7 +40,7 @@ public class SubmitterServiceImpl implements SubmitterService {
   public Submitter findById(Long id) {
     return submitterRepository.findById(id)
         .orElseThrow(() ->
-            new EmailNotFoundException("Submitter id:" + id + " not found")
+            new IdNotFoundException("Submitter id:" + id + " not found")
         );
   }
 
@@ -59,28 +60,10 @@ public class SubmitterServiceImpl implements SubmitterService {
           .build();
       return submitterRepository.save(submitterNew);
     });
-
-//        .orElseThrow(() ->
-//            new EmailNotFoundException("Submitter email:" + email + " not " +
-//                "found")
-//        );
-//    User user = userRepository.findByEmail(email)
-//        .orElseThrow(() ->
-//            new EmailNotFoundException("User email:" + email + " not found")
-//        );
-//    return submitterRepository.findByUser(user)
-//        .orElseThrow(() ->
-//            new EmailNotFoundException("Submitter email:" + email + " not " +
-//                "found")
-//        );
   }
 
   @Override
   public Set<Submitter> findByEmailLike(String email) {
-//    List<Long> userIds = userRepository.findAllByEmailLike(email).stream()
-//        .map(User::getId)
-//        .collect(Collectors.toList());
-//    return new HashSet<>(submitterRepository.findByIdIn(userIds));
     return new HashSet<>(submitterRepository.findAllByUserEmailLike(email));
 
   }

@@ -1,6 +1,8 @@
 package com.cs177.parkapp.security.service;
 
 import com.cs177.parkapp.exceptions.AnonymousNotFound;
+import com.cs177.parkapp.exceptions.EmailNotFoundException;
+import com.cs177.parkapp.exceptions.IdNotFoundException;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.security.dto.NewUserDto;
@@ -64,7 +66,7 @@ public class UserServiceImpl implements UserService{
     //todo better error checking between this and registration controller
     return userRepository.findByEmail(email)
         .orElseThrow(() ->
-            new UsernameNotFoundException("User email: " + email + " not found")
+            new EmailNotFoundException("User email: " + email + " not found")
         );
   }
 
@@ -78,7 +80,7 @@ public class UserServiceImpl implements UserService{
   public User findById(Long id) {
     return userRepository.findById(id)
         .orElseThrow(() ->
-            new UsernameNotFoundException("User id: " + id + " not found")
+            new IdNotFoundException("User id: " + id + " not found")
         );
   }
 
@@ -86,8 +88,8 @@ public class UserServiceImpl implements UserService{
   public User findBySubmitter(Submitter submitter) {
     return userRepository.findBySubmitter(submitter)
         .orElseThrow(() ->
-            new UsernameNotFoundException("User with submitter" +
-            " id:" + submitter.getId() + " not found")
+            new IdNotFoundException("User with submitter id:"
+                + submitter.getId() + " not found")
         );
   }
 
@@ -95,8 +97,8 @@ public class UserServiceImpl implements UserService{
   public User findByRanger(Ranger ranger) {
     return userRepository.findByRanger(ranger)
         .orElseThrow(() ->
-            new UsernameNotFoundException("Ranger with submitter" +
-                " id:" + ranger.getId() + " not found")
+            new IdNotFoundException("Ranger with submitter id:"
+                + ranger.getId() + " not found")
         );
   }
 

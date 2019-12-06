@@ -1,7 +1,6 @@
 package com.cs177.parkapp.services;
 
-import com.cs177.parkapp.exceptions.EmailNotFoundException;
-import com.cs177.parkapp.exceptions.TicketNotFoundException;
+import com.cs177.parkapp.exceptions.IdNotFoundException;
 import com.cs177.parkapp.mail.MailClient;
 import com.cs177.parkapp.model.*;
 import com.cs177.parkapp.repositories.TicketRepository;
@@ -30,7 +29,7 @@ public class TicketServiceImpl implements TicketService {
   public Ticket findById(Long id) {
     return ticketRepository.findById(id)
         .orElseThrow(() ->
-            new EmailNotFoundException("Ticket id:" + id + " not found")
+            new IdNotFoundException("Ticket id:" + id + " not found")
         );
   }
 
@@ -49,7 +48,7 @@ public class TicketServiceImpl implements TicketService {
 
     Ticket ticketFound = ticketRepository.findById(ticket.getId())
         .orElseThrow(() ->
-            new TicketNotFoundException("Ticket id: " + ticket.getId() + " not found.")
+            new IdNotFoundException("Ticket id: " + ticket.getId() + " not found.")
         );
 
     ticketFound.setName(ticket.getName());

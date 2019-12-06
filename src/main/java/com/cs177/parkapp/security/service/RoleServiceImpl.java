@@ -1,6 +1,7 @@
 package com.cs177.parkapp.security.service;
 
-import com.cs177.parkapp.exceptions.RoleNotFoundException;
+import com.cs177.parkapp.exceptions.IdNotFoundException;
+import com.cs177.parkapp.exceptions.NameNotFoundException;
 import com.cs177.parkapp.security.entity.Role;
 import com.cs177.parkapp.security.repository.RoleRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class RoleServiceImpl implements RoleService{
   public Role findById(Long id) {
     return roleRepository.findById(id)
         .orElseThrow(() ->
-            new RoleNotFoundException("Role id:" + id + " not found")
+            new IdNotFoundException("Role id:" + id + " not found")
         );
   }
 
@@ -26,7 +27,7 @@ public class RoleServiceImpl implements RoleService{
   public Role findByName(String role) {
     return roleRepository.findByName(role)
         .orElseThrow(() ->
-            new RoleNotFoundException("Role: " + role + " not found")
+            new NameNotFoundException("Role name: " + role + " not found")
         );
   }
 
@@ -34,7 +35,7 @@ public class RoleServiceImpl implements RoleService{
   public Role findByShortName(String role) {
     return roleRepository.findByName("ROLE_" + role.toUpperCase())
         .orElseThrow(() ->
-            new RoleNotFoundException("Role: " + role + " not found")
+            new NameNotFoundException("Role name: " + role + " not found")
         );
   }
 

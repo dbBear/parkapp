@@ -1,11 +1,10 @@
 package com.cs177.parkapp.services;
 
 import com.cs177.parkapp.dto.ParkDto;
-import com.cs177.parkapp.exceptions.EmailNotFoundException;
-import com.cs177.parkapp.exceptions.ParkNotFoundException;
+import com.cs177.parkapp.exceptions.IdNotFoundException;
+import com.cs177.parkapp.exceptions.NameNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.repositories.ParkRepository;
-import com.cs177.parkapp.services.ParkService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class ParkServiceImpl implements ParkService {
   public Park findById(Long id) {
     return parkRepository.findById(id)
         .orElseThrow(() ->
-          new EmailNotFoundException("Park id:" + id + " not found")
+          new IdNotFoundException("Park id:" + id + " not found")
         );
   }
 
@@ -43,7 +42,7 @@ public class ParkServiceImpl implements ParkService {
   public Park findByName(String name) {
     return parkRepository.findByName(name)
         .orElseThrow(() ->
-            new EmailNotFoundException("Park name:" + name + " not found")
+            new NameNotFoundException("Park name:" + name + " not found")
         );
   }
 
@@ -67,7 +66,7 @@ public class ParkServiceImpl implements ParkService {
   public Park updateDto(ParkDto parkDto) {
     Park park = parkRepository.findById(parkDto.getId())
         .orElseThrow(() ->
-            new ParkNotFoundException("Park with id: " + parkDto.getId()
+            new IdNotFoundException("Park with id: " + parkDto.getId()
                 + " not found."));
     park.setName(parkDto.getName());
     return parkRepository.save(park);
