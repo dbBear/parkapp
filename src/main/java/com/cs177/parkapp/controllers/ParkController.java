@@ -12,13 +12,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
-import static com.cs177.parkapp.config.StaticNames.ROLE_OFFICIAL;
+import static com.cs177.parkapp.config.StaticStrings.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStrings.ROLE_OFFICIAL;
 
 @Slf4j
 @AllArgsConstructor

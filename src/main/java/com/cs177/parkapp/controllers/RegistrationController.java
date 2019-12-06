@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
-import static com.cs177.parkapp.config.StaticNames.*;
+import static com.cs177.parkapp.config.StaticStrings.*;
 
 @AllArgsConstructor
 @Controller

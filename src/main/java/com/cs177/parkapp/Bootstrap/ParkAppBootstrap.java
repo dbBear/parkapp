@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-import static com.cs177.parkapp.config.StaticNames.*;
+import static com.cs177.parkapp.config.StaticStrings.*;
 
 @Slf4j
 @AllArgsConstructor

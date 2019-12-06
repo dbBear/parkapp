@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.cs177.parkapp.config.StaticNames.ROLE_RANGER;
+import static com.cs177.parkapp.config.StaticStrings.ROLE_RANGER;
 
 @AllArgsConstructor
 @Service

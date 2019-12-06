@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStrings.DEV_DIR;
 
 @AllArgsConstructor
 @Controller

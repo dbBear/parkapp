@@ -23,8 +23,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.cs177.parkapp.config.StaticNames.DEV_DIR;
-import static com.cs177.parkapp.config.StaticNames.ROLE_OFFICIAL;
+import static com.cs177.parkapp.config.StaticStrings.DEV_DIR;
+import static com.cs177.parkapp.config.StaticStrings.ROLE_OFFICIAL;
 
 @AllArgsConstructor
 @Controller

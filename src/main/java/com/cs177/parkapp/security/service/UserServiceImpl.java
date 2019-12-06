@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import static com.cs177.parkapp.config.StaticNames.ANONYMOUS_EMAIL;
-import static com.cs177.parkapp.config.StaticNames.ROLE_USER;
+import static com.cs177.parkapp.config.StaticStrings.ANONYMOUS_EMAIL;
+import static com.cs177.parkapp.config.StaticStrings.ROLE_USER;
 
 @AllArgsConstructor
 //@Transactional

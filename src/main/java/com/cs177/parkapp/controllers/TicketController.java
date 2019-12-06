@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
 
-import static com.cs177.parkapp.config.StaticNames.*;
+import static com.cs177.parkapp.config.StaticStrings.*;
 
 
 @Slf4j

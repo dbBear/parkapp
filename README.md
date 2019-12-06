@@ -3,6 +3,17 @@ Welcome to ParkApp. Please find information about how to load and update the pro
 
 This github project is private so only those with share privileges can see it.
 
+# Bootstrapped Username: Password
++ **admin** - admin@admin.com : admin
++ **park 1 official** - official.park1@email.com : password
++ **park 1 ranger** - ranger.park1@email.com : password
++ **park 2 official** - official.park2@email.com : password
++ **park2 ranger** - ranger.park2@email.com : password
++ **submitter 1** - submitter.1@email.com : password
++ **submitter 2** - submitter.2@email.com : password
++ **anonymous submitter** - anonymous@parkapp.com : password
+
+
 
 # Running Locally
 ### Install
@@ -11,7 +22,7 @@ If you'd like to run the project locally, you'll need:
 
     [If you're on a unix system, I recommend using SDKMAN.](https://sdkman.io/)
     Currently, I'm using the Amazon 11.0.5. [You can download it directly here.](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html)
-+ Maven
++ Maven(not required)
 
     [Maven is a build/package management tool that makes life simple through complexity.](https://maven.apache.org/install.html) 
     I'm on Maven 3.6.2 (latest as of Nov 16, 2019)
@@ -19,10 +30,16 @@ If you'd like to run the project locally, you'll need:
     Alternatively, you don't have to install Maven. Use the Maven Wrapper as detailed in the _'Didn't Install Maven'_
      section under _'Running'_.
     
-### Running
-Once both are installed, bring up a terminal, navigate to the top level directory of ParkApp and run:
+### Running 
+####Sans IDE
 
-    `mvn package && java -jar target/parkapp-[version]-jar
+If you've installed maven, run:
+
+    `mvn spring-boot:run`
+   
+Or, if maven isn't installed, run:
+
+    `./mavnw clean install && ./mvnw spring-boot:run`
     
 `[version]` is found in the top level pom.xml file with the tag version. Currently, this is `0.0.1-SNAPSHOT`.
 
@@ -30,10 +47,6 @@ Assuming all the tests are valid and it compiles, you'll be able to access the s
 
 >If you'd like to change the default port, go to `parkapp/src/main/resource/application-default.properties` and
 > change `server.port` to any valid local port
-
-###### Didn't Install Maven
-If you didn't install maven, go into the parent directory and run `./mvnw clean install` to get all the dependencies
-, and run with `./mvnw spring-boot:run`
 
 
 #### With an IDE
@@ -47,6 +60,16 @@ Just go to **File | Open** (either from the open dialogue or the main menu), nav
 
 ### SQL
 Currently, `0.0.1-SNAPSHOT` is using an in-memory database. This section will get updated once we link an SQL server.
+
+### SMTP server
+[To verify that the email service is working, I'm using FakeSMTP](http://nilhcem.com/FakeSMTP/). 
+
+Once installed, just navigate to the unzipped directory and run:
+
+    `java -jar fakeSMTP.jar -s -p 6000`
+    
+If you get an error that port 6000 is not available, change the -p argument to and available port **and change the
+ `spring.mail.port` property in the application-default.properties file the same port**
 
 # Git
 ### Installing
@@ -80,8 +103,6 @@ There are two directories in `static` and `templates`, both called `backEndStuff
 ### Displaying
 You don't need the server running to work on the design. As long as you make all you links referential, everything
  will be 'A Okay.' Just load up a page from the system directory and you'll be set!
-
-
 
 # Documentation
 + [Git Repository](https://github.com/dbBear/parkapp)
