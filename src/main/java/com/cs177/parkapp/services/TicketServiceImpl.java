@@ -2,6 +2,7 @@ package com.cs177.parkapp.services;
 
 import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.exceptions.TicketNotFoundException;
+import com.cs177.parkapp.mail.MailClient;
 import com.cs177.parkapp.model.*;
 import com.cs177.parkapp.repositories.TicketRepository;
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
@@ -18,6 +19,7 @@ public class TicketServiceImpl implements TicketService {
   private final TicketRepository ticketRepository;
   private final SubmitterService submitterService;
   private final AuthenticationFacade authenticationFacade;
+  private final MailClient mailClient;
 
   @Override
   public Set<Ticket> findAll() {
@@ -40,8 +42,11 @@ public class TicketServiceImpl implements TicketService {
       Submitter submitter = submitterService.findByEmail(currentUser);
       ticket.setSubmitter(submitter);
 //      ticket.setSubmitter(submitterService.findByEmail(currentUser));
-      return ticketRepository.save(ticket);
+      Ticket ticketSaved = ticketRepository.save(ticket);
+      mailClient.sendNewTicket(ticketSaved);
+      return  ticketSaved;
     }
+
     Ticket ticketFound = ticketRepository.findById(ticket.getId())
         .orElseThrow(() ->
             new TicketNotFoundException("Ticket id: " + ticket.getId() + " not found.")
@@ -52,7 +57,12 @@ public class TicketServiceImpl implements TicketService {
     ticketFound.setCategory(ticket.getCategory());
     ticketFound.setDescription(ticket.getDescription());
     ticketFound.setPark(ticket.getPark());
-    return ticketRepository.save(ticketFound);
+
+    Ticket ticketSaved = ticketRepository.save(ticketFound);
+    if(ticket.getStatus().equals(Status.CLOSED)) {
+      mailClient.sendClosedTicket(ticketSaved);
+    }
+    return ticketSaved;
   }
 
   @Override

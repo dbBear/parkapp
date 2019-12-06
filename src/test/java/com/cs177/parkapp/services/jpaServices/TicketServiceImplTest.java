@@ -1,5 +1,6 @@
 package com.cs177.parkapp.services.jpaServices;
 
+import com.cs177.parkapp.mail.MailClient;
 import com.cs177.parkapp.model.Category;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Submitter;
@@ -35,6 +36,8 @@ class TicketServiceImplTest {
   TicketRepository ticketRepository;
   @Mock
   SubmitterService submitterService;
+  @Mock
+  MailClient mailClient;
   AuthenticationFacade authenticationFacade;
   private TicketServiceImpl ticketService;
 
@@ -46,7 +49,7 @@ class TicketServiceImplTest {
   void setUp() {
     MockitoAnnotations.initMocks(this);
     ticketService = new TicketServiceImpl(ticketRepository,
-        submitterService, authenticationFacade);
+        submitterService, authenticationFacade, mailClient);
     ticket1 = Ticket.builder()
         .id(ID_1)
         .category(category)
