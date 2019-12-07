@@ -14,7 +14,7 @@ This github project is private so only those with share privileges can see it.
 + **anonymous submitter** - anonymous@parkapp.com : password
 
 
-
+#
 # Running Locally
 ### Install
 If you'd like to run the project locally, you'll need:
@@ -48,20 +48,36 @@ Assuming all the tests are valid and it compiles, you'll be able to access the s
 >If you'd like to change the default port, go to `parkapp/src/main/resource/application-default.properties` and
 > change `server.port` to any valid local port
 
-
+---
 #### With an IDE
-###### Intellij
-Just go to **File | Open** (either from the open dialogue or the main menu), navigate to the pom.xml file in the project
-, and **Open as Project**
+##### Intellij
 
-###### Eclipse
+_Step 1 (if not in a project)_
+
+From the Welcome menu, select `Import Project`, navigate and select the parent folder (should be `parkapp`), 
+click okay and the, on the 'Import Project' window, make sure to select `Import project from external model` and select `Maven`.
+
+_Step 1 (while viewing a project)_
+
+Select `File | NEW >  Project From Existing Sources` 
+
+_Step 2_
+
+navigate and select the parent folder (should be `parkapp`),
+click okay and then, on the 'Import Project' window, make sure to select `Import project from external model` and select `Maven`.
+
+---
+
+##### Eclipse
 [Here's a stack overflow post with the answer](https://stackoverflow.com/questions/2061094/importing-maven-project-into-eclipse)
 
 
 ### SQL
-Currently, `0.0.1-SNAPSHOT` is using an in-memory database. This section will get updated once we link an SQL server.
+Currently, `0.0.2-SNAPSHOT` is using an in-memory database. This section will get updated once we link an SQL server.
 
-### SMTP server
+---
+
+### SMTP Server
 [To verify that the email service is working, I'm using FakeSMTP](http://nilhcem.com/FakeSMTP/). 
 
 Once installed, just navigate to the unzipped directory and run:
@@ -71,6 +87,9 @@ Once installed, just navigate to the unzipped directory and run:
 If you get an error that port 6000 is not available, change the -p argument to and available port **and change the
  `spring.mail.port` property in the application-default.properties file the same port**
 
+
+
+#
 # Git
 ### Installing
 [First, make sure you have git installed locally.](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
@@ -82,7 +101,39 @@ We're going to use the 'Centralized Repository' workflow. [Atlassian as a good d
 We'll keep two working branches, `master` and `production`. **Make sure all work is on the `production` branch!**
 If you've cloned the `master` branch, just run `git checkout -t origin/production` and you'll be all set :)
 
-Please make your commits nice and small. Also, make sure you include a message in your commit!
+Once you're on production, DON'T WORK DIRECTLY IN THIS BRANCH! Instead, create a new branch with a name describing
+ the work you'll be doing, like:
+ 
+ `git checkout -b add-new-feature`
+ 
+ The `checkout -b` will create a new branch called 'add-new-feature' and automatically check out that branch for you
+ . Confirm this by running `git branch` and you see output like this:
+ 
+    * add-new-feature
+    master
+    production
+    
+The asterisk highlights which branch you're currently on. Now, do any work you need to do to make your new feature
+ and make all your commits to this branch.
+ 
+ 
+ Your commits should be nice and small - think of them like 'saves' that you can undo. So, you make a new file and
+  write some code it works (but still needs some added pizaz), commit! You finished adding that pizez, commit!
+  
+ 
+One you have finished everything for your new feature and you've made your last commit, it's time to merge.
+
+Check out the production branch again with `git checkout production` and THE FIRST THING YOU SHOULD RUN IS 
+`git pull` (this will update production if someone else has updated it while you were working). Now, you can merge your
+'add-new-feature' branch.
+
+Run `git merge add-new-feature` and your branch will dump into production. If there are no conflicts, everything will
+ be A-Okay. [If there are issues, you have to resolve the conflicts.](https://www.atlassian.com/git/tutorials/using-branches/merge-conflicts)
+ Then, run `git push` to push the new change on the 'production' branch to git hub so we can see everything.
+ 
+Lastly, you can delete you 'add-new-feature' branch as all those commits you made are part of production. Just run
+ `git branch -d add-new-feature` and you're all done!
+
 
 >##### .gitignore
 >I've included a .gitignore file in the commit that's pretty extensive. If you need to add more so we're not getting
@@ -90,6 +141,7 @@ Please make your commits nice and small. Also, make sure you include a message i
 
 
 
+#
 # Front End Design
 ### Directories
 There are two directories currently dealing with front end work
@@ -104,6 +156,9 @@ There are two directories in `static` and `templates`, both called `backEndStuff
 You don't need the server running to work on the design. As long as you make all you links referential, everything
  will be 'A Okay.' Just load up a page from the system directory and you'll be set!
 
+
+
+#
 # Documentation
 + [Git Repository](https://github.com/dbBear/parkapp)
 + [Slack Channel](https://cs177parkapp.slack.com)
@@ -116,4 +171,5 @@ You don't need the server running to work on the design. As long as you make all
 + Jason Rosenberg [comparc@icloud.com](mailto:comparc@icloud.com)
 + Anastasiia Chalova [achalova@mail.ccsf.edu](mailto:achalova@mail.ccsf.edu)
 + Maryna Ponomarenko [mponoma1@mail.ccsf.edu](mailto:mponoma1@mail.ccsf.edu)
+
 
