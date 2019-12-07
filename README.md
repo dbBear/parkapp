@@ -39,7 +39,7 @@ If you've installed maven, run:
    
 Or, if maven isn't installed, run:
 
-    `./mavnw clean install && ./mvnw spring-boot:run`
+    `./mvnw clean install && ./mvnw spring-boot:run`
     
 `[version]` is found in the top level pom.xml file with the tag version. Currently, this is `0.0.1-SNAPSHOT`.
 
