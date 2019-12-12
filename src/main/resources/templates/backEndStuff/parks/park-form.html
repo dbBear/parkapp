@@ -6,26 +6,26 @@
 </head>
 <body>
 <nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
-<!--/*@thymesVar id="park" type="com.cs177.parkapp.dto.ParkDto"*/-->
+<!--/*@thymesVar id="park" type="com.cs177.parkapp.model.Park"*/-->
 <section class="mainSection">
   <div class="container justify-content-md-center">
     <div class="row">
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <h3 th:if="${park.getId() == null}">New Park</h3>
-            <h3 th:if="${park.getId() != null}">Update Park</h3>
+            <h3 th:value="${park.id == null ? 'New Park' : 'Update Park'}">Park</h3>
           </div>
           <div class="card-body">
             <form
                 th:object="${park}"
-                th:action="@{/parks/new}"
+                th:action="${park.getId()} == null ? @{/parks/new} : @{/parks/update}"
                 method="post">
               <input type="hidden" th:field="*{id}" />
               <div class="form-group">
                 <label for="name">Name:</label>
                 <input class="form-control" id="name" type="text" th:field="*{name}" th:value="*{name}" />
               </div>
+<!--              todo add ability to change official ranger-->
               <button type="submit" class="btn btn-primary">Submit</button>
 
             </form>

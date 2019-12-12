@@ -29,15 +29,15 @@
         </div>
       </li>
       <li class="nav-item" sec:authorize="hasRole('ROLE_OFFICIAL')">
-        <a class="nav-link" href="../../parks/parkForm.html" th:href="@{/parks/update}">Update Park</a>
+        <a class="nav-link" href="../../parks/park-form.html" th:href="@{/parks/update}">Update Park</a>
       </li>
       <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPark"  data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false"
            >Parks</a>
         <div class="dropdown-menu" aria-labelledby="navBarDropdownPark">
-          <a class="dropdown-item" href="../../parks/parkList.html" th:href="@{/parks}">Park List</a>
-          <a class="dropdown-item" href="../../parks/parkForm.html" th:href="@{/parks/new}">New Park</a>
+          <a class="dropdown-item" href="../../parks/park-list.html" th:href="@{/parks}">Park List</a>
+          <a class="dropdown-item" href="../../parks/park-form.html" th:href="@{/parks/new}">New Park</a>
         </div>
       </li>
       <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">

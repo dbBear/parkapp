@@ -13,7 +13,5 @@ public interface ParkService {
   Park findByName(String name);
   Set<Park> findByNameLike(String name);
   Park save(Park park);
-  Park newDto(ParkDto parkDto);
-  Park updateDto(ParkDto parkDto);
   void delete(Park park);
 }

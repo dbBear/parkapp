@@ -30,7 +30,7 @@ public class ParkController {
   @GetMapping({"", "/" })
   public String showParks(Model model) {
     model.addAttribute("parks", parkService.findAll());
-    return DEV_DIR + "/parks/parkList";
+    return DEV_DIR + "/parks/park-list";
   }
 
   @GetMapping({"/new"})
@@ -38,40 +38,36 @@ public class ParkController {
   public String newPark(
       Model model
   ) {
-    model.addAttribute("park", new ParkDto());
-    return DEV_DIR + "/parks/parkForm";
+    model.addAttribute("park", new Park());
+    return DEV_DIR + "/parks/park-form";
   }
 
   @GetMapping("/update")
   public String updatePark(
-      @RequestParam(required = false) String id,
+      @RequestParam(required = false) Long id,
       Model model
   ){
     boolean isOfficial =
         authenticationFacade.getRoles().contains(ROLE_OFFICIAL);
-    ParkDto parkDto;
+    Park park;
 
-    if(id == null && !isOfficial) {
-      parkDto = new ParkDto();
-//      park = new Park();
-    } else if (isOfficial){
+    if(isOfficial) {
       Ranger ranger = rangerService.findByEmail(authenticationFacade.getName());
-      parkDto = new ParkDto(parkService.findById(ranger.getPark().getId()));
+      park = parkService.findById(ranger.getPark().getId());
     } else {
-      parkDto = new ParkDto(parkService.findById(Long.valueOf(id)));
-//      park = parkService.findById(Long.valueOf(id));
+      park = parkService.findById(id);
     }
 
-    model.addAttribute("park", parkDto);
-    return DEV_DIR + "/parks/parkForm";
+    model.addAttribute("park", park);
+    return DEV_DIR + "/parks/park-form";
   }
 
   @GetMapping("/delete")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   public String deletePark(
-      @RequestParam String id
+      @RequestParam Long id
   ){
-    Park park = parkService.findById(Long.valueOf(id));
+    Park park = parkService.findById(id);
     parkService.delete(park);
     return "redirect:/parks";
   }
@@ -79,19 +75,17 @@ public class ParkController {
   @PostMapping({"/new"})
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   public String saveOrUpdatePark(
-      @ModelAttribute ParkDto parkDto
+      @ModelAttribute Park park
   ) {
-    Park park;
-    if(parkDto.getId() == null) {
-      park = parkService.newDto(parkDto);
-    } else {
-      park = parkService.updateDto(parkDto);
-    }
+    parkService.save(park);
+    return "redirect:/rangers/new?newParkId=" + park.getId();
+  }
 
-    if(park.getOfficial() == null) {
-      return "redirect:/rangers/new?newParkId=" + park.getId();
-    } else {
-      return "redirect:/parks";
-    }
+  @PostMapping({"/update"})
+  public String updatePark(
+      @ModelAttribute Park park
+  ){
+    parkService.save(park);
+    return "redirect:/parks";
   }
 }

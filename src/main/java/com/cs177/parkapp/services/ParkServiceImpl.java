@@ -1,6 +1,5 @@
 package com.cs177.parkapp.services;
 
-import com.cs177.parkapp.dto.ParkDto;
 import com.cs177.parkapp.exceptions.IdNotFoundException;
 import com.cs177.parkapp.exceptions.NameNotFoundException;
 import com.cs177.parkapp.model.Park;
@@ -14,7 +13,6 @@ import java.util.Set;
 
 @Slf4j
 @AllArgsConstructor
-//@Transactional
 @Service
 public class ParkServiceImpl implements ParkService {
 
@@ -57,20 +55,7 @@ public class ParkServiceImpl implements ParkService {
     return parkRepository.save(park);
   }
 
-  @Override
-  public Park newDto(ParkDto parkDto) {
-    return parkRepository.save(parkDto.newPark());
-  }
 
-  @Override
-  public Park updateDto(ParkDto parkDto) {
-    Park park = parkRepository.findById(parkDto.getId())
-        .orElseThrow(() ->
-            new IdNotFoundException("Park with id: " + parkDto.getId()
-                + " not found."));
-    park.setName(parkDto.getName());
-    return parkRepository.save(park);
-  }
 
   @Override
   public void delete(Park park) {
