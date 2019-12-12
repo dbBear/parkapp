@@ -144,6 +144,5 @@ public class RangerServiceImpl implements RangerService {
     }
     userService.removeRoles(user, rolesToRemove);
 
-//    userService.save(user);
   }
 }
