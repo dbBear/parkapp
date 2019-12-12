@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html
-    xmlns:th="https://www.thymeleaf.org"
-    lang="en">
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head th:insert="~{backEndStuff/fragments/header/header::header}">
   <meta charset="UTF-8">
   <title>Update Ranger</title>
@@ -24,7 +25,7 @@
               th:action="@{/rangers/update}"
               method="post">
               <input type="hidden" th:field="*{id}"/>
-              <div class="form-group">
+              <div class="form-group" sec:authorize="hasRole('ROLE_ADMIN')">
                 <label for="park">Park</label>
                 <select id="park" name="park" class="form-control" th:field="*{parkId}">
                   <option th:each="park : ${parks}"

@@ -47,14 +47,14 @@ public class User {
   @OneToOne(
       mappedBy = "user",
       cascade = CascadeType.ALL,
-      fetch = FetchType.LAZY
+      fetch = FetchType.EAGER
   )
   private Submitter submitter;
 
   @OneToOne(
       mappedBy = "user",
-      cascade = CascadeType.ALL,
-      fetch = FetchType.LAZY
+//      cascade = CascadeType.ALL,
+      fetch = FetchType.EAGER
   )
   private Ranger ranger;
 

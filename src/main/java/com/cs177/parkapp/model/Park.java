@@ -2,6 +2,7 @@ package com.cs177.parkapp.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ public class Park extends BaseEntity {
 
   private String name;
   @OneToOne
+  @Nullable
   private Ranger official;
 
   @OneToMany(
@@ -32,7 +34,8 @@ public class Park extends BaseEntity {
 
   @OneToMany(
       mappedBy = "park",
-      cascade = {CascadeType.ALL}
+      cascade = {CascadeType.ALL},
+      orphanRemoval = true
   )
   @Builder.Default
   private Set<Ticket> tickets = new HashSet<>();
@@ -45,11 +48,14 @@ public class Park extends BaseEntity {
   public void removeRanger(Ranger ranger) {
     // todo better error checking
     Ranger rangerToRemove = rangers.stream()
-        .filter(o -> o.getId().equals(ranger.getId()))
+        .filter(r -> r.getId().equals(ranger.getId()))
         .findFirst()
         .orElse(null);
-    rangers.remove(rangerToRemove);
-    rangerToRemove.setPark(null);
+    if(rangerToRemove != null) {
+      rangers.remove(rangerToRemove);
+      rangerToRemove.setPark(null);
+    }
+
   }
 
   public void addTicket(Ticket ticket) {
@@ -63,8 +69,11 @@ public class Park extends BaseEntity {
         .filter(t -> t.getId().equals(ticket.getId()))
         .findFirst()
         .orElse(null);
-    tickets.remove(ticketToRemove);
-    ticketToRemove.setPark(null);
+    if(ticketToRemove != null) {
+      tickets.remove(ticketToRemove);
+      ticketToRemove.setPark(null);
+    }
+
   }
 
 }

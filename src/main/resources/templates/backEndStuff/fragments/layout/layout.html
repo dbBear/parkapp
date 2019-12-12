@@ -14,10 +14,10 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="../../tickets/ticketForm.html" th:href="@{/tickets/new}">New Ticket</a>
+        <a class="nav-link" href="../../tickets/ticket-form.html" th:href="@{/tickets/new}">New Ticket</a>
       </li>
       <li class="nav-item" sec:authorize="isAuthenticated()">
-        <a class="nav-link" href="../../tickets/ticketList.html" th:href="@{/tickets}">Tickets</a>
+        <a class="nav-link" href="../../tickets/ticket-list.html" th:href="@{/tickets}">Tickets</a>
       </li>
       <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRanger"  data-toggle="dropdown"

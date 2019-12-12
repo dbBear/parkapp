@@ -9,18 +9,19 @@
 </head>
 
 <body>
-<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
-<header class="jumbotron jumbotron-fluid">
-  <h1 class="display-2 text-center">New Ticket</h1>
-</header>
-<section class="mainSection">
 <!--/*@thymesVar id="ticket" type="com.cs177.parkapp.model.Ticket"*/-->
 <!--/*@thymesVar id="category" type="com.cs177.parkapp.model.Category"*/-->
 <!--/*@thymesVar id="park" type="com.cs177.parkapp.model.Park"*/-->
+<nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
+<header class="jumbotron jumbotron-fluid">
+  <h1 class="display-2 text-center" th:text="${ticket.id} == null ? 'New Ticket' : 'Update Ticket'">New Ticket</h1>
+</header>
+<section class="mainSection">
+
   <form
       class="ticketForm"
       th:object="${ticket}"
-      th:action="@{/tickets/new}"
+      th:action="*{id} == null ? @{/tickets/new} : @{/tickets/update}"
       method="post">
     <input type="hidden" th:field="*{id}"/>
     <div class="row" th:if="*{id}" sec:authorize="hasRole('ROLE_RANGER') or hasRole('ROLE_ADMIN')">
