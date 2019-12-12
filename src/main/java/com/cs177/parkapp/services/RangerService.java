@@ -18,4 +18,5 @@ public interface RangerService {
   Ranger newSave(User user, NewRangerDto rangerDto);
   Ranger update(UpdateRangerDto rangerDto);
   void delete(Ranger ranger);
+  void removeRangerRoles(Ranger ranger);
 }

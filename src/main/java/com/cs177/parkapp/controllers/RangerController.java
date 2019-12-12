@@ -11,6 +11,7 @@ import com.cs177.parkapp.security.service.UserService;
 import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.RangerService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,6 @@ import java.util.Set;
 import static com.cs177.parkapp.config.StaticStrings.DEV_DIR;
 import static com.cs177.parkapp.config.StaticStrings.ROLE_OFFICIAL;
 
-@AllArgsConstructor
 @Controller
 @RequestMapping({"/rangers"})
 @PreAuthorize("hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')")
@@ -37,6 +37,19 @@ public class RangerController {
   private final UserService userService;
   private final RoleService roleService;
   private final AuthenticationFacade authenticationFacade;
+
+  public RangerController(
+      @Lazy RangerService rangerService,
+      @Lazy ParkService parkService,
+      @Lazy UserService userService,
+      @Lazy RoleService roleService,
+      AuthenticationFacade authenticationFacade) {
+    this.rangerService = rangerService;
+    this.parkService = parkService;
+    this.userService = userService;
+    this.roleService = roleService;
+    this.authenticationFacade = authenticationFacade;
+  }
 
   @GetMapping({"", "/"})
   public String showRangers(Model model) {

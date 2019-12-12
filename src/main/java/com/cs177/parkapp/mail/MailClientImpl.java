@@ -49,17 +49,22 @@ public class MailClientImpl implements MailClient{
 
   @Override
   public void sendClosedTicket(Ticket ticket) {
-    String recipient = ticket.getSubmitter().getUser().getEmail();
-    if(recipient.equalsIgnoreCase(ANONYMOUS_EMAIL)){
-      String subject = "ParkApp: You Ticket '" + ticket.getName() + "' is " +
-          "Closed!";
-      String message =
-          "Your ticket has been closed!" +
-              "Name: " + ticket.getName() +
-              "Park: " + ticket.getPark().getName() +
-              "Submission: " + ticket.getCreateDateTime() +
-              "Description: " + ticket.getDescription();
-      prepareAndSend(recipient, subject, message);
+    String submitterRecipient = ticket.getSubmitter().getUser().getEmail();
+    String officialRecipient =
+        ticket.getPark().getOfficial().getUser().getEmail();
+
+    String subject = "ParkApp: Your Ticket '" + ticket.getName() + "' is " +
+        "Closed!";
+    String message =
+        "Your ticket has been closed!" +
+            "Name: " + ticket.getName() +
+            "Park: " + ticket.getPark().getName() +
+            "Submission: " + ticket.getCreateDateTime() +
+            "Description: " + ticket.getDescription();
+
+    if(submitterRecipient.equalsIgnoreCase(ANONYMOUS_EMAIL)){
+      prepareAndSend(submitterRecipient, subject, message);
     }
+    prepareAndSend(officialRecipient, subject, message);
   }
 }

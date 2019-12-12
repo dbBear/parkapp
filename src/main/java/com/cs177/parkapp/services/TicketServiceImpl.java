@@ -5,13 +5,12 @@ import com.cs177.parkapp.mail.MailClient;
 import com.cs177.parkapp.model.*;
 import com.cs177.parkapp.repositories.TicketRepository;
 import com.cs177.parkapp.security.facade.AuthenticationFacade;
-import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
 @Service
 public class TicketServiceImpl implements TicketService {
 
@@ -19,6 +18,18 @@ public class TicketServiceImpl implements TicketService {
   private final SubmitterService submitterService;
   private final AuthenticationFacade authenticationFacade;
   private final MailClient mailClient;
+
+  public TicketServiceImpl(
+      TicketRepository ticketRepository,
+      @Lazy SubmitterService submitterService,
+      AuthenticationFacade authenticationFacade,
+      MailClient mailClient
+  ) {
+    this.ticketRepository = ticketRepository;
+    this.submitterService = submitterService;
+    this.authenticationFacade = authenticationFacade;
+    this.mailClient = mailClient;
+  }
 
   @Override
   public Set<Ticket> findAll() {

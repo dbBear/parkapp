@@ -7,18 +7,19 @@ import com.cs177.parkapp.exceptions.IdNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.model.Ranger;
 import com.cs177.parkapp.repositories.RangerRepository;
+import com.cs177.parkapp.security.entity.Role;
 import com.cs177.parkapp.security.entity.User;
 import com.cs177.parkapp.security.service.RoleService;
 import com.cs177.parkapp.security.service.UserService;
-import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.cs177.parkapp.config.StaticStrings.ROLE_OFFICIAL;
 import static com.cs177.parkapp.config.StaticStrings.ROLE_RANGER;
 
-@AllArgsConstructor
 @Service
 public class RangerServiceImpl implements RangerService {
 
@@ -26,6 +27,18 @@ public class RangerServiceImpl implements RangerService {
   private final ParkService parkService;
   private final UserService userService;
   private final RoleService roleService;
+
+
+  public RangerServiceImpl(
+      RangerRepository rangerRepository,
+      @Lazy ParkService parkService,
+      @Lazy UserService userService,
+      @Lazy RoleService roleService) {
+    this.rangerRepository = rangerRepository;
+    this.parkService = parkService;
+    this.userService = userService;
+    this.roleService = roleService;
+  }
 
   @Override
   public Set<Ranger> findAll() {
@@ -105,6 +118,32 @@ public class RangerServiceImpl implements RangerService {
 
   @Override
   public void delete(Ranger ranger) {
+    removeRangerRoles(ranger);
+
     rangerRepository.delete(ranger);
+  }
+
+  @Override
+  public void removeRangerRoles(Ranger ranger) {
+    if( ranger.getPark() != null &&
+        ranger.getUser().getRoles()
+            .contains(roleService.findByName(ROLE_OFFICIAL)))
+    {
+      ranger.getPark().setOfficial(null);
+    }
+    User user = userService.findById(ranger.getUser().getId());
+    user.setRanger(null);
+    ranger.setUser(null);
+
+    Set<Role> rolesToRemove = new HashSet<>();
+    Role roleRanger = roleService.findByName(ROLE_RANGER);
+    Role roleOfficial = roleService.findByName(ROLE_OFFICIAL);
+    rolesToRemove.add(roleRanger);
+    if(user.getRoles().contains(roleOfficial)) {
+      rolesToRemove.add(roleOfficial);
+    }
+    userService.removeRoles(user, rolesToRemove);
+
+//    userService.save(user);
   }
 }

@@ -4,6 +4,7 @@ import com.cs177.parkapp.exceptions.EmailNotFoundException;
 import com.cs177.parkapp.model.Park;
 import com.cs177.parkapp.repositories.ParkRepository;
 import com.cs177.parkapp.services.ParkServiceImpl;
+import com.cs177.parkapp.services.RangerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ class ParkServiceImplTest {
 
   @Mock
   ParkRepository parkRepository;
+  @Mock
+  RangerService rangerService;
   private ParkServiceImpl parkService;
 
   private Park park1;
@@ -36,7 +39,7 @@ class ParkServiceImplTest {
   @BeforeEach
   void setUp() {
     MockitoAnnotations.initMocks(this);
-    parkService = new ParkServiceImpl(parkRepository);
+    parkService = new ParkServiceImpl(parkRepository, rangerService);
     park1 = Park.builder()
         .id(ID_1)
         .name(NAME_1)

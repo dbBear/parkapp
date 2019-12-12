@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @AllArgsConstructor
-//@Transactional
 @Service
 public class CategoryServiceImpl implements CategoryService {
 

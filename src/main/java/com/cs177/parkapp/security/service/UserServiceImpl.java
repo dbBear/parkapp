@@ -10,14 +10,19 @@ import com.cs177.parkapp.security.entity.Role;
 import com.cs177.parkapp.security.entity.User;
 import com.cs177.parkapp.security.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.cs177.parkapp.config.StaticStrings.ANONYMOUS_EMAIL;
@@ -97,7 +102,7 @@ public class UserServiceImpl implements UserService{
   public User findByRanger(Ranger ranger) {
     return userRepository.findByRanger(ranger)
         .orElseThrow(() ->
-            new IdNotFoundException("Ranger with submitter id:"
+            new IdNotFoundException("Ranger with user id:"
                 + ranger.getId() + " not found")
         );
   }
@@ -121,5 +126,34 @@ public class UserServiceImpl implements UserService{
   @Override
   public User save(User user) {
     return userRepository.save(user);
+  }
+
+  @Override
+  public User addRoles(User user, Set<Role> roles) {
+    roles.forEach(user::addRole);
+    userRepository.save(user);
+//    updateAuthorities(user);
+    return user;
+  }
+
+  @Override
+  public User removeRoles(User user, Set<Role> roles) {
+    roles.forEach(user::removeRole);
+    userRepository.save(user);
+//    updateAuthorities(user);
+    return user;
+  }
+
+  private void updateAuthorities(User user) {
+    Set<GrantedAuthority> authorities = new HashSet<>();
+    user.getRoles().stream()
+        .map(role -> new SimpleGrantedAuthority(role.getName()))
+        .forEach(authorities::add);
+
+    Authentication reAuth = new UsernamePasswordAuthenticationToken(
+        user.getEmail(), user.getPassword(), authorities
+    );
+    SecurityContextHolder.getContext().setAuthentication(reAuth);
+
   }
 }

@@ -8,6 +8,7 @@ import com.cs177.parkapp.services.ParkService;
 import com.cs177.parkapp.services.RangerService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +18,25 @@ import static com.cs177.parkapp.config.StaticStrings.DEV_DIR;
 import static com.cs177.parkapp.config.StaticStrings.ROLE_OFFICIAL;
 
 @Slf4j
-@AllArgsConstructor
 @Controller
 @RequestMapping({"/parks"})
 @PreAuthorize("hasRole('ROLE_OFFICIAL') or hasRole('ROLE_ADMIN')")
 public class ParkController {
 
+
   private final ParkService parkService;
   private final RangerService rangerService;
   private final AuthenticationFacade authenticationFacade;
+
+  public ParkController(
+      @Lazy ParkService parkService,
+      @Lazy RangerService rangerService,
+      AuthenticationFacade authenticationFacade
+  ) {
+    this.parkService = parkService;
+    this.rangerService = rangerService;
+    this.authenticationFacade = authenticationFacade;
+  }
 
   @GetMapping({"", "/" })
   public String showParks(Model model) {
@@ -86,6 +97,9 @@ public class ParkController {
       @ModelAttribute Park park
   ){
     parkService.save(park);
+    if(authenticationFacade.getRoles().contains(ROLE_OFFICIAL)){
+      return "redirect:/?saved=true";
+    }
     return "redirect:/parks";
   }
 }

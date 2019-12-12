@@ -7,14 +7,12 @@ import com.cs177.parkapp.security.facade.AuthenticationFacade;
 import com.cs177.parkapp.services.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -23,7 +21,6 @@ import static com.cs177.parkapp.config.StaticStrings.*;
 
 @Slf4j
 @RequestMapping({"/tickets"})
-@AllArgsConstructor
 @Controller
 public class TicketController {
 
@@ -34,13 +31,29 @@ public class TicketController {
   private final SubmitterService submitterService;
   private final AuthenticationFacade authenticationFacade;
 
+  public TicketController(
+      @Lazy TicketService ticketService,
+      @Lazy CategoryService categoryService,
+      @Lazy ParkService parkService,
+      @Lazy RangerService rangerService,
+      @Lazy SubmitterService submitterService,
+      AuthenticationFacade authenticationFacade
+  ) {
+    this.ticketService = ticketService;
+    this.categoryService = categoryService;
+    this.parkService = parkService;
+    this.rangerService = rangerService;
+    this.submitterService = submitterService;
+    this.authenticationFacade = authenticationFacade;
+  }
+
   @GetMapping({"/new"})
   public String newTicket(Model model) {
     Ticket ticket = Ticket.builder().build();
     model.addAttribute("ticket", ticket);
     model.addAttribute("categories", categoryService.getCategories());
     model.addAttribute("parks", parkService.findAll());
-    return DEV_DIR + "/tickets/ticketForm";
+    return DEV_DIR + "/tickets/ticket-form";
   }
 
   @GetMapping({"", "/" })
@@ -59,7 +72,7 @@ public class TicketController {
       tickets = ticketService.findAllBySubmitter(submitter);
     }
     model.addAttribute("tickets", tickets);
-    return DEV_DIR + "/tickets/ticketList";
+    return DEV_DIR + "/tickets/ticket-list";
   }
 
   @GetMapping({"/update"})
@@ -71,7 +84,7 @@ public class TicketController {
     model.addAttribute("ticket", ticketService.findById(id));
     model.addAttribute("categories", categoryService.getCategories());
     model.addAttribute("parks", parkService.findAll());
-    return DEV_DIR + "/tickets/ticketForm";
+    return DEV_DIR + "/tickets/ticket-form";
   }
 
   @GetMapping({"/delete"})
@@ -85,7 +98,7 @@ public class TicketController {
 
   @PostMapping({"/new"})
   public String saveTicket(
-      Ticket ticket,
+      @ModelAttribute Ticket ticket,
       BindingResult result
   ) {
     Ticket ticketSaved = ticketService.save(ticket);
@@ -94,6 +107,15 @@ public class TicketController {
     } else {
       return "redirect:/tickets?saved=true";
     }
+  }
+
+  @PostMapping({"/update"})
+  public String updateTicket(
+      @ModelAttribute Ticket ticket,
+      BindingResult result
+  ){
+    ticketService.save(ticket);
+    return "redirect:/tickets?saved=true";
   }
 
 

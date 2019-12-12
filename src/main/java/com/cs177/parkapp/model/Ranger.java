@@ -4,13 +4,14 @@ import com.cs177.parkapp.security.entity.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cascade;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -25,6 +26,7 @@ public class Ranger extends BaseEntity{
       fetch = FetchType.LAZY
   )
   @JoinColumn(name = "park_id")
+  @Nullable
   private Park park;
 
   public String getFullName() {

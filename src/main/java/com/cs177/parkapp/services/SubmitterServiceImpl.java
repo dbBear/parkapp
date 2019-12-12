@@ -7,6 +7,7 @@ import com.cs177.parkapp.model.Submitter;
 import com.cs177.parkapp.repositories.SubmitterRepository;
 import com.cs177.parkapp.security.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -15,13 +16,18 @@ import java.util.Set;
 import static com.cs177.parkapp.config.StaticStrings.ANONYMOUS_EMAIL;
 import static com.cs177.parkapp.config.StaticStrings.ANONYMOUS_NAME;
 
-@AllArgsConstructor
 @Service
 public class SubmitterServiceImpl implements SubmitterService {
 
   private final SubmitterRepository submitterRepository;
   private final UserService userService;
-//  private final UserRepository userRepository;
+
+  public SubmitterServiceImpl(
+      SubmitterRepository submitterRepository,
+      @Lazy UserService userService) {
+    this.submitterRepository = submitterRepository;
+    this.userService = userService;
+  }
 
   @Override
   public Submitter getAnonymousSubmitter() {
