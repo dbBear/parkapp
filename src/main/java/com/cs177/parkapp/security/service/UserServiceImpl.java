@@ -118,7 +118,6 @@ public class UserServiceImpl implements UserService{
         .build();
     user.getRoles().add(
         roleService.findByName(ROLE_USER)
-//        roleService.findById(userDto.getRoleId())
     );
     return userRepository.save(user);
   }
@@ -132,7 +131,6 @@ public class UserServiceImpl implements UserService{
   public User addRoles(User user, Set<Role> roles) {
     roles.forEach(user::addRole);
     userRepository.save(user);
-//    updateAuthorities(user);
     return user;
   }
 
@@ -140,20 +138,7 @@ public class UserServiceImpl implements UserService{
   public User removeRoles(User user, Set<Role> roles) {
     roles.forEach(user::removeRole);
     userRepository.save(user);
-//    updateAuthorities(user);
     return user;
   }
 
-  private void updateAuthorities(User user) {
-    Set<GrantedAuthority> authorities = new HashSet<>();
-    user.getRoles().stream()
-        .map(role -> new SimpleGrantedAuthority(role.getName()))
-        .forEach(authorities::add);
-
-    Authentication reAuth = new UsernamePasswordAuthenticationToken(
-        user.getEmail(), user.getPassword(), authorities
-    );
-    SecurityContextHolder.getContext().setAuthentication(reAuth);
-
-  }
 }
