@@ -17,6 +17,7 @@
       <th scope="col">Name</th>
       <th scope="col">Number of Tickets</th>
       <th scope="col">Number of Rangers</th>
+      <th scope="col">Official Email</th>
     </tr>
     </thead>
     <tr th:each="park : ${parks}">
@@ -31,6 +32,7 @@
       <td th:text="${park.name}">Park Name</td>
       <td th:text="${park.getTickets().size()}">0</td>
       <td th:text="${park.getRangers().size()}">0</td>
+      <td th:text="${park.getOfficial().getUser().getEmail()}"></td>
     </tr>
   </table>
 </section>

@@ -19,4 +19,5 @@ public interface RangerService {
   Ranger update(UpdateRangerDto rangerDto);
   void delete(Ranger ranger);
   void removeRangerRoles(Ranger ranger);
+  void switchOfficialRole(Ranger oldOfficial, Ranger newOfficial);
 }

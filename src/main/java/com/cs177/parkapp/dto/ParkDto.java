@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -16,13 +15,14 @@ public class ParkDto {
   private Long id;
   @NotEmpty
   private String name;
-  private Long rangerId;
+  private Long officialId;
 
   public ParkDto(Park park) {
     this.id = park.getId();
     this.name = park.getName();
-    this.rangerId = park.getOfficial().getId();
+    this.officialId = park.getOfficial().getId();
   }
+
 
   public Park newPark() {
     return Park.builder()

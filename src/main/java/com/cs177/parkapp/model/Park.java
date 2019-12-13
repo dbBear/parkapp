@@ -20,6 +20,7 @@ import java.util.Set;
 public class Park extends BaseEntity {
 
   private String name;
+
   @OneToOne
   @Nullable
   private Ranger official;

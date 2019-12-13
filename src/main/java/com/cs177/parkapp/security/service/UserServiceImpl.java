@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -141,4 +142,13 @@ public class UserServiceImpl implements UserService{
     return user;
   }
 
+  @Override
+  public User addRole(User user, Role role) {
+    return addRoles(user, new HashSet<>(Arrays.asList(role)));
+  }
+
+  @Override
+  public User removeRole(User user, Role role) {
+    return removeRoles(user, new HashSet<>(Arrays.asList(role)));
+  }
 }

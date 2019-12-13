@@ -21,4 +21,6 @@ public interface UserService extends UserDetailsService {
   User save(User user);
   User addRoles(User user, Set<Role> roles);
   User removeRoles(User user, Set<Role> roles);
+  User addRole(User user, Role role);
+  User removeRole(User user, Role role);
 }
