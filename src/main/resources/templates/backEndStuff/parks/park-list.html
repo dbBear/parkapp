@@ -32,7 +32,7 @@
       <td th:text="${park.name}">Park Name</td>
       <td th:text="${park.getTickets().size()}">0</td>
       <td th:text="${park.getRangers().size()}">0</td>
-      <td th:text="${park.getOfficial().getUser().getEmail()}"></td>
+      <td th:text="${park.getOfficial() != null ? park.getOfficial().getUser().getEmail() : 'No Official'}"></td>
     </tr>
   </table>
 </section>
