@@ -53,7 +53,11 @@
 		</dependency>
 
 <!--		Database -->
-<!--		todo add MySql integration -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
 
 <!--		Helpers -->
 		<dependency>

@@ -1,0 +1,27 @@
+#jdbc.driver=com.mysql.jdbc.Driver
+#jdbc.url=jdbc:mysql://localhost:3306/park_app_db?useSSL=false
+#jdbc.user=parkappAdmin
+#jdbc.password=admin
+#
+#hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+#hibernate.show_sql=true
+#hibernate.packagesToScan=com.cs177.parkapp
+#
+#connection.pool.initialPoolSize=5
+#connection.pool.minPoolSize=5
+#connection.pool.maxPoolSize=20
+#connection.pool.maxIdleTime=3000
+
+
+spring:
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://localhost:3306/park_app_db
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: mysql
+    show-sql: true
