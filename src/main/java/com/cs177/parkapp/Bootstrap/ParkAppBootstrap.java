@@ -173,32 +173,38 @@ public class ParkAppBootstrap implements CommandLineRunner {
         "Ticket 1", trashCategory,
         anonymousSubmitter, park1
     );
+    ticket1.setLocation("2 Miles down the Terror Trail");
 
     Ticket ticket2 = generateTicket(
         "Ticket 2", facilitiesCategory,
         anonymousSubmitter, park2
     );
+    ticket2.setLocation("In front of Glad Gale");
 
     Ticket ticket3 = generateTicket(
        "Ticket 3", trailCategory,
        submitter1, park1
     );
+    ticket3.setLocation("North of the Bending Bend");
 
     Ticket ticket4 = generateTicket(
         "Ticket 4", otherCategory,
         submitter2, park2
     );
+    ticket4.setLocation("At the Glory Grills");
 
     Ticket ticket5 = generateTicket(
         "Ticket 5", trashCategory,
         submitter1, park2
     );
+    ticket5.setLocation("not sure");
     ticket5.setStatus(Status.CLOSED);
 
     Ticket ticket6 = generateTicket(
         "Ticket 6", trailCategory,
         submitter2, park1
     );
+    ticket6.setLocation("In front of the south gate parking lot");
     ticket6.setStatus(Status.CLOSED);
 
     ticketRepository.saveAll(Arrays.asList(

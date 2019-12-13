@@ -2,6 +2,7 @@ package com.cs177.parkapp.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,6 +28,15 @@ public class Ticket extends BaseEntity{
 
   @Lob
   private String description;
+
+  @Nullable
+  private Double latitude;
+  @Nullable
+  private Double longitude;
+
+
+  @Lob
+  private String location;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "submitter_id")

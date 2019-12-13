@@ -3,9 +3,10 @@
       xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       >
-<head th:insert="~{backEndStuff/fragments/header/header::header}">
+<head th:insert="~{backEndStuff/fragments/header/header::header}" th:remove="tag">
   <meta charset="UTF-8">
   <title>Title</title>
+  <script src="../../../static/backEndStuff/js/ticket-form.js"></script>
 </head>
 
 <body>
@@ -38,7 +39,8 @@
     <div class="form-row">
       <div class="col">
         <label for="name">Name</label>
-        <input id="name" type="text" class="form-control" placeholder="Ticket Name" th:field="*{name}">
+        <input id="name" type="text" class="form-control"  placeholder="Ticket Name"
+               th:field="*{name}">
       </div>
     </div>
     <div class="form-row justify-content-lg-start">
@@ -61,10 +63,32 @@
         </select>
       </div>
     </div>
+    <div class="form-row justify-content-start">
+      <div class="col-4" th:hidden="${ticket.id != null}">
+        <button type="button" onclick="getLocation()" >Get GPS Location</button>
+      </div>
+      <div id="gpsDiv" class="col-4" th:hidden="${ticket.id == null}">
+        <div id="latitudeDiv" class="form-row" >
+          <label for="latitude" class="col">Latitude</label>
+          <input id="latitude" type="text" class="form-control col" th:readonly="readonly"
+                 th:field="*{latitude}">
+        </div>
+        <div id="longitudeDiv" class="form-row" >
+          <label for="longitude" class="col">Longitude</label>
+          <input id="longitude" type="text" class="form-control col" th:readonly="readonly" th:field="*{longitude}">
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <label for="location">Location Description</label>
+        <textarea id="location" class="form-control" rows="6" th:field="*{location}"></textarea>
+      </div>
+    </div>
     <div class="form-row">
       <div class="col">
         <label for="description">Description</label>
-        <textarea id="description" class="form-control" rows="10" th:field="*{description}"></textarea>
+        <textarea id="description" class="form-control" rows="6" th:field="*{description}"></textarea>
       </div>
     </div>
     <div class="form-row justify-content-end">
@@ -76,5 +100,36 @@
 <footer>
 
 </footer>
+<!--<script th:inline="javascript">-->
+<!--  /*<![CDATA[*/-->
+<!--  let gpsDiv = $('#gpsDiv');-->
+
+<!--  function getLocation() {-->
+<!--    if (navigator.geolocation) {-->
+<!--      navigator.geolocation.getCurrentPosition(showPosition);-->
+<!--    } else {-->
+<!--      gpsDiv.append(-->
+<!--          "<p>Geolocation is not supported/allowed.</p>"-->
+<!--      )-->
+<!--    }-->
+<!--  }-->
+
+<!--  function showPosition(position) {-->
+<!--    gpsDiv.append(-->
+<!--        "<label for='latitude'>Latitude</label>" +-->
+<!--        "<input id='latitude' type='text' class='form-control' value='" + position.coords.latitude +-->
+<!--        "'th:field='*{ticket[__${status.index}__].latitude}'>" +-->
+<!--        "<label for='Longitude'>Longitude</label>" +-->
+<!--        "<input id='Longitude' type='text' class='form-control' value='" + position.coords.longitude +-->
+<!--        "'th:field='*{ticket[__${status.index}__].longitude}'>"-->
+<!--    )-->
+<!--  }-->
+
+<!--  $(document).ready(function() {-->
+<!--    console.log("ready!")-->
+<!--  });-->
+<!--  /*]]>*/-->
+<!--</script>-->
+<script src="/backEndStuff/js/ticket-form.js" th:src="@{/backEndStuff/js/ticket-form.js}"></script>
 </body>
 </html>

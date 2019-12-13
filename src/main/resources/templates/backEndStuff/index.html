@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:include="~{backEndStuff/fragments/header/header::header}">
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:insert="~{backEndStuff/fragments/header/header::header}">
   <meta charset="UTF-8">
   <title>Parks App</title>
 </head>
@@ -15,7 +18,10 @@
   <div class="row justify-content-center titleButtons">
       <a role="button" class="btn btn-primary btn-lg" href="/tickets/ticket-form" th:href="@{/tickets/new}">New
         Ticket</a>
-      <a role="button" class="btn btn-primary btn-lg" href="/login/loginForm" th:href="@{/login}">Login</a>
+      <a role="button" class="btn btn-primary btn-lg" href="/login/loginForm"
+         th:href="@{/login}"
+         sec:authorize="isAnonymous()"
+      >Login</a>
   </div>
 </div>
 <!--<div class="container">-->
