@@ -6,7 +6,7 @@
 	<groupId>com.cs177</groupId>
 	<artifactId>parkapp</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>parkapp</name>
 	<description>parkapp for cs177</description>
 	<properties>
