@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 import static com.cs177.parkapp.config.StaticStrings.DEV_DIR;
 import static com.cs177.parkapp.config.StaticStrings.ROLE_OFFICIAL;
 
@@ -96,7 +98,8 @@ public class ParkController {
 
   @PostMapping({"/update"})
   public String updatePark(
-      @ModelAttribute ParkDto parkDto
+      @ModelAttribute ParkDto parkDto,
+      @RequestParam(required = false) Boolean createOfficial
   ){
     Park park = parkService.findById(parkDto.getId());
     park.setName(parkDto.getName());
@@ -115,6 +118,10 @@ public class ParkController {
     if(authenticationFacade.getRoles().contains(ROLE_OFFICIAL)){
       return "redirect:/?saved=true";
     }
-    return "redirect:/parks";
+    if(createOfficial != null && createOfficial) {
+      return "redirect:/rangers/new?newParkId=" + park.getId();
+    } else {
+      return "redirect:/parks";
+    }
   }
 }

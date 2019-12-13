@@ -20,7 +20,9 @@ public class ParkDto {
   public ParkDto(Park park) {
     this.id = park.getId();
     this.name = park.getName();
-    this.officialId = park.getOfficial().getId();
+    if(park.getOfficial() != null) {
+      this.officialId = park.getOfficial().getId();
+    }
   }
 
 
