@@ -100,36 +100,6 @@
 <footer>
 
 </footer>
-<!--<script th:inline="javascript">-->
-<!--  /*<![CDATA[*/-->
-<!--  let gpsDiv = $('#gpsDiv');-->
-
-<!--  function getLocation() {-->
-<!--    if (navigator.geolocation) {-->
-<!--      navigator.geolocation.getCurrentPosition(showPosition);-->
-<!--    } else {-->
-<!--      gpsDiv.append(-->
-<!--          "<p>Geolocation is not supported/allowed.</p>"-->
-<!--      )-->
-<!--    }-->
-<!--  }-->
-
-<!--  function showPosition(position) {-->
-<!--    gpsDiv.append(-->
-<!--        "<label for='latitude'>Latitude</label>" +-->
-<!--        "<input id='latitude' type='text' class='form-control' value='" + position.coords.latitude +-->
-<!--        "'th:field='*{ticket[__${status.index}__].latitude}'>" +-->
-<!--        "<label for='Longitude'>Longitude</label>" +-->
-<!--        "<input id='Longitude' type='text' class='form-control' value='" + position.coords.longitude +-->
-<!--        "'th:field='*{ticket[__${status.index}__].longitude}'>"-->
-<!--    )-->
-<!--  }-->
-
-<!--  $(document).ready(function() {-->
-<!--    console.log("ready!")-->
-<!--  });-->
-<!--  /*]]>*/-->
-<!--</script>-->
 <script src="/backEndStuff/js/ticket-form.js" th:src="@{/backEndStuff/js/ticket-form.js}"></script>
 </body>
 </html>
