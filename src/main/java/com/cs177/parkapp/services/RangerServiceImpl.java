@@ -14,6 +14,7 @@ import com.cs177.parkapp.security.service.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -143,6 +144,12 @@ public class RangerServiceImpl implements RangerService {
       rolesToRemove.add(roleOfficial);
     }
     userService.removeRoles(user, rolesToRemove);
+  }
 
+  @Override
+  public void switchOfficialRole(Ranger oldOfficial, Ranger newOfficial) {
+    Role officialRole = roleService.findByName(ROLE_OFFICIAL);
+    userService.removeRole(oldOfficial.getUser(), officialRole);
+    userService.addRole(newOfficial.getUser(), officialRole);
   }
 }

@@ -49,7 +49,7 @@ public class ParkController {
   public String newPark(
       Model model
   ) {
-    model.addAttribute("park", new Park());
+    model.addAttribute("park", new ParkDto());
     return DEV_DIR + "/parks/park-form";
   }
 
@@ -67,9 +67,10 @@ public class ParkController {
       park = parkService.findById(ranger.getPark().getId());
     } else {
       park = parkService.findById(id);
+      model.addAttribute("rangers", rangerService.findByPark(park));
     }
 
-    model.addAttribute("park", park);
+    model.addAttribute("park", new ParkDto(park));
     return DEV_DIR + "/parks/park-form";
   }
 
@@ -86,16 +87,30 @@ public class ParkController {
   @PostMapping({"/new"})
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   public String saveOrUpdatePark(
-      @ModelAttribute Park park
+      @ModelAttribute ParkDto parkDto
   ) {
+    Park park = parkDto.newPark();
     parkService.save(park);
     return "redirect:/rangers/new?newParkId=" + park.getId();
   }
 
   @PostMapping({"/update"})
   public String updatePark(
-      @ModelAttribute Park park
+      @ModelAttribute ParkDto parkDto
   ){
+    Park park = parkService.findById(parkDto.getId());
+    park.setName(parkDto.getName());
+
+    if(park.getOfficial() != null &&
+        parkDto.getOfficialId() != null &&
+        !park.getOfficial().getId().equals(parkDto.getOfficialId()))
+    {
+      Ranger newOfficial = rangerService.findById(parkDto.getOfficialId());
+      Ranger oldOfficial = park.getOfficial();
+      park.setOfficial(newOfficial);
+      rangerService.switchOfficialRole(oldOfficial, newOfficial);
+    }
+
     parkService.save(park);
     if(authenticationFacade.getRoles().contains(ROLE_OFFICIAL)){
       return "redirect:/?saved=true";
