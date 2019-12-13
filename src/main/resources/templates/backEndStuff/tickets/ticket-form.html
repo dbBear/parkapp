@@ -14,7 +14,7 @@
 <!--/*@thymesVar id="park" type="com.cs177.parkapp.model.Park"*/-->
 <nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <header class="jumbotron jumbotron-fluid">
-  <h1 class="display-2 text-center" th:text="${ticket.id} == null ? 'New Ticket' : 'Update Ticket'">New Ticket</h1>
+  <h2 class="display-4 text-center" th:text="${ticket.id} == null ? 'New Ticket' : 'Update Ticket'">New Ticket</h2>
 </header>
 <section class="mainSection">
 
@@ -24,7 +24,7 @@
       th:action="*{id} == null ? @{/tickets/new} : @{/tickets/update}"
       method="post">
     <input type="hidden" th:field="*{id}"/>
-    <div class="row" th:if="*{id}" sec:authorize="hasRole('ROLE_RANGER') or hasRole('ROLE_ADMIN')">
+    <div class="form-row" th:if="*{id}" sec:authorize="hasRole('ROLE_RANGER') or hasRole('ROLE_ADMIN')">
       <div class="col">
         <label for="status">Status</label>
         <select id="status" name="status" class="form-control" th:field="*{status}">
@@ -35,14 +35,14 @@
         </select>
       </div>
     </div>
-    <div class="row">
+    <div class="form-row">
       <div class="col">
-        <label for="name"></label>
+        <label for="name">Name</label>
         <input id="name" type="text" class="form-control" placeholder="Ticket Name" th:field="*{name}">
       </div>
     </div>
-    <div class="row">
-      <div class="col">
+    <div class="form-row justify-content-lg-start">
+      <div class="col-lg-4">
         <label for="category">Categories </label>
         <select class="form-control form-control-sm" id="category" name="category.id" th:field="*{category}">
           <option th:each="category : ${categories}"
@@ -51,7 +51,7 @@
           >Category</option>
         </select>
       </div>
-      <div class="col">
+      <div class="offset-lg-1 col-lg-4">
         <label for="park">Park </label>
         <select class="form-control form-control-sm" id="park" name="park.id" th:field="*{park}">
           <option th:each="park : ${parks}"
@@ -61,13 +61,15 @@
         </select>
       </div>
     </div>
-    <div class="row">
+    <div class="form-row">
       <div class="col">
         <label for="description">Description</label>
         <textarea id="description" class="form-control" rows="10" th:field="*{description}"></textarea>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-row justify-content-end">
+      <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+    </div>
   </form>
 </section>
 

@@ -7,8 +7,15 @@
 <body>
 <nav th:replace="~{backEndStuff/fragments/layout/layout::nav}"></nav>
 <div class="jumbotron jumbotron-fluid" id="title">
-  <div class="container-fluid">
-    <h1 class="text-center">Welcome to the Parks App!</h1>
+    <h1 class="display-2 text-center title-text">Welcome to ParkApp!</h1>
+    <br />
+    <h5 class="display-5 text-center">Make a ticket to help your parks ;)</h5>
+</div>
+<div class="container">
+  <div class="row justify-content-center titleButtons">
+      <a role="button" class="btn btn-primary btn-lg" href="/tickets/ticket-form" th:href="@{/tickets/new}">New
+        Ticket</a>
+      <a role="button" class="btn btn-primary btn-lg" href="/login/loginForm" th:href="@{/login}">Login</a>
   </div>
 </div>
 <!--<div class="container">-->

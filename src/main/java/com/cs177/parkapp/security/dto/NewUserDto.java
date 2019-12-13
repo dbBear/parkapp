@@ -25,10 +25,6 @@ import java.util.stream.Collectors;
 })
 public class NewUserDto {
 
-//  private BCryptPasswordEncoder passwordEncoder;
-//  private RoleService roleService;
-
-//  private Long roleId;
   @NotEmpty
   private String firstName;
   @NotEmpty
@@ -44,24 +40,5 @@ public class NewUserDto {
   @ValidEmail
   private String confirmEmail;
 
-//  public UserDto(User user) {
-//    firstName = user.getFirstName();
-//    lastName = user.getLastName();
-//    email = user.getEmail();
-//  }
-//
-//  public User toUser() {
-//    User user = new User();
-//    user.setFirstName(firstName.toLowerCase());
-//    user.setLastName(lastName.toLowerCase());
-//    user.setEmail(email.toLowerCase());
-//    user.setPassword(passwordEncoder.encode(password));
-//
-//    List<Role> roles = roleService.getAll().stream()
-//        .filter(role -> role.getId() <= roleId)
-//        .collect(Collectors.toList());
-//    user.setRoles(roles);
-//    return user;
-//  }
 
 }

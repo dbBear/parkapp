@@ -22,7 +22,7 @@
           <div class="card-body">
 
             <!--                th:action="${park.getId()} == null ? @{/parks/new} : @{/parks/update}"-->
-            <form
+            <form id="park-form"
                 th:object="${park}"
                 method="post">
               <input type="hidden" th:field="*{id}" />
@@ -41,17 +41,21 @@
                     >Official</option>
                   </select>
                 </div>
-                <div class="form-group" th:if="${(park.getOfficialId() == null) and (park.getId() != null)}">
-                  <button type="submit" class="btn btn-secondary"
-                          th:formaction="@{/parks/update?createOfficial=true}"
-                  >Update and Create Official</button>
+                <div class="form-row justify-content-end">
+                  <div class="form-group" th:if="${(park.getOfficialId() == null) and (park.getId() != null)}">
+                    <button type="submit" class="btn btn-primary btn-lg"
+                            th:formaction="@{/parks/update?createOfficial=true}"
+                    >Update and Create Official</button>
+                  </div>
+                  <div class="form-group" th:if="${park.getId()} == null">
+                    <button type="submit" class="btn btn-primary btn-lg" th:formaction="@{/parks/new}">Create</button>
+                  </div>
+                  <div class="form-group" th:if="${park.getId()} != null">
+                    <button type="submit" class="btn btn-primary btn-lg" th:formaction="@{/parks/update}">Update
+                    </button>
+                  </div>
                 </div>
-                <div class="form-group" th:if="${park.getId()} == null">
-                  <button type="submit" class="btn btn-primary" th:formaction="@{/parks/new}">Create</button>
-                </div>
-                <div class="form-group" th:if="${park.getId()} != null">
-                  <button type="submit" class="btn btn-primary" th:formaction="@{/parks/update}">Update</button>
-                </div>
+
               </div>
 <!--              <button type="submit" class="btn btn-primary">Submit</button>-->
 
@@ -63,7 +67,5 @@
   </div>
 
 </section>
-
-
 </body>
 </html>

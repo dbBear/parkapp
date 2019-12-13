@@ -1,4 +1,42 @@
-section.mainSection {
-    margin: 10px 10px 0 10px;
+body {
+  font-family: 'Muli', sans-serif;
+}
 
+.navbar {
+    font-weight: bold;
+}
+.navbar-brand {
+  font-size: 40px;
+  font-style: italic;
+  font-weight: bold;
+}
+.navbar .navbar-nav a {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.title-text {
+  font-weight: 900 !important;
+}
+section.mainSection {
+    margin: 10px;
+}
+
+.ticketForm {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 1.3em;
+}
+
+.ticketForm .form-row{
+  margin-top: 20px;
+}
+
+.ticketForm label {
+  font-size: 1em;
+}
+
+
+.ticketForm button {
+  margin-top: 20px;
 }
